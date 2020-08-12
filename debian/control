@@ -7,14 +7,15 @@ Uploaders: Michał Zając <quintasan@kubuntu.org>, Iain Lane <laney@debian.org>
 Build-Depends: cmake,
                debhelper (>= 12),
                doxygen,
-	       maliit-framework-dev,
-	       libchewing3-dev,
-	       libpresage-dev,
-	       qtfeedback5-dev,
-	       libhunspell-dev,
-	       libanthyinput-dev,
-	       libpinyin-common-dev,
-	       libpinyin13-dev
+               libanthyinput-dev,
+               libchewing3-dev,
+               libhunspell-dev,
+               libpinyin-common-dev,
+               libpinyin13-dev,
+               libpresage-dev,
+               maliit-framework-dev,
+               qtdeclarative5-dev,
+               qtfeedback5-dev
 Standards-Version: 3.9.6
 Homepage: https://wiki.maliit.org
 
