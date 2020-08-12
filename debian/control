@@ -1,0 +1,25 @@
+Source: maliit-keyboard
+Section: libs
+Priority: extra
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Debian Mobile Team <debian-mobile@lists.debian.org>
+Uploaders: Michał Zając <quintasan@kubuntu.org>, Iain Lane <laney@debian.org>
+Build-Depends: cmake,
+               debhelper (>= 12),
+               doxygen,
+	       maliit-framework-dev,
+	       libchewing3-dev,
+	       libpresage-dev,
+	       qtfeedback5-dev,
+	       libhunspell-dev,
+	       libanthyinput-dev,
+	       libpinyin-common-dev,
+	       libpinyin13-dev
+Standards-Version: 3.9.6
+Homepage: https://wiki.maliit.org
+
+Package: maliit-keyboard
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Maliit Keyboard
+ Keyboard for Maliit
