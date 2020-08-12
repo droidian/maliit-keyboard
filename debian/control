@@ -15,7 +15,8 @@ Build-Depends: cmake,
                libpresage-dev,
                maliit-framework-dev,
                qtdeclarative5-dev,
-               qtfeedback5-dev
+               qtfeedback5-dev,
+               qtmultimedia5-dev
 Standards-Version: 3.9.6
 Homepage: https://wiki.maliit.org
 
