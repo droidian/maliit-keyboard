@@ -16,7 +16,8 @@ Build-Depends: cmake,
                maliit-framework-dev,
                qtdeclarative5-dev,
                qtfeedback5-dev,
-               qtmultimedia5-dev
+               qtmultimedia5-dev,
+               sqlite3
 Standards-Version: 3.9.6
 Homepage: https://wiki.maliit.org
 
