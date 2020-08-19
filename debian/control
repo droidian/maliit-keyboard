@@ -24,6 +24,6 @@ Homepage: https://wiki.maliit.org
 
 Package: maliit-keyboard
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: maliit-framework, ${misc:Depends}, ${shlibs:Depends}
 Description: Maliit Keyboard
  Keyboard for Maliit
