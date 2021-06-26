@@ -1,0 +1,6 @@
+maliit-keyboard (2.0.0-1~1) UNRELEASED; urgency=medium
+
+  [ Norbert Preining ]
+  * First upload to Debian (Closes: #NNNNN)
+
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Sat, 26 Jun 2021 09:21:07 +0900
