@@ -1,4 +1,4 @@
-maliit-keyboard (2.2.0-1) UNRELEASED; urgency=medium
+maliit-keyboard (2.2.0-1) unstable; urgency=medium
 
   [ Norbert Preining ]
   * Prepare initial packaging of v2.0.0.
@@ -7,7 +7,39 @@ maliit-keyboard (2.2.0-1) UNRELEASED; urgency=medium
   * Initial upload to Debian. (Closes: #991529).
   * debian/:
     + Move packaging over to the UBports Team's umbrella.
+  * debian/patches:
+    + Add README file explaining our patch naming scheme.
+    + Add 1001_typo-fix-in-API.patch. Fix spelling error in API/ABI relevant
+      parts of the code.
+  * debian/control:
+    + Improve SYNOPSIS and LONG_DESCRIPTION.
+    + Bump Standards-Version: to 4.6.0. No changes needed.
+    + Adjust Vcs-*: fields. Plan is to (co-)maintain the src:pkg with the
+      Qt/KDE team in group Debian on salsa.debian.org.
+    + Switch from Priority: extra to Priority: optional.
+    + Set Section: field to 'x11' (we should actually have a 'graphical'
+      section or somesuch).
   * debian/rules:
     + Add get-orig-source target (for the maintainer's convenience).
+    + Drop DEB_LDFLAGS_MAIN_APPEND variable.
+    + Enable all hardening build flags.
+    + Remove extra license files from bin:pkg.
+  * debian/{control,rules}:
+    + Make preparations for enabling unit tests (once the issue has been
+      resolved upstream).
+  * debian/upstream/metadata:
+    + Add file. Comply with DEP-12.
+  * debian/source/lintian-overrides:
+    + Override complains about emoji.js. The file is ok.
+  * debian/copyright:
+    + Add auto-generated copyright.in file.
+    + Drop some very long lines from this file, manually.
+    + Rewrite entire file.
+  * debian/source/lintian-overrides:
+    + Ignore long lines in COPYING.BSD.
+    + Silence various reports about language-specific files with very long
+      lines.
+  * debian/maliit-keyboard.lintian-overrides:
+    + Ignore missing man page for now, reported upstream.
 
- -- Mike Gabriel <sunweaver@debian.org>  Sat, 26 Jun 2021 09:21:07 +0900
+ -- Mike Gabriel <sunweaver@debian.org>  Mon, 07 Mar 2022 11:43:11 +0100
