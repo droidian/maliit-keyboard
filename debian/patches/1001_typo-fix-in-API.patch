@@ -1,0 +1,149 @@
+Description: {plugins,src}/: Fix typo ('overridden' is spelled with double 'd').
+Author: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+Forwarded: https://github.com/maliit/keyboard/pull/106
+
+--- a/plugins/ko/src/koreanplugin.cpp
++++ b/plugins/ko/src/koreanplugin.cpp
+@@ -73,9 +73,9 @@
+     return true;
+ }
+ 
+-void KoreanPlugin::addSpellingOverride(const QString& orig, const QString& overriden)
++void KoreanPlugin::addSpellingOverride(const QString& orig, const QString& overridden)
+ {
+-    Q_EMIT addOverride(orig, overriden);
++    Q_EMIT addOverride(orig, overridden);
+ }
+ 
+ void KoreanPlugin::loadOverrides(const QString& pluginPath) {
+--- a/plugins/ko/src/koreanplugin.h
++++ b/plugins/ko/src/koreanplugin.h
+@@ -32,7 +32,7 @@
+     void spellCheckerSuggest(const QString& word, int limit) override;
+     void addToSpellCheckerUserWordList(const QString& word) override;
+     bool setLanguage(const QString& languageId, const QString& pluginPath) override;
+-    virtual void addSpellingOverride(const QString& orig, const QString& overriden);
++    virtual void addSpellingOverride(const QString& orig, const QString& overridden);
+     virtual void loadOverrides(const QString& pluginPath);
+ 
+ signals:
+@@ -42,7 +42,7 @@
+     void parsePredictionText(QString surroundingLeft, QString preedit);
+     void setPredictionLanguage(QString language);
+     void addToUserWordList(const QString& word);
+-    void addOverride(const QString& orig, const QString& overriden);
++    void addOverride(const QString& orig, const QString& overridden);
+ 
+ public slots:
+     void spellCheckFinishedProcessing(QString word, QStringList suggestions);
+--- a/plugins/pinyin/src/pinyinadapter.cpp
++++ b/plugins/pinyin/src/pinyinadapter.cpp
+@@ -139,7 +139,7 @@
+ PinyinSequenceIterator::PinyinSequenceIterator(pinyin_instance_t *instance, std::size_t offset)
+     : m_instance(instance)
+     , m_offset(offset)
+-    , m_next(offset + 1) // to be overriden later
++    , m_next(offset + 1) // to be overridden later
+ {
+     ChewingKey *key;
+     auto st = pinyin_get_pinyin_key(m_instance, offset, &key);
+--- a/plugins/westernsupport/spellpredictworker.cpp
++++ b/plugins/westernsupport/spellpredictworker.cpp
+@@ -145,7 +145,7 @@
+     m_limit = limit;
+ }
+ 
+-void SpellPredictWorker::addOverride(const QString& orig, const QString& overriden)
++void SpellPredictWorker::addOverride(const QString& orig, const QString& overridden)
+ {
+-    m_overrides[orig] = overriden;
++    m_overrides[orig] = overridden;
+ }
+--- a/plugins/westernsupport/spellpredictworker.h
++++ b/plugins/westernsupport/spellpredictworker.h
+@@ -53,7 +53,7 @@
+     void setLanguage(QString language, QString pluginPath);
+     void setSpellCheckLimit(int limit);
+     void addToUserWordList(const QString& word);
+-    void addOverride(const QString& orig, const QString& overriden);
++    void addOverride(const QString& orig, const QString& overridden);
+ 
+ signals:
+     void newSpellingSuggestions(QString word, QStringList suggestions,
+--- a/plugins/westernsupport/westernlanguagesplugin.cpp
++++ b/plugins/westernsupport/westernlanguagesplugin.cpp
+@@ -80,9 +80,9 @@
+     return true;
+ }
+ 
+-void WesternLanguagesPlugin::addSpellingOverride(const QString& orig, const QString& overriden)
++void WesternLanguagesPlugin::addSpellingOverride(const QString& orig, const QString& overridden)
+ {
+-    Q_EMIT addOverride(orig, overriden);
++    Q_EMIT addOverride(orig, overridden);
+ }
+ 
+ void WesternLanguagesPlugin::loadOverrides(const QString& pluginPath) {
+--- a/plugins/westernsupport/westernlanguagesplugin.h
++++ b/plugins/westernsupport/westernlanguagesplugin.h
+@@ -33,7 +33,7 @@
+     void spellCheckerSuggest(const QString& word, int limit) override;
+     void addToSpellCheckerUserWordList(const QString& word) override;
+     bool setLanguage(const QString& languageId, const QString& pluginPath) override;
+-    virtual void addSpellingOverride(const QString& orig, const QString& overriden);
++    virtual void addSpellingOverride(const QString& orig, const QString& overridden);
+     virtual void loadOverrides(const QString& pluginPath);
+ 
+ signals:
+@@ -43,7 +43,7 @@
+     void parsePredictionText(QString surroundingLeft, QString preedit);
+     void setPredictionLanguage(QString language);
+     void addToUserWordList(const QString& word);
+-    void addOverride(const QString& orig, const QString& overriden);
++    void addOverride(const QString& orig, const QString& overridden);
+ 
+ public slots:
+     void spellCheckFinishedProcessing(QString word, QStringList suggestions);
+--- a/src/lib/logic/wordengine.cpp
++++ b/src/lib/logic/wordengine.cpp
+@@ -47,7 +47,7 @@
+ 
+     bool use_predictive_text;
+     bool requested_prediction_state; // The state requested by settings prior
+-                                     // to being overriden by any language
++                                     // to being overridden by any language
+                                      // specific requirements
+ 
+     bool use_spell_checker;
+--- a/src/plugin/updatenotifier.cpp
++++ b/src/plugin/updatenotifier.cpp
+@@ -92,10 +92,10 @@
+     }
+ }
+ 
+-void UpdateNotifier::notifyOverride(const Logic::KeyOverrides &overriden_keys,
++void UpdateNotifier::notifyOverride(const Logic::KeyOverrides &overridden_keys,
+                                     bool update /* = false */)
+ {
+-    Q_EMIT keysOverriden(overriden_keys, update);
++    Q_EMIT keysOverriden(overridden_keys, update);
+ }
+ 
+ } // namespace MaliitKeyboard
+--- a/src/plugin/updatenotifier.h
++++ b/src/plugin/updatenotifier.h
+@@ -58,12 +58,12 @@
+     ~UpdateNotifier() override;
+ 
+     void notify(MImUpdateEvent *event);
+-    void notifyOverride(const Logic::KeyOverrides &overriden_keys,
++    void notifyOverride(const Logic::KeyOverrides &overridden_keys,
+                         bool update = false);
+ 
+     Q_SIGNAL void cursorPositionChanged(int cursor_position,
+                                         const QString &surrounding_text);
+-    Q_SIGNAL void keysOverriden(const Logic::KeyOverrides &overriden_keys,
++    Q_SIGNAL void keysOverriden(const Logic::KeyOverrides &overridden_keys,
+                                 bool update);
+ 
+ private:
