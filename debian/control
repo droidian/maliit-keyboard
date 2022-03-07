@@ -1,5 +1,5 @@
 Source: maliit-keyboard
-Section: libs
+Section: x11
 Priority: optional
 Maintainer: Debian UBports Team <team+ubports@tracker.debian.org>
 Uploaders:
