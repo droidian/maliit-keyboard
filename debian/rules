@@ -8,6 +8,13 @@ include /usr/share/dpkg/buildflags.mk
 %:
 	dh $@
 
+override_dh_install:
+	# drop extra license files from bin:pkg
+	rm debian/tmp/usr/share/doc/maliit-keyboard/COPYING*
+
+	# finally, run dh_install
+	dh_install
+
 override_dh_auto_test:
 	true
 
