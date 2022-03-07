@@ -1,6 +1,6 @@
 Source: maliit-keyboard
 Section: libs
-Priority: extra
+Priority: optional
 Maintainer: Debian UBports Team <team+ubports@tracker.debian.org>
 Uploaders:
  Mike Gabriel <sunweaver@debian.org>,
