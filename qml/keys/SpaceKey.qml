@@ -52,11 +52,14 @@ ActionKey {
         anchors.fill: parent
 
         onPressAndHold: {
+            fullScreenItem.prevSwipePositionX = mouseX
+            fullScreenItem.prevSwipePositionY = mouseY
             fullScreenItem.cursorSwipe = true
             spaceKey.currentlyPressed = false
         }
 
         onPressed: {
+            Feedback.keyPressed()
             spaceKey.currentlyPressed = true
             fullScreenItem.timerSwipe.stop()
         }

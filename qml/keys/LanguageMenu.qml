@@ -17,7 +17,7 @@
 
 import QtQuick 2.4
 
-import QtQuick.Controls 2.13
+import QtQuick.Controls 2.12
 
 import MaliitKeyboard 2.0
 
@@ -41,13 +41,20 @@ Menu {
             }
         }
     }
+    MenuItem {
+        text: Gettext.qsTr("Emoji")
+        onClicked: {
+            keypad.state = "EMOJI";
+            canvas.languageMenu.close();
+        }
+    }
     MenuSeparator {
     }
     MenuItem {
         id: settingsItem
-        text: qsTr("Settings") + "…"
+        text: Gettext.qsTr("Settings") + "…"
         onClicked: {
-            Qt.openUrlExternally("settings:///system/language")
+            Keyboard.showSystemSettings();
             canvas.languageMenu.close();
             maliit_input_method.hide();
         }

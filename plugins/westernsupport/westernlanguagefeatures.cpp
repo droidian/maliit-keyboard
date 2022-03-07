@@ -3,7 +3,6 @@
  *
  * Copyright (C) 2012 Openismus GmbH
  *
- * Contact: maliit-discuss@lists.maliit.org
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -52,7 +51,8 @@ bool WesternLanguageFeatures::autoCapsAvailable() const
 
 bool WesternLanguageFeatures::activateAutoCaps(const QString &preedit) const
 {
-    static const QString sentenceBreak = QStringLiteral("!.?:\r\n");
+
+    static const QString sentenceBreak = QString::fromUtf8("!.?\r\n");
 
     if (preedit.isEmpty()) {
         return false;

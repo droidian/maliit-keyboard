@@ -3,7 +3,6 @@
  *
  * Copyright (C) 2012 Openismus GmbH
  *
- * Contact: maliit-discuss@lists.maliit.org
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -57,6 +56,21 @@ bool MockLanguageFeatures::isSeparator(const QString &text) const
     }
 
     if (separators.contains(text.right(1))) {
+        return true;
+    }
+
+    return false;
+}
+
+bool MockLanguageFeatures::isSymbol(const QString &text) const
+{
+    static const QString symbols = QString::fromUtf8("#()[]");
+
+    if (text.isEmpty()) {
+        return false;
+    }
+
+    if (symbols.contains(text.right(1))) {
         return true;
     }
 

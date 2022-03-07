@@ -114,16 +114,17 @@ InputMethod::InputMethod(MAbstractInputMethodHost *host)
     d->registerAudioFeedbackSoundSetting();
     d->registerAudioFeedbackSetting();
     d->registerHapticFeedbackSetting();
+    d->registerEnableMagnifier();
     d->registerAutoCorrectSetting();
     d->registerAutoCapsSetting();
     d->registerWordEngineSetting();
     d->registerActiveLanguage();
-    d->registerPreviousLanguage();
     d->registerEnabledLanguages();
     d->registerDoubleSpaceFullStop();
     d->registerStayHidden();
     d->registerPluginPaths();
     d->registerOpacity();
+    d->registerTheme();
 
     //fire signal so all listeners know what active language is
     Q_EMIT activeLanguageChanged(d->activeLanguage);
@@ -131,6 +132,13 @@ InputMethod::InputMethod(MAbstractInputMethodHost *host)
     // Setting layout orientation depends on word engine and hide word ribbon
     // settings to be initialized first:
     d->setLayoutOrientation(d->appsCurrentOrientation);
+
+    // If MALIIT_ENABLE_ANIMATIONS environment is set and 0, disable animations,
+    // otherwise enable them.
+    bool animationOk = false;
+    int animationEnv = qEnvironmentVariableIntValue("MALIIT_ENABLE_ANIMATIONS", &animationOk);
+    d->animationEnabled = animationOk && animationEnv != 0;
+    Q_EMIT animationEnabledChanged();
 
     QString prefix = qgetenv("KEYBOARD_PREFIX_PATH");
     if (!prefix.isEmpty()) {
@@ -270,22 +278,22 @@ bool InputMethod::imExtensionEvent(MImExtensionEvent *event)
             d->actionKeyOverrider->setLabel(QString());
             break;
         case Qt::EnterKeyDone:
-            d->actionKeyOverrider->setLabel(tr("Done"));
+            d->actionKeyOverrider->setLabel(d->m_gettext->qsTr("Done"));
             break;
         case Qt::EnterKeyGo:
-            d->actionKeyOverrider->setLabel(tr("Go"));
+            d->actionKeyOverrider->setLabel(d->m_gettext->qsTr("Go"));
             break;
         case Qt::EnterKeySend:
-            d->actionKeyOverrider->setLabel(tr("Send"));
+            d->actionKeyOverrider->setLabel(d->m_gettext->qsTr("Send"));
             break;
         case Qt::EnterKeySearch:
-            d->actionKeyOverrider->setLabel(tr("Search"));
+            d->actionKeyOverrider->setLabel(d->m_gettext->qsTr("Search"));
             break;
         case Qt::EnterKeyNext:
-            d->actionKeyOverrider->setLabel(tr("Next"));
+            d->actionKeyOverrider->setLabel(d->m_gettext->qsTr("Next"));
             break;
         case Qt::EnterKeyPrevious:
-            d->actionKeyOverrider->setLabel(tr("Previous"));
+            d->actionKeyOverrider->setLabel(d->m_gettext->qsTr("Previous"));
             break;
     }
     emit actionKeyOverrideChanged();
@@ -332,8 +340,14 @@ void InputMethod::onEnabledLanguageSettingsChanged()
 {
     Q_D(InputMethod);
     d->enabledLanguages = d->m_settings.enabledLanguages();
-    if (!d->enabledLanguages.contains(d->previousLanguage)) {
-        setPreviousLanguage(QString());
+    // Reset the value if it gets unset
+    if (d->enabledLanguages.length() == 0) {
+        d->m_settings.resetEnabledLanguages();
+    }
+    // Switch to first language in enabled languages if the currently active
+    // language is no longer enabled
+    if (!d->enabledLanguages.contains(d->activeLanguage)) {
+        setActiveLanguage(d->enabledLanguages.front());
     }
     Q_EMIT enabledLanguagesChanged(d->enabledLanguages);
 }
@@ -534,14 +548,6 @@ const QString &InputMethod::activeLanguage() const
     return d->activeLanguage;
 }
 
-//! \brief InputMethod::previousLanguage returns the language that was used
-//! immediately prior to the current activeLanguage
-const QString &InputMethod::previousLanguage() const
-{
-    Q_D(const InputMethod);
-    return d->previousLanguage;
-}
-
 //! \brief InputMethod::useAudioFeedback is true, when keys should play a audio
 //! feedback when pressed
 //! \return
@@ -558,6 +564,15 @@ bool InputMethod::useHapticFeedback() const
 {
     Q_D(const InputMethod);
     return d->m_settings.keyPressHapticFeedback();
+}
+
+//! \brief InputMethod::enableMagnifier is true, when keys should display magnifier
+//!  when pressed
+//! \return
+bool InputMethod::enableMagnifier() const
+{
+    Q_D(const InputMethod);
+    return d->m_settings.enableMagnifier();
 }
 
 //! \brief InputMethod::actionKeyOverride returns any override information about
@@ -578,30 +593,54 @@ const QString InputMethod::audioFeedbackSound() const
     return d->m_settings.keyPressAudioFeedbackSound();
 }
 
+//! \brief InputMethod::selectNextLanguage
+//! Sets the active language to the next language in the enaabled languages list
+void InputMethod::selectNextLanguage()
+{
+    auto const& langs = enabledLanguages();
+    if (activeLanguage() == langs.back()) {
+        setActiveLanguage(langs.front());
+    } else {
+        setActiveLanguage(langs[langs.indexOf(activeLanguage()) + 1]);
+    }
+}
+
 //! \brief InputMethod::setActiveLanguage
 //! Sets the currently active/used language
 //! \param newLanguage id of the new language. For example "en" or "es"
-//! FIXME check if the language is supported - if not use "en" as fallback
 void InputMethod::setActiveLanguage(const QString &newLanguage)
 {
     Q_D(InputMethod);
 
     qDebug() << "in inputMethod.cpp setActiveLanguage() activeLanguage is:" << newLanguage;
 
+    QString newPluginPath;
     foreach(QString pluginPath, d->languagesPaths) {
         QDir testDir(pluginPath + QDir::separator() + newLanguage);
         if (testDir.exists()) {
-            d->currentPluginPath = testDir.absolutePath();
+            newPluginPath = testDir.absolutePath();
             break;
         }
     }
+    // The language plpugin was not found, so reset the active language
+    if (newPluginPath.isEmpty()) {
+        d->m_settings.resetActiveLanguage();
+        // If the plugin was not found, and was in enabledLanguages list,
+        // also remove it from there
+        auto enabled = enabledLanguages();
+        if (enabled.contains(newLanguage)) {
+            enabled.removeAll(newLanguage);
+            d->m_settings.setEnabledLanguages(enabled);
+        }
+        return;
+    }
+    d->currentPluginPath = newPluginPath;
 
     if (d->activeLanguage == newLanguage)
         return;
 
     d->editor.commitPreedit();
 
-    setPreviousLanguage(d->activeLanguage);
     d->activeLanguage = newLanguage;
     d->host->setLanguage(newLanguage);
     d->m_settings.setActiveLanguage(newLanguage);
@@ -609,23 +648,6 @@ void InputMethod::setActiveLanguage(const QString &newLanguage)
     qDebug() << "in inputMethod.cpp setActiveLanguage() emitting activeLanguageChanged to" << d->activeLanguage;
     Q_EMIT activeLanguageChanged(d->activeLanguage);
 }
-
-//! \brief InputMethod::setPreviousLanguage
-//! Set the language used immediately prior to the current active language.
-//! \param prevLanguage id the previous language used. e.g. "en" or "emoji"
-void InputMethod::setPreviousLanguage(const QString &prevLanguage)
-{
-    Q_D(InputMethod);
-
-    if (d->previousLanguage == prevLanguage)
-        return;
-
-    d->previousLanguage = prevLanguage;
-    d->m_settings.setPreviousLanguage(prevLanguage);
-
-    Q_EMIT previousLanguageChanged(d->previousLanguage);
-}
-
 
 void InputMethod::onWordEnginePluginChanged()
 {
@@ -700,6 +722,12 @@ double InputMethod::opacity() const
     return d->m_settings.opacity();
 }
 
+const QString InputMethod::theme() const
+{
+    Q_D(const InputMethod);
+    return d->m_settings.theme();
+}
+
 void InputMethod::replacePreedit(const QString &preedit)
 {
     Q_D(InputMethod);
@@ -724,6 +752,12 @@ QString InputMethod::surroundingRight()
     return d->editor.text()->surroundingRight();
 }
 
+bool InputMethod::isAnimationEnabled()
+{
+    Q_D(InputMethod);
+    return d->animationEnabled;
+}
+
 bool InputMethod::languageIsSupported(const QString plugin) {
     Q_D(const InputMethod);
     foreach(QString pluginPath, d->languagesPaths) {
@@ -739,9 +773,8 @@ bool InputMethod::languageIsSupported(const QString plugin) {
 void InputMethod::onLanguageChanged(const QString &language) {
     Q_D(InputMethod);
     for (const auto& languagePath : std::as_const(d->languagesPaths)) {
-        QPluginLoader languagePlugin(QStringLiteral("%1/%2/lib%2plugin.so").arg(languagePath, language));
-        const auto& metaData = languagePlugin.metaData();
-        if (metaData.value(u8"IID").toString() == QLatin1String("io.maliit.keyboard.LanguagePlugin.1")) {
+        QFile languagePlugin(languagePath + QDir::separator() + language + QDir::separator() + QStringLiteral("lib%1plugin.so").arg(language));
+        if (languagePlugin.exists()) {
             Q_EMIT languagePluginChanged(languagePlugin.fileName(), language);
             return;
         }
@@ -754,4 +787,21 @@ void InputMethod::onPluginPathsChanged(const QStringList& pluginPaths) {
     Q_UNUSED(pluginPaths);
 
     d->updateLanguagesPaths();
+}
+
+void InputMethod::showSystemSettings()
+{
+    // Make sure we are not forcing the inputpanel-shell into the processes we issue
+    auto previous = qgetenv("QT_WAYLAND_SHELL_INTEGRATION");
+    qunsetenv("QT_WAYLAND_SHELL_INTEGRATION");
+
+    if (qgetenv("XDG_CURRENT_DESKTOP") == "KDE") {
+        QDesktopServices::openUrl(QUrl("systemsettings://kcm_mobile_virtualkeyboard"));
+    } else {
+        QDesktopServices::openUrl(QUrl("settings://system/language"));
+    }
+
+    if (!previous.isEmpty()) {
+        qputenv("QT_WAYLAND_SHELL_INTEGRATION", previous);
+    }
 }

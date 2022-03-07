@@ -293,7 +293,7 @@ AbstractTextEditor::AbstractTextEditor(const EditorOptions &options,
 
     connect(word_engine, &Logic::AbstractWordEngine::primaryCandidateChanged,
             this,        &AbstractTextEditor::setPrimaryCandidate);
-    
+
     connect(this,        &AbstractTextEditor::autoCorrectEnabledChanged,
             word_engine, &Logic::AbstractWordEngine::setAutoCorrectEnabled);
 
@@ -384,7 +384,7 @@ void AbstractTextEditor::onKeyReleased(const Key &key)
         bool auto_caps_activated = false;
         const bool isSeparator = d->word_engine->languageFeature()->isSeparator(text);
         const bool isSymbol = d->word_engine->languageFeature()->isSymbol(text);
-        const bool replace_preedit = d->auto_correct_enabled && not d->text->primaryCandidate().isEmpty() && 
+        const bool replace_preedit = d->auto_correct_enabled && not d->text->primaryCandidate().isEmpty() &&
                     not d->text->preedit().isEmpty() && isSeparator;
         const bool enablePreeditAtInsertion = d->word_engine->languageFeature()->enablePreeditAtInsertion();
 
@@ -417,6 +417,11 @@ void AbstractTextEditor::onKeyReleased(const Key &key)
                 if (!email_detected) {
                     auto_caps_activated = d->word_engine->languageFeature()->activateAutoCaps(d->text->surroundingLeft() + d->text->preedit());
                 }
+                commitPreedit();
+                alreadyAppended = true;
+            }
+            else if (d->keyboardState == QLatin1String("EMOJI")) {
+                d->text->appendToPreedit(text);
                 commitPreedit();
                 alreadyAppended = true;
             }
@@ -453,9 +458,10 @@ void AbstractTextEditor::onKeyReleased(const Key &key)
 
     case Key::ActionBackspace: {
         if (not d->backspace_sent) {
+            bool uncommittedDelete = d->text->preedit().isEmpty();
             singleBackspace();
             if (!email_detected) {
-                checkPreeditReentry(true);
+                checkPreeditReentry(uncommittedDelete);
             }
         } else if (!email_detected) {
             checkPreeditReentry(false);
@@ -491,7 +497,7 @@ void AbstractTextEditor::onKeyReleased(const Key &key)
             }
         }
 
-        // Delete automatically inserted full stop if the user continues 
+        // Delete automatically inserted full stop if the user continues
         // pressing space after a double space.
         if (look_for_a_triple_space) {
             singleBackspace();
@@ -515,7 +521,7 @@ void AbstractTextEditor::onKeyReleased(const Key &key)
                 // If the user has added an apostrophe to the end of the word
                 // we should preserve this, as it may be user as a single quote
                 // or the plural form of certain names (but would otherwise be
-                // replaced by auto-correct as it's treated as a normal 
+                // replaced by auto-correct as it's treated as a normal
                 // character for use inside words).
                 d->text->setPreedit(d->text->preedit() + "'");
                 d->previous_preedit_position -= 1;
@@ -535,7 +541,7 @@ void AbstractTextEditor::onKeyReleased(const Key &key)
                  && !textOnLeft.at(textOnLeft.count() - 2).isSpace()
                  && textOnLeftTrimmed.count() > 0
                  && !d->word_engine->languageFeature()->isSeparator(textOnLeftTrimmed.at(textOnLeftTrimmed.count() - 1))
-                 && !(textOnLeftTrimmed.endsWith(QLatin1String(")")) 
+                 && !(textOnLeftTrimmed.endsWith(QLatin1String(")"))
                       && textOnLeftTrimmed.count() > 1
                       && d->word_engine->languageFeature()->isSeparator(textOnLeftTrimmed.at(textOnLeftTrimmed.count() - 2)))) {
             removeTrailingWhitespaces();
@@ -611,9 +617,14 @@ void AbstractTextEditor::onKeyReleased(const Key &key)
     case Key::ActionDown:
         event_key = Qt::Key_Down;
         break;
-
+        
+    case Key::ActionKeySequence:
+        sendKeySequence(text, QKeySequence::fromString(key.commandSequence()));
+        break;
+        
     case Key::ActionCommand:
         invokeAction(text, QKeySequence::fromString(key.commandSequence()));
+        break;
 
     case Key::ActionLeftLayout:
         Q_EMIT leftLayoutSelected();
@@ -715,6 +726,21 @@ void AbstractTextEditor::replaceTextWithPreedit(const QString &replacement, int 
 
     Q_EMIT preeditChanged(d->text->preedit());
     Q_EMIT cursorPositionChanged(d->text->cursorPosition());
+}
+
+void AbstractTextEditor::onWordCandidateSelected(const QString &word)
+{
+    Q_D(AbstractTextEditor);
+
+    if (not d->valid()) {
+        return;
+    }
+
+    if (d->word_engine->languageFeature()->shouldDelayCandidateCommit()) {
+        return;
+    }
+
+    replaceAndCommitPreedit(word);
 }
 
 //! \brief Replaces current preedit with given replacement and then
@@ -1012,7 +1038,7 @@ void AbstractTextEditor::singleBackspace()
         in_word = true;
         d->text->removeFromPreedit(1);
         textOnLeft += d->text->preedit();
-        
+
         // Clear previous word candidates
         Q_EMIT wordCandidatesChanged(WordCandidateList());
         sendPreeditString(d->text->preedit(), d->text->preeditFace(),
@@ -1058,6 +1084,106 @@ void AbstractTextEditor::onKeyboardStateChanged(QString state) {
     Q_D(AbstractTextEditor);
 
     d->keyboardState = state;
+}
+
+void AbstractTextEditor::sendKeySequence(const QString &action, const QKeySequence &sequence) {
+
+    static const Qt::KeyboardModifiers AllModifiers = Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier
+            | Qt::MetaModifier | Qt::KeypadModifier;
+
+    QKeySequence actionSequence;
+
+    if (action == "Copy") {
+        actionSequence = QKeySequence::Copy;
+    }
+    else if (action == "Paste") {
+        actionSequence = QKeySequence::Paste;
+    }
+    else if (action == "Cut") {
+        actionSequence = QKeySequence::Cut;
+    }
+    else if (action == "Tab") {
+        actionSequence = QKeySequence::AddTab;
+    }
+    else if (action == "Redo") {
+        actionSequence = QKeySequence::Redo;
+    }
+    else if (action == "Undo") {
+        actionSequence = QKeySequence::Undo;
+    }
+    else if (action == "SelectAll") {
+        actionSequence = QKeySequence::SelectAll;
+    }
+    else if (action == "SelectNextChar") {
+        actionSequence = QKeySequence::SelectNextChar;
+    }
+    else if (action == "SelectPreviousChar") {
+        actionSequence = QKeySequence::SelectPreviousChar;
+    }
+    else if (action == "SelectNextLine") {
+        actionSequence = QKeySequence::SelectNextLine;
+    }
+    else if (action == "SelectPreviousLine") {
+        actionSequence = QKeySequence::SelectPreviousLine;
+    }
+    else if (action == "SelectPreviousWord") {
+        actionSequence = QKeySequence::SelectPreviousWord;
+    }
+    else if (action == "SelectNextWord") {
+        actionSequence = QKeySequence::SelectNextWord;
+    }
+    else if (action == "SelectStartOfLine") {
+        actionSequence = QKeySequence::SelectStartOfLine;
+    }
+    else if (action == "SelectEndOfLine") {
+        actionSequence = QKeySequence::SelectEndOfLine;
+    }
+    else if (action == "SelectStartOfDocument") {
+        actionSequence = QKeySequence::SelectStartOfDocument;
+    }
+    else if (action == "SelectEndOfDocument") {
+        actionSequence = QKeySequence::SelectEndOfDocument;
+    }
+    else if (action == "MoveToNextChar") {
+        actionSequence = QKeySequence::MoveToNextChar;
+    }
+    else if (action == "MoveToPreviousChar") {
+        actionSequence = QKeySequence::MoveToPreviousChar;
+    }
+    else if (action == "MoveToPreviousWord") {
+        actionSequence = QKeySequence::MoveToPreviousWord;
+    }
+    else if (action == "MoveToNextWord") {
+        actionSequence = QKeySequence::MoveToNextWord;
+    }
+    else if (action == "MoveToStartOfLine") {
+        actionSequence = QKeySequence::MoveToStartOfLine;
+    }
+    else if (action == "MoveToEndOfLine") {
+        actionSequence = QKeySequence::MoveToEndOfLine;
+    }
+    else if (action == "MoveToStartOfDocument") {
+        actionSequence = QKeySequence::MoveToStartOfDocument;
+    }
+    else if (action == "MoveToEndOfDocument") {
+        actionSequence = QKeySequence::MoveToEndOfDocument;
+    }else{
+        actionSequence = QKeySequence::UnknownKey;
+    }
+
+    if (actionSequence == QKeySequence::UnknownKey) {
+        actionSequence = sequence;
+    }
+
+    for (int i = 0; i < actionSequence.count(); i++) {
+        const int key = actionSequence[i] & ~AllModifiers;
+        const int modifiers = actionSequence[i] & AllModifiers;
+        QString text("");
+        if (modifiers == Qt::NoModifier || modifiers == Qt::ShiftModifier) {
+            text = QString(key);
+        }
+        sendKeyPressAndReleaseEvents(key, static_cast<Qt::KeyboardModifiers>(modifiers), text);
+    }
 }
 
 void AbstractTextEditor::sendKeyPressAndReleaseEvents(
