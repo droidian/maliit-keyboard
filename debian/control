@@ -21,8 +21,8 @@ Build-Depends: cmake,
                presage
 Standards-Version: 4.6.0
 Homepage: https://github.com/maliit/keyboard
-Vcs-Browser: https://salsa.debian.org/qt-kde-team/extras/maliit-keyboard
-Vcs-Git: https://salsa.debian.org/qt-kde-team/extras/maliit-keyboard.git
+Vcs-Browser: https://salsa.debian.org/debian/maliit-keyboard
+Vcs-Git: https://salsa.debian.org/debian/maliit-keyboard.git
 Rules-Requires-Root: no
 
 Package: maliit-keyboard
