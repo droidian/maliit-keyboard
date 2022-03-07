@@ -8,3 +8,6 @@ export DEB_LDFLAGS_MAINT_APPEND := -Wl,--as-needed
 
 override_dh_auto_test:
 	true
+
+get-orig-source:
+	uscan --noconf --force-download --rename --download-current-version --destdir=..
