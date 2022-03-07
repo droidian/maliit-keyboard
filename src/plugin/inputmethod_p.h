@@ -20,7 +20,9 @@
 #include "device.h"
 #include "editor.h"
 #include "feedback.h"
+#include "gettext.h"
 #include "greeterstatus.h"
+#include "iconprovider.h"
 #include "keyboardgeometry.h"
 #include "keyboardsettings.h"
 #include "theme.h"
@@ -80,7 +82,6 @@ public:
     bool wordEngineEnabled;
     InputMethod::TextContentType contentType;
     QString activeLanguage;
-    QString previousLanguage;
     QStringList enabledLanguages;
     Qt::ScreenOrientation appsCurrentOrientation;
     QString keyboardState;
@@ -95,6 +96,8 @@ public:
     std::unique_ptr<Feedback> m_feedback;
     std::unique_ptr<Theme> m_theme;
     std::unique_ptr<Device> m_device;
+    std::unique_ptr<IconProvider> m_iconProvider;
+    std::unique_ptr<Gettext> m_gettext;
 
     WordRibbon* wordRibbon;
 
@@ -102,6 +105,8 @@ public:
 
     QStringList languagesPaths;
     QString currentPluginPath;
+
+    bool animationEnabled = true;
 
     explicit InputMethodPrivate(InputMethod * const _q,
                                 MAbstractInputMethodHost *host)
@@ -114,7 +119,6 @@ public:
         , wordEngineEnabled(false)
         , contentType(InputMethod::FreeTextContentType)
         , activeLanguage(QStringLiteral("en"))
-        , previousLanguage()
         , enabledLanguages(activeLanguage)
         , appsCurrentOrientation(qGuiApp->primaryScreen()->orientation())
         , keyboardState(QStringLiteral("CHARACTERS"))
@@ -126,6 +130,8 @@ public:
         , m_feedback(std::make_unique<Feedback>(&m_settings))
         , m_theme(std::make_unique<Theme>(&m_settings))
         , m_device(std::make_unique<Device>(&m_settings))
+        , m_iconProvider(std::make_unique<IconProvider>(m_theme.get()))
+        , m_gettext(std::make_unique<Gettext>())
         , wordRibbon(new WordRibbon)
         , previous_position(-1)
     {
@@ -146,7 +152,7 @@ public:
                          wordRibbon, &MaliitKeyboard::WordRibbon::onWordCandidatesChanged);
 
         QObject::connect(wordRibbon, &MaliitKeyboard::WordRibbon::wordCandidateSelected,
-                         &editor,  &MaliitKeyboard::AbstractTextEditor::replaceAndCommitPreedit);
+                         &editor,  &MaliitKeyboard::AbstractTextEditor::onWordCandidateSelected);
 
         QObject::connect(wordRibbon, &MaliitKeyboard::WordRibbon::userCandidateSelected,
                          &editor,  &MaliitKeyboard::AbstractTextEditor::addToUserDictionary);
@@ -156,6 +162,10 @@ public:
 
         QObject::connect(wordRibbon, &MaliitKeyboard::WordRibbon::wordCandidateSelected,
                          editor.wordEngine(), &MaliitKeyboard::Logic::AbstractWordEngine::onWordCandidateSelected);
+
+        QObject::connect(editor.wordEngine(), &MaliitKeyboard::Logic::AbstractWordEngine::commitTextRequested,
+                         &editor, &MaliitKeyboard::AbstractTextEditor::replaceAndCommitPreedit);
+
 
     #ifdef DISABLED_FLAGS_FROM_SURFACE
         view->setFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint
@@ -184,6 +194,9 @@ public:
 
         setContextProperties(engine->rootContext());
 
+        // Add our image provider for handling icon themes
+        engine->addImageProvider(QLatin1String("icon"), m_iconProvider.get());
+
         // workaround: resizeMode not working in current qpa imlementation
         // http://qt-project.org/doc/qt-5.0/qtquick/qquickview.html#ResizeMode-enum
         view->setResizeMode(QQuickView::SizeRootObjectToView);
@@ -209,6 +222,7 @@ public:
         qmlRegisterSingletonInstance("MaliitKeyboard", 2, 0, "Feedback", m_feedback.get());
         qmlRegisterSingletonInstance("MaliitKeyboard", 2, 0, "Theme", m_theme.get());
         qmlRegisterSingletonInstance("MaliitKeyboard", 2, 0, "Device", m_device.get());
+        qmlRegisterSingletonInstance("MaliitKeyboard", 2, 0, "Gettext", m_gettext.get());
         qml_context->setContextProperty(QStringLiteral("maliit_input_method"), q);
         qml_context->setContextProperty(QStringLiteral("maliit_geometry"), m_geometry);
         qml_context->setContextProperty(QStringLiteral("maliit_event_handler"), &event_handler);
@@ -249,6 +263,12 @@ public:
                          q, &InputMethod::useHapticFeedbackChanged);
     }
 
+    void registerEnableMagnifier()
+    {
+        QObject::connect(&m_settings, SIGNAL(enableMagnifierChanged(bool)),
+                         q, SIGNAL(enableMagnifierChanged()));
+    }
+
     void registerAutoCorrectSetting()
     {
         QObject::connect(&m_settings, &MaliitKeyboard::KeyboardSettings::autoCompletionChanged,
@@ -281,15 +301,6 @@ public:
         activeLanguage = m_settings.activeLanguage();
         qDebug() << "inputmethod_p.h registerActiveLanguage(): activeLanguage is:" << activeLanguage;
         q->setActiveLanguage(activeLanguage);
-    }
-
-    void registerPreviousLanguage()
-    {
-        QObject::connect(&m_settings, &MaliitKeyboard::KeyboardSettings::previousLanguageChanged,
-                         q, &InputMethod::setPreviousLanguage);
-
-        previousLanguage = m_settings.previousLanguage();
-        q->setPreviousLanguage(previousLanguage);
     }
 
     void registerEnabledLanguages()
@@ -325,6 +336,12 @@ public:
     {
         QObject::connect(&m_settings, &MaliitKeyboard::KeyboardSettings::opacityChanged,
                         q, &InputMethod::opacityChanged);
+    }
+
+    void registerTheme()
+    {
+        QObject::connect(&m_settings, SIGNAL(themeChanged(QString)),
+                        q, SIGNAL(themeChanged(QString)));
     }
 
     void closeOskWindow()

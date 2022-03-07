@@ -3,7 +3,6 @@
  *
  * Copyright (C) 2012 Openismus GmbH. All rights reserved.
  *
- * Contact: maliit-discuss@lists.maliit.org
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -79,8 +78,6 @@ class Layout
     Q_PROPERTY(QString activeView READ activeView WRITE setActiveView
                                          NOTIFY activeViewChanged)
 
-    Q_ENUMS(State)
-
 public:
     enum State {
         DefaultState,
@@ -89,6 +86,7 @@ public:
         SecondarySymbolState,
         DeadkeyState
     };
+    Q_ENUM(State)
 
     enum Roles {
         RoleKeyRectangle = Qt::UserRole + 1,
@@ -104,6 +102,7 @@ public:
         RoleKeyActionInsert,
         RoleKeyAction   // Extra introspection detail for testing.
     };
+    Q_ENUM(Roles)
 
     explicit Layout(QObject *parent = nullptr);
     ~Layout() override;

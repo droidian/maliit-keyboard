@@ -3,7 +3,6 @@
  *
  * Copyright (C) 2012 Openismus GmbH
  *
- * Contact: maliit-discuss@lists.maliit.org
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -30,6 +29,8 @@
  */
 
 import QtQuick 2.4
+import QtQuick.Controls 2.4
+import QtGraphicalEffects 1.0
 
 import MaliitKeyboard 2.0
 
@@ -45,9 +46,10 @@ Item {
     property bool cursorSwipe: false
     property int prevSwipePositionX
     property int prevSwipePositionY
-    property int cursorSwipeDuration: 400
+    property int cursorSwipeDuration: 5000
     property var timerSwipe: swipeTimer
-    
+    property var theme: Theme.defaultTheme
+
     property variant input_method: maliit_input_method
     property variant event_handler: maliit_event_handler
 
@@ -55,7 +57,7 @@ Item {
     onYChanged: fullScreenItem.reportKeyboardVisibleRect();
     onWidthChanged: fullScreenItem.reportKeyboardVisibleRect();
     onHeightChanged: fullScreenItem.reportKeyboardVisibleRect();
-
+    
     Item {
         id: canvas
         objectName: "MaliitKeyboard" // Allow us to specify a specific keyboard within autopilot.
@@ -109,8 +111,8 @@ Item {
             //fix for lp:1277186
             //only filter children when wordRibbon visible
             drag.filterChildren: wordRibbon.visible
-            // Avoid conflict with extended key swipe selection
-            enabled: !canvas.extendedKeysShown
+            // Avoid conflict with extended key swipe selection and cursor swipe mode
+            enabled: !canvas.extendedKeysShown && !fullScreenItem.cursorSwipe
 
             onReleased: {
                 if (keyboardSurface.y > jumpBackThreshold) {
@@ -146,7 +148,7 @@ Item {
                     id: wordRibbon
                     objectName: "wordRibbon"
 
-                    visible: canvas.wordribbon_visible
+                    visible: canvas.wordribbon_visible && keypad.state !== "EMOJI"
 
                     anchors.bottom: keyboardComp.top
                     width: parent.width;
@@ -155,6 +157,17 @@ Item {
                                                       : 0
                     onHeightChanged: fullScreenItem.reportKeyboardVisibleRect();
                 }
+                
+                ActionsToolbar {
+                    id: toolbar
+                    objectName: "actionsToolbar"
+                    
+                    z: 1
+                    visible: fullScreenItem.cursorSwipe
+                    height: Device.wordRibbonHeight
+                    state: wordRibbon.visible ? "wordribbon" : "top"
+                }
+                    
 
                 Item {
                     id: keyboardComp
@@ -206,7 +219,10 @@ Item {
 
         PropertyAnimation {
             id: bounceBackAnimation
-            target: keyboardSurface
+            // Animations don't have an "enabled" property, so just set the
+            // target to null if animation is disabled, which effectively also
+            // disables the animation.
+            target: maliit_input_method.animationEnabled ? keyboardSurface : null
             properties: "y"
             easing.type: Easing.OutBounce;
             easing.overshoot: 2.0
@@ -237,12 +253,9 @@ Item {
                     maliit_input_method.close();
                     canvas.hidingComplete = true;
                     reportKeyboardVisibleRect();
-                    // Switch back to the previous layout if we're in
-                    // in a layout like emoji that requests switchBack
-                    if (keypad.switchBack && maliit_input_method.previousLanguage) {
-                        keypad.switchBack = false;
-                        maliit_input_method.activeLanguage = maliit_input_method.previousLanguage;
-                    }
+                    
+                    // Exit cursor swipe mode when the keyboard hides
+                    fullScreenItem.exitSwipeMode();
                 }
                 // Wait for the first show operation to complete before
                 // allowing hiding, as the conditions when the keyboard
@@ -251,6 +264,7 @@ Item {
             }
         ]
         transitions: Transition {
+            enabled: maliit_input_method.animationEnabled
             NumberAnimation { target: keyboardSurface; properties: "y"; duration: 165}
         }
 
@@ -276,20 +290,68 @@ Item {
                 keypad.delayedAutoCaps = false;
             }
         }
+        
+        FloatingActions {
+            id: floatingActions
+            objectName: "floatingActions"
+            
+            z: 1
+            visible: fullScreenItem.cursorSwipe && !cursorSwipeArea.pressed
+        }
 
         MouseArea {
             id: cursorSwipeArea
-            anchors.fill: parent
+
+            property point firstPress
+            property point lastRelease
+            property bool selectionMode: false
+            
+            anchors {
+                fill: parent
+                topMargin: toolbar.height
+            }
+            
             enabled: cursorSwipe
 
             Rectangle {
                 anchors.fill: parent
                 visible: parent.enabled
-                color: Theme.charKeyPressedColor
-                opacity: 0.5
+                color: cursorSwipeArea.selectionMode ? Theme.selectionColor : Theme.charKeyPressedColor
+                
+                Label {
+                    visible: !cursorSwipeArea.pressed
+                    horizontalAlignment: Text.AlignHCenter
+                    // FIXME: selected font color should differ
+                    color: cursorSwipeArea.selectionMode ? "#fefefe" : Theme.fontColor
+                    wrapMode: Text.WordWrap
+                    
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        verticalCenter: parent.verticalCenter
+                    }
+                    
+                    text: cursorSwipeArea.selectionMode ? qsTr("Swipe to move selection") + "\n\n" + qsTr("Double-tap to exit selection mode")
+                                : qsTr("Swipe to move cursor") + "\n\n" + qsTr("Double-tap to enter selection mode")
+                }
+            }
+            
+            function exitSelectionMode() {
+                selectionMode = false
+                fullScreenItem.timerSwipe.restart()
+            }
+            
+            onSelectionModeChanged: {
+                if (fullScreenItem.cursorSwipe) {
+                    Feedback.keyPressed();
+                }
+            }
+            
+            onMouseXChanged: {
+                processSwipe(mouseX, mouseY)
             }
 
-            onMouseXChanged: {
+            onMouseYChanged: {
                 processSwipe(mouseX, mouseY)
             }
 
@@ -297,13 +359,52 @@ Item {
                 prevSwipePositionX = mouseX
                 prevSwipePositionY = mouseY
                 fullScreenItem.timerSwipe.stop()
+
+                if (firstPress === Qt.point(0,0)) {
+                    firstPress = Qt.point(mouse.x, mouse.y)
+                }
             }
 
             onReleased: {
-                fullScreenItem.timerSwipe.restart()
+                if (!cursorSwipeArea.selectionMode) {
+                    fullScreenItem.timerSwipe.restart()
+                    firstPress = Qt.point(0,0)
+                } else {
+                    fullScreenItem.timerSwipe.stop()
+                    
+                    // TODO: Disabled word selection until input_method.hasSelection is fixed in QtWebEngine
+                    // ubports/ubuntu-touch#1157 <https://github.com/ubports/ubuntu-touch/issues/1157>
+                    /*
+                    if(!input_method.hasSelection){
+                        fullScreenItem.selectWord()
+                        cursorSwipeArea.selectionMode = false
+                        fullScreenItem.timerSwipe.restart()
+                    }
+                    */
+                }
+
+                lastRelease = Qt.point(mouse.x, mouse.y)
+            }
+            
+            onDoubleClicked: {
+                // We avoid triggering double click accidentally by using a threshold
+                var xReleaseDiff = Math.abs(lastRelease.x - mouse.x)
+                var yReleaseDiff = Math.abs(lastRelease.y - mouse.y)
+
+                var threshold = Device.gu(2)
+
+                if (xReleaseDiff < threshold && yReleaseDiff < threshold) {
+                    if (!cursorSwipeArea.selectionMode) {
+                        cursorSwipeArea.selectionMode = true
+                        fullScreenItem.timerSwipe.stop()
+                    } else {
+                        exitSelectionMode();
+                    }
+                }
+
+                firstPress = Qt.point(0,0)
             }
         }
-
     } // canvas
 
     Timer {
@@ -311,14 +412,29 @@ Item {
         interval: cursorSwipeDuration
         running: false
         onTriggered: {
-            fullScreenItem.cursorSwipe = false
-            // We only enable autocaps after cursor movement has stopped
-            if (keypad.delayedAutoCaps) {
-                keypad.activeKeypadState = "SHIFTED"
-                keypad.delayedAutoCaps = false
-            } else {
-                keypad.activeKeypadState = "NORMAL"
-            }
+            fullScreenItem.exitSwipeMode();
+        }
+    }
+    
+    onCursorSwipeChanged:{
+        if (cursorSwipe && input_method.hasSelection) {
+            cursorSwipeArea.selectionMode = true
+        }
+        
+        Feedback.keyPressed();
+    }
+    
+    function exitSwipeMode() {
+        fullScreenItem.cursorSwipe = false
+        fullScreenItem.timerSwipe.stop()
+        cursorSwipeArea.selectionMode = false
+        
+        // We only enable autocaps after cursor movement has stopped
+        if (keypad.delayedAutoCaps) {
+            keypad.activeKeypadState = "SHIFTED"
+            keypad.delayedAutoCaps = false
+        } else {
+            keypad.activeKeypadState = "NORMAL"
         }
     }
 
@@ -364,20 +480,94 @@ Item {
     function sendEndKey() {
         event_handler.onKeyReleased("", "end");
     }
+    function selectLeft() {
+        event_handler.onKeyReleased("SelectPreviousChar", "keysequence");
+    }
+    function selectRight() {
+        event_handler.onKeyReleased("SelectNextChar", "keysequence");
+    }
+    function selectUp() {
+        event_handler.onKeyReleased("SelectPreviousLine", "keysequence");
+    }
+    function selectDown() {
+        event_handler.onKeyReleased("SelectNextLine", "keysequence");
+    }
+    function selectWord() {
+        event_handler.onKeyReleased("MoveToPreviousWord", "keysequence");
+        event_handler.onKeyReleased("SelectNextWord", "keysequence");
+    }
+    function selectStartOfLine() {
+        event_handler.onKeyReleased("SelectStartOfLine", "keysequence");
+    }
+    function selectEndOfLine() {
+        event_handler.onKeyReleased("SelectEndOfLine", "keysequence");
+    }
+    function selectStartOfDocument() {
+        event_handler.onKeyReleased("SelectStartOfDocument", "keysequence");
+    }
+    function selectEndOfDocument() {
+        event_handler.onKeyReleased("SelectEndOfDocument", "keysequence");
+    }
+    function selectAll() {
+        event_handler.onKeyReleased("SelectAll", "keysequence");
+    }
+    function moveToStartOfLine() {
+        event_handler.onKeyReleased("MoveToStartOfLine", "keysequence");
+    }
+    function moveToEndOfLine() {
+        event_handler.onKeyReleased("MoveToEndOfLine", "keysequence");
+    }
+    function moveToStartOfDocument() {
+        event_handler.onKeyReleased("MoveToStartOfDocument", "keysequence");
+    }
+    function moveToEndOfDocument() {
+        event_handler.onKeyReleased("MoveToEndOfDocument", "keysequence");
+    }
+    function redo() {
+        event_handler.onKeyReleased("Redo", "keysequence");
+    }
+    function undo() {
+        event_handler.onKeyReleased("Undo", "keysequence");
+    }
+    function paste() {
+        event_handler.onKeyReleased("Paste", "keysequence");
+    }
+    function copy() {
+        event_handler.onKeyReleased("Copy", "keysequence");
+    }
+    function cut() {
+        event_handler.onKeyReleased("Cut", "keysequence");
+    }
 
     function processSwipe(positionX, positionY) {
-        if (positionX < prevSwipePositionX - Device.gu(1) && input_method.surroundingLeft != "") {
-            sendLeftKey();
+        if (positionX < prevSwipePositionX - Device.gu(1)) {
+            if(cursorSwipeArea.selectionMode){
+                selectLeft();
+            }else{
+                sendLeftKey();
+            }
             prevSwipePositionX = positionX
-        } else if (positionX > prevSwipePositionX + Device.gu(1) && input_method.surroundingRight != "") {
-            sendRightKey();
+        } else if (positionX > prevSwipePositionX + Device.gu(1)) {
+            if(cursorSwipeArea.selectionMode){
+                selectRight();
+            }else{
+                sendRightKey();
+            }
             prevSwipePositionX = positionX
         }
         if (positionY < prevSwipePositionY - Device.gu(4)) {
-            sendUpKey();
+            if(cursorSwipeArea.selectionMode){
+                selectUp();
+            }else{
+                sendUpKey();
+            }
             prevSwipePositionY = positionY
         } else if (positionY > prevSwipePositionY + Device.gu(4)) {
-            sendDownKey();
+            if(cursorSwipeArea.selectionMode){
+                selectDown();
+            }else{
+                sendDownKey();
+            }
             prevSwipePositionY = positionY
         }
     }

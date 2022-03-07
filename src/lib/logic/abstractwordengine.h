@@ -3,7 +3,6 @@
  *
  * Copyright (C) 2012 Openismus GmbH
  *
- * Contact: maliit-discuss@lists.maliit.org
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -83,6 +82,7 @@ signals:
     void preeditFaceChanged(Model::Text::PreeditFace face);
     void primaryCandidateChanged(QString candidate);
     void pluginChanged();
+    void commitTextRequested(const QString &text);
 
 private:
     virtual void fetchCandidates(Model::Text *text) = 0;

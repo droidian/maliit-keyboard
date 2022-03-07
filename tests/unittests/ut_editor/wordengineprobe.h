@@ -3,7 +3,6 @@
  *
  * Copyright (C) 2012 Openismus GmbH
  *
- * Contact: maliit-discuss@lists.maliit.org
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -44,6 +43,7 @@ public:
     virtual ~MockLanguageFeatures() {}
 
     virtual bool isSeparator(const QString &text) const;
+    virtual bool isSymbol(const QString &text) const;
     virtual bool alwaysShowSuggestions() const { return false; }
     virtual bool autoCapsAvailable() const { return true; }
     virtual bool activateAutoCaps(const QString &preedit) const;

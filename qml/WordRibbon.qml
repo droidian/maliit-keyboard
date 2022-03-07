@@ -26,11 +26,6 @@ Rectangle {
     objectName: "wordRibbenCanvas"
     state: "NORMAL"
 
-    Rectangle {
-        anchors.fill: parent
-        color: Theme.backgroundColor
-    }
-
     ListView {
         id: listView
         objectName: "wordListView"
@@ -76,6 +71,8 @@ Rectangle {
             MouseArea {
                 anchors.fill: wordCandidateItem
                 onPressed: {
+                    Feedback.keyPressed();
+                    
                     wordRibbonCanvas.state = "SELECTED"
                     event_handler.onWordCandidatePressed(wordItem.text, isUserInput)
                 }
@@ -92,17 +89,16 @@ Rectangle {
             name: "NORMAL"
             PropertyChanges {
                 target: wordRibbonCanvas
-                color: "transparent"
+                color: Theme.backgroundColor
             }
         },
         State {
             name: "SELECTED"
             PropertyChanges {
                 target: wordRibbonCanvas
-                color: "#e4e4e4"
+                color: Theme.actionKeyPressedColor
             }
         }
     ]
 
 }
-

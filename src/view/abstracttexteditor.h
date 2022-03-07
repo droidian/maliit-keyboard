@@ -157,6 +157,8 @@ public:
     Q_SLOT void setPreeditFace(Model::Text::PreeditFace face);
     Q_SLOT void setPrimaryCandidate(QString);
 
+    Q_SLOT void onWordCandidateSelected(const QString &word);
+
 private:
     const QScopedPointer<AbstractTextEditorPrivate> d_ptr;
 
@@ -177,6 +179,7 @@ private:
     void autoRepeatWordBackspace();
     QString wordLeftOfCursor() const;
 
+    void sendKeySequence(const QString &action, const QKeySequence &sequence);
     void sendKeyPressAndReleaseEvents(int key, Qt::KeyboardModifiers modifiers,
                                       const QString& text = QString());
 

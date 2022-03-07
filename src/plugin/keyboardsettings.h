@@ -45,9 +45,10 @@ public:
     
     QString activeLanguage() const;
     void setActiveLanguage(const QString& id);
-    QString previousLanguage() const;
-    void setPreviousLanguage(const QString& id);
+    void resetActiveLanguage();
     QStringList enabledLanguages() const;
+    void setEnabledLanguages(const QStringList& ids);
+    void resetEnabledLanguages();
     bool autoCapitalization() const;
     bool autoCompletion() const;
     bool predictiveText() const;
@@ -55,6 +56,7 @@ public:
     bool keyPressAudioFeedback() const;
     QString keyPressAudioFeedbackSound() const;
     bool keyPressHapticFeedback() const;
+    bool enableMagnifier() const;
     bool doubleSpaceFullStop() const;
     bool stayHidden() const;
     bool disableHeight() const;
@@ -65,7 +67,6 @@ public:
 
 Q_SIGNALS:
     void activeLanguageChanged(QString);
-    void previousLanguageChanged(QString);
     void enabledLanguagesChanged(QStringList);
     void autoCapitalizationChanged(bool);
     void autoCompletionChanged(bool);
@@ -74,6 +75,7 @@ Q_SIGNALS:
     void keyPressAudioFeedbackChanged(bool);
     void keyPressAudioFeedbackSoundChanged(QString);
     void keyPressHapticFeedbackChanged(bool);
+    void enableMagnifierChanged(bool);
     void doubleSpaceFullStopChanged(bool);
     void stayHiddenChanged(bool);
     void disableHeightChanged(bool);
