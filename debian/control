@@ -18,7 +18,9 @@ Build-Depends: cmake,
                qtfeedback5-dev,
                qtmultimedia5-dev,
                sqlite3,
-               presage
+               presage,
+               xauth,
+               xvfb,
 Standards-Version: 4.6.0
 Homepage: https://github.com/maliit/keyboard
 Vcs-Browser: https://salsa.debian.org/debian/maliit-keyboard

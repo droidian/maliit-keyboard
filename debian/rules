@@ -8,15 +8,20 @@ include /usr/share/dpkg/buildflags.mk
 %:
 	dh $@
 
+### https://github.com/maliit/keyboard/issues/7 (tests cannot be built)
+#override_dh_auto_configure:
+#	dh_auto_configure -- -Denable-tests=ON
+
 override_dh_install:
 	# drop extra license files from bin:pkg
-	rm debian/tmp/usr/share/doc/maliit-keyboard/COPYING*
+	rm debian/maliit-keyboard/usr/share/doc/maliit-keyboard/COPYING*
 
 	# finally, run dh_install
 	dh_install
 
-override_dh_auto_test:
-	true
+### https://github.com/maliit/keyboard/issues/7 (tests cannot be built)
+#override_dh_auto_test:
+#	xvfb-run dh_auto_test
 
 get-orig-source:
 	uscan --noconf --force-download --rename --download-current-version --destdir=..
