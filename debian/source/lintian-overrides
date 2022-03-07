@@ -5,3 +5,10 @@ source: source-is-missing qml/languages/emoji.js
 
 # ignore awkward text layout in COPYING.BSD
 source: very-long-line-length-in-source-file COPYING.BSD line 9 is 759 characters long (>512)
+
+# some too-long lines to be ignored
+source: very-long-line-length-in-source-file plugins/bg/src/free_ebook.txt line 7975 is 1364 characters long (>512)
+source: very-long-line-length-in-source-file plugins/hr/src/knjiga.txt line 927 is 1005 characters long (>512)
+source: very-long-line-length-in-source-file plugins/pl/src/ziemia_obiecana_tom_pierwszy_4.txt line 3157 is 1480 characters long (>512)
+source: very-long-line-length-in-source-file plugins/ro/src/amintiri_din_copilarie.txt line 118 is 2699 characters long (>512)
+source: very-long-line-length-in-source-file plugins/tr/src/free_ebook.txt line 1800 is 3007 characters long (>512)
