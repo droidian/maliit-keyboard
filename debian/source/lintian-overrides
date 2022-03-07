@@ -1,0 +1,4 @@
+# emoji.js simply contains a long array in one line...
+source: very-long-line-length-in-source-file qml/languages/emoji.js line 1 is 7769 characters long (>512)
+source: source-contains-prebuilt-javascript-object qml/languages/emoji.js
+source: source-is-missing qml/languages/emoji.js
