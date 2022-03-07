@@ -1,6 +1,13 @@
-maliit-keyboard (2.0.0-1~1) UNRELEASED; urgency=medium
+maliit-keyboard (2.2.0-1) UNRELEASED; urgency=medium
 
   [ Norbert Preining ]
-  * First upload to Debian. (Closes: #991529).
+  * Prepare initial packaging of v2.0.0.
+
+  [ Mike Gabriel ]
+  * Initial upload to Debian. (Closes: #991529).
+  * debian/:
+    + Move packaging over to the UBports Team's umbrella.
+  * debian/rules:
+    + Add get-orig-source target (for the maintainer's convenience).
 
  -- Mike Gabriel <sunweaver@debian.org>  Sat, 26 Jun 2021 09:21:07 +0900
