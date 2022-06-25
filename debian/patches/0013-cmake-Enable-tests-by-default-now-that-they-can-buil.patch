@@ -1,0 +1,26 @@
+From 3f68a9855d24c04f9c89ded1b2c287cb8c4ee1f4 Mon Sep 17 00:00:00 2001
+From: Rodney Dawes <dobey.pwns@gmail.com>
+Date: Fri, 10 Jun 2022 15:23:03 -0400
+Subject: [PATCH 13/13] cmake: Enable tests by default now that they can build
+
+Signed-off-by: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b024acc1..8013bec6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,7 +4,7 @@ project(maliit-keyboard VERSION 2.2.1.1)
+ 
+ option(enable-presage "Use presage to calculate word candidates (maliit-keyboard-plugin only)" ON)
+ option(enable-hunspell "Use hunspell for error correction (maliit-keyboard-plugin only)" ON)
+-option(enable-tests "Build tests" OFF)
++option(enable-tests "Build tests" ON)
+ 
+ # Install paths
+ include(GNUInstallDirs)
+-- 
+2.30.2
+

@@ -1,0 +1,30 @@
+From ef8e602cead7dfade2ddac04426712871d7a0019 Mon Sep 17 00:00:00 2001
+From: Rodney Dawes <dobey.pwns@gmail.com>
+Date: Fri, 10 Jun 2022 15:18:04 -0400
+Subject: [PATCH 12/13] Remove obsolete unittests.sh script
+
+Signed-off-by: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+---
+ unittests.sh | 10 ----------
+ 1 file changed, 10 deletions(-)
+ delete mode 100755 unittests.sh
+
+diff --git a/unittests.sh b/unittests.sh
+deleted file mode 100755
+index 6dbb58f5..00000000
+--- a/unittests.sh
++++ /dev/null
+@@ -1,10 +0,0 @@
+-
+-# to be run on the device
+-
+-#LD_LIBRARY_PATH=src/plugin:$LD_LIBRARY_PATH tests/editor/ut_editor
+-#LD_LIBRARY_PATH=src/plugin:$LD_LIBRARY_PATH tests/wordengine/ut_wordengine
+-#LD_LIBRARY_PATH=src/plugin:$LD_LIBRARY_PATH tests/dynamic-layout/ut_dynamiclayout
+-#LD_LIBRARY_PATH=src/plugin:$LD_LIBRARY_PATH tests/language-layout-switching/language-layout-switching
+-make check
+-
+-qmltestrunner -import maliit-keyboard/tests/qmltests/qml-api-tests/imports/ -input maliit-keyboard/tests/qmltests/qml-api-tests/tst_inputMethodHints.qml
+-- 
+2.30.2
+

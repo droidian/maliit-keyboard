@@ -1,0 +1,30 @@
+From 2a5928607fc9eaa637b5e0081add064e5f2d5292 Mon Sep 17 00:00:00 2001
+From: Rodney Dawes <dobey.pwns@gmail.com>
+Date: Fri, 10 Jun 2022 14:31:29 -0400
+Subject: [PATCH 08/13] tests: Fix ut_wordengine test
+
+Signed-off-by: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+---
+ tests/unittests/ut_wordengine/ut_wordengine.cpp | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/tests/unittests/ut_wordengine/ut_wordengine.cpp b/tests/unittests/ut_wordengine/ut_wordengine.cpp
+index 9c5acb83..7460d26d 100644
+--- a/tests/unittests/ut_wordengine/ut_wordengine.cpp
++++ b/tests/unittests/ut_wordengine/ut_wordengine.cpp
+@@ -24,12 +24,6 @@ private:
+ 
+     QCOMPARE(wr.candidates().size(), 0);
+ 
+-
+-    QHash<int, QByteArray> roles;
+-    roles.insert(WordRibbon::WordRole, "word");
+-    QCOMPARE( wr.roleNames(), roles );
+-
+-
+     WordCandidate wc1(WordCandidate::SourceUnknown, "word_1");
+     WordCandidate wc2(WordCandidate::SourceUnknown, "word_2");
+     WordCandidate wc3(WordCandidate::SourceUnknown, "word_3");
+-- 
+2.30.2
+

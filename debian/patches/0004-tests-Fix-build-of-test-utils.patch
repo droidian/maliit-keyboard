@@ -1,0 +1,53 @@
+From ec369901dcb1eb4beb3d721178a513eb225059be Mon Sep 17 00:00:00 2001
+From: Rodney Dawes <dobey.pwns@gmail.com>
+Date: Fri, 10 Jun 2022 14:27:33 -0400
+Subject: [PATCH 04/13] tests: Fix build of test-utils
+
+Signed-off-by: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+---
+ tests/unittests/common/inputmethodhostprobe.h | 1 +
+ tests/unittests/common/utils.cpp              | 2 --
+ tests/unittests/common/utils.h                | 2 --
+ 3 files changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/tests/unittests/common/inputmethodhostprobe.h b/tests/unittests/common/inputmethodhostprobe.h
+index d12df093..9828f360 100644
+--- a/tests/unittests/common/inputmethodhostprobe.h
++++ b/tests/unittests/common/inputmethodhostprobe.h
+@@ -112,6 +112,7 @@ public:
+     void setScreenRegion(const QRegion&, QWindow*) override {}
+     void setInputMethodArea(const QRegion&, QWindow*) override {}
+ 
++    QVariant inputMethodQuery(Qt::InputMethodQuery, const QVariant&) const override { return 0; }
+ };
+ 
+ #endif // INPUTMETHODHOSTPROBE_H
+diff --git a/tests/unittests/common/utils.cpp b/tests/unittests/common/utils.cpp
+index bf824f29..4bce47f9 100644
+--- a/tests/unittests/common/utils.cpp
++++ b/tests/unittests/common/utils.cpp
+@@ -33,8 +33,6 @@
+ 
+ #include <QtCore>
+ 
+-#include <QCoreApplication>
+-
+ namespace TestUtils {
+ 
+ // Requires event loop. Use SIGNAL macro for signal parameter.
+diff --git a/tests/unittests/common/utils.h b/tests/unittests/common/utils.h
+index 98e1c467..0929a467 100644
+--- a/tests/unittests/common/utils.h
++++ b/tests/unittests/common/utils.h
+@@ -34,8 +34,6 @@
+ 
+ class QObject;
+ class QString;
+-class QCoreApplication;
+-class QApplication;
+ 
+ namespace TestUtils {
+ 
+-- 
+2.30.2
+
