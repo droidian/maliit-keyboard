@@ -236,6 +236,7 @@ License: GNU Lesser General Public License, Version 3
 Files: CMakeLists.txt
  COPYING.BSD
  cmake/FindAnthy.cmake
+ cmake/FindAnthyUnicode.cmake
  cmake/FindChewing.cmake
  cmake/FindGIO.cmake
  cmake/FindGLib2.cmake
@@ -261,9 +262,8 @@ Files: CMakeLists.txt
  debian/changelog
  debian/control
  debian/files
- debian/patches/1001_typo-fix-in-API.patch
+ debian/maliit-keyboard.lintian-overrides
  debian/patches/README
- debian/patches/series
  debian/rules
  debian/source/format
  debian/source/lintian-overrides
@@ -389,18 +389,6 @@ Files: CMakeLists.txt
  po/CMakeLists.txt
  qml/ActionsToolbar.qml
  qml/FloatingActions.qml
- qml/images/action_key@27.sci
- qml/images/action_key_bg@18.sci
- qml/images/grey_key@27.sci
- qml/images/key_bg@18.sci
- qml/images/keybg_action@18.sci
- qml/images/keybg_action_active@18.sci
- qml/images/keyboard-caps-disabled.svg
- qml/images/keyboard-caps-enabled.svg
- qml/images/keyboard-caps-locked.svg
- qml/images/magnified_key.sci
- qml/images/popover.sci
- qml/images/white_key@27.sci
  qml/keys/ActionsToolbarButton.qml
  qml/keys/DropShadow.qml
  qml/keys/FloatingActionKey.qml
@@ -757,21 +745,12 @@ License: GNU Lesser General Public License, Version 3
 
 Files: README.md
 Copyright: NONE
-License: GNU Lesser General Public License, Version 3 Creative Commons Attribution 3.0 Unported License
- FIXME
-
-Files: debian/copyright
-Copyright: -format/1.0/
-  2012, Mattia Barbon <mattia@develer.com>
-  2013, Canonical Ltd
-  2013, Jolla Ltd
-  2013, Openismus GmbH
-License: NTP License (legal disclaimer)
+License: GNU Lesser General Public License, Version 3
  FIXME
 
 Files: plugins/tr/src/database_tr.db
-Copyright:    -suÃ§lanmadÄ±ÄÄ±6í   !sonralarÄ±6   
-  %yÃ¼kseldiÄiD   §yollandÄ±CA   ¥)yenisÃ¶ylem'inBt   £%yazÄ±lÄ±ydÄ±A³   ¡
+Copyright:    �-suçlanmadığı6�   �!sonraları6   �
+  %yükseldiğiD   �yollandıCA   �)yenisöylem'inBt   �%yazılıydıA�   �
 License: UNKNOWN
  FIXME
 
@@ -785,9 +764,8 @@ Copyright: 2017, Jan Arne Petersen
 License: UNKNOWN
  FIXME
 
-Files: COPYING.CC-BY
-Copyright: Convention (as revised on July 24, 1971). These
-  Treaty of 1996, the WIPO Performances and Phonograms Treaty of 1996 and
+Files: debian/copyright
+Copyright: -format/1.0/
 License: UNKNOWN
  FIXME
 
@@ -802,20 +780,20 @@ License: UNKNOWN
  FIXME
 
 Files: plugins/pt/src/historias_sem_data.txt
-Copyright: ainda aquelle que nÃ£o precisa de
-  m, que o meu fim Ã© definir estas paginas como tratando, em
-  o peor que lhe pÃ³de
+Copyright: ainda aquelle que não precisa de
+  m, que o meu fim é definir estas paginas como tratando, em
+  o peor que lhe póde
 License: UNKNOWN
  FIXME
 
 Files: plugins/sv/src/overrides.csv
-Copyright: al,L'OrÃ©al
+Copyright: al,L'Oréal
 License: UNKNOWN
  FIXME
 
 Files: plugins/fr/src/overrides.csv
-Copyright: al,L'OrÃ©al
-  cole,Saint-Cyr-l'Ãcole
+Copyright: al,L'Oréal
+  cole,Saint-Cyr-l'École
 License: UNKNOWN
  FIXME
 
@@ -825,21 +803,21 @@ License: UNKNOWN
  FIXME
 
 Files: plugins/nl/src/overrides.csv
-Copyright: autos,privÃ©auto's
-  s,AndrÃ©s'
+Copyright: autos,privéauto's
+  s,Andrés'
 License: UNKNOWN
  FIXME
 
 Files: plugins/fr/src/les_trois_mousquetaires.txt
-Copyright: cient les tableaux d'Ã©poques. Ils y trouveront des
+Copyright: cient les tableaux d'époques. Ils y trouveront des
   duisit: je les emportai chez moi, avec la permission de M. le
   es sur des portes de
-  moires de M. d'Artagnan, imprimÃ©s -- comme la
-  poque, oÃ¹ les auteurs
+  moires de M. d'Artagnan, imprimés -- comme la
+  poque, où les auteurs
   poque.
-  ritÃ© sans aller faire un tour plus ou moins
-  s de main de maÃ®tre; et, quoique les esquisses
-  tails que nous avons signalÃ©s, la chose qui nous prÃ©occupa le
+  rité sans aller faire un tour plus ou moins
+  s de main de maître; et, quoique les esquisses
+  tails que nous avons signalés, la chose qui nous préoccupa le
   ville, le
   vorai.
 License: UNKNOWN
@@ -851,7 +829,7 @@ License: UNKNOWN
  FIXME
 
 Files: plugins/da/src/overrides.csv
-Copyright: korpss,armÃ©korps's
+Copyright: korpss,armékorps's
 License: UNKNOWN
  FIXME
 
@@ -875,6 +853,37 @@ License: UNKNOWN
 
 Files: plugins/it/src/la_francia_dal_primo_impero.txt
 Copyright: stessi,
+License: UNKNOWN
+ FIXME
+
+Files: plugins/ko/src/korean.txt
+Copyright: �주 뜨는 냄새와 같이 퀴퀴한 냄새로 방안은 쾨쾨하다. 웃간에는 쥐들이 찍찍거린다. 홀어머니는 쪽 떨어진 화로를 끼�
+  이나 침침한 반짝 등불이 북쪽 지게문에 뚫린 구멍으로 새 드는 바람에 반득이며 빛을 잃는다. 헌버�
+License: UNKNOWN
+ FIXME
+
+Files: doc/keyboard-styling-calc.ods
+Copyright: ��d��͒pk�i�����G`�_�B$�
+  ���{�t�v��
+  �_P�����9$�G��^`��dG�r��Y)kt�2��"��l�c��T�bW�vB6��ݲUjʽY�.�)��SRp�rp��T��	hB&�bh#e
+  ��ؒ��C������R,1p���㝀DV�ۊ0Y�ou�|�������
+  Ǧi���֔U����LV�^,@���kO九����{�e�In�ܝ�&9reyl��q#L��.��B�?�7cѪ�w޵�w�f���`;�i��m���X��q��I�I�!z�V�6�L��5>����n���������id���L�@I��+"ͩ��&��2�SM��S����|�k��hHfۉ�(P����Q1�/6�j�Sm�u���Cs
+  �5
+  ��hBm�8��B!
+  ��w�Ѱ.~7 a�r��/ڂ�|��5:�Į����7�:�I2���	h���y���%�@�kd�,�J�t�U�f;y��wi���A_�
+  �>��3� �mZ
+  ���B!۴�d��b���m.�Mk��8�KX7�l��[h5��aTc,ש<t���J��ss
+  �n��H�ϳDj��Ü~� W�1���
+License: UNKNOWN
+ FIXME
+
+Files: plugins/bg/src/free_ebook.txt
+Copyright: е минат още шест за нова дата, а тогава и двете ще сме завършили. Като редактор не мога да си позволя провал сега. Моля те! - умоляваше ме Кейт с дрезгавия си глас, стържещ през възпаленото й гърло. Не разбира�
+License: UNKNOWN
+ FIXME
+
+Files: qml/languages/emoji.js
+Copyright: 🇿','🇦🇩','🇦🇴','🇦🇮','🇦🇬','🇦🇷','🇦🇲','🇦🇼','🇦🇺','🇦🇹','🇦🇿','🇧🇸','🇧🇭','🇧🇩','🇧🇧','🇧🇾','🇧🇪','🇧🇿','🇧🇯','🇧🇲','🇧🇹','🇧🇴','🇧🇦','🇧🇼','🇧🇷','🇧🇳','🇧🇬','🇧🇫','🇧🇮','🇨🇻','🇰🇭','🇨🇲','🇨🇦','🇰🇾','🇨🇫','🇹🇩','🇨🇱','🇨🇳','🇨🇴','🇰🇲','🇨🇬','🇨🇩','🇨🇷','🇭🇷','🇨🇺','🇨🇾','🇨🇿','🇩🇰','🇩🇯','🇩🇲','🇩🇴','🇪🇨','🇪🇬','🇸🇻','🇬🇶','🇪🇷','🇪🇪','🇪🇹','🇫🇰','🇫🇴','🇫🇯','🇫🇮','🇫🇷','🇵🇫','🇬🇦','🇬🇲','🇬🇪','🇩🇪','🇬🇭','🇬🇮','🇬🇷','🇬🇱','🇬🇩','🇬🇺','🇬🇹','🇬🇳','🇬🇼','🇬🇾','🇭🇹','🇭🇳','🇭🇰','🇭🇺','🇮🇸','🇮🇳','🇮🇩','🇮🇷','🇮🇶','🇮🇪','🇮🇱','🇮🇹','🇨🇮','🇯🇲','🇯🇵','🇯🇪','🇯🇴','🇰🇿','🇰🇪','🇰🇮','🇽🇰','🇰🇼','🇰🇬','🇱🇦','🇱🇻','🇱🇧','🇱🇸','🇱🇷','🇱🇾','🇱🇮','🇱🇹','🇱🇺','🇲🇴','🇲🇰','🇲🇬','🇲🇼','🇲🇾','🇲🇻','🇲🇱','🇲🇹','🇲🇭','🇲🇷','🇲🇺','🇲🇽','🇫🇲','🇲🇩','🇲🇨','🇲🇳','🇲🇪','🇲🇸','🇲🇦','🇲🇿','🇲🇲','🇳🇦','🇳🇷','🇳🇵','🇳🇱','🇳🇨','🇳🇿','🇳🇮','🇳🇪','🇳🇬','🇳🇺','🇰🇵','🇳🇴','🇴🇲','🇵🇰','🇵🇼','🇵🇸','🇵🇦','🇵🇬','🇵🇾','🇵🇪','🇵🇭','🇵🇱','🇵🇹','🇵🇷','🇶🇦','🇷🇴','🇷🇺','🇷🇼','🇸🇭','🇰🇳','🇱🇨','🇻🇨','🇼🇸','🇸🇲','🇸🇹','🇸🇦','🇸🇳','🇷🇸','🇸🇨','🇸🇱','🇸🇬','🇸🇰','🇸🇮','🇸🇧','🇸🇴','🇿🇦','🇰🇷','🇪🇸','🇱🇰','🇸🇩','🇸🇷','🇸🇿','🇸🇪','🇨🇭','🇸🇾','🇹🇼','🇹🇯','🇹🇿','🇹🇭','🇹🇱','🇹🇬','🇹🇴','🇹🇹','🇹🇳','🇹🇷','🇹🇲','🇹🇻','🇺🇬','🇺🇦','🇦🇪','🇬🇧','🇺🇸','🇻🇮','🇺🇾','🇺🇿','🇻🇺','🇻🇦','🇻🇪','🇻🇳','🇼🇫','🇪🇭','🇾🇪','🇿🇲','🇿🇼','🇷🇪','🇦🇽','🇹🇦','🇮🇴','🇧🇶','🇨🇽','🇨🇨','🇬🇬','🇮🇲','🇾🇹','🇳🇫','🇵🇳','🇧🇱','🇵🇲','🇬🇸','🇹🇰','🇧🇻','🇭🇲','🇸🇯','🇺🇲','🇮🇨','🇪🇦','🇨🇵','🇩🇬','🇦🇸','🇦🇶','🇻🇬','🇨🇰','🇨🇼','🇪🇺','🇬🇫','🇹🇫','🇬🇵','🇲🇶','🇲🇵','🇸🇽','🇸🇸','🇹🇨','🇲🇫'
 License: UNKNOWN
  FIXME
 
