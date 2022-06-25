@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 
-project(maliit-keyboard VERSION 2.1.0)
+project(maliit-keyboard VERSION 2.2.1.1)
 
 option(enable-presage "Use presage to calculate word candidates (maliit-keyboard-plugin only)" ON)
 option(enable-hunspell "Use hunspell for error correction (maliit-keyboard-plugin only)" ON)
@@ -35,6 +35,7 @@ find_package(Qt5Multimedia)
 find_package(Qt5Feedback)
 find_package(Intl REQUIRED)
 
+find_package(AnthyUnicode)
 find_package(Anthy)
 find_package(Pinyin)
 find_package(Chewing)
@@ -353,7 +354,13 @@ abstract_language_plugin(en@dv englishdvorak
 abstract_language_plugin(fr-ch french LIBRARIES westernsupport)
 abstract_language_plugin(th thai DIRECTORY qml/keys)
 
-if(Anthy_FOUND)
+if(AnthyUnicode_FOUND)
+    abstract_language_plugin(ja japanese ABSTRACT_LANGUAGE_PLUGIN
+            SOURCES anthyadapter.cpp anthyadapter.h
+            LIBRARIES ${AnthyUnicode_LIBRARIES}
+            INCLUDE_DIRS ${AnthyUnicode_INCLUDE_DIRS}
+            DIRECTORY qml/keys)
+elseif(Anthy_FOUND)
     abstract_language_plugin(ja japanese ABSTRACT_LANGUAGE_PLUGIN
             SOURCES anthyadapter.cpp anthyadapter.h
             LIBRARIES ${Anthy_LIBRARIES}
@@ -386,7 +393,7 @@ endif()
 
 # Installation
 
-install(FILES COPYING COPYING.BSD COPYING.CC-BY README.md
+install(FILES COPYING COPYING.BSD README.md
         DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/maliit-keyboard)
 
 install(TARGETS maliit-keyboard-plugin maliit-keyboard
@@ -398,10 +405,6 @@ install(DIRECTORY qml/keys qml/languages
 install(FILES qml/ActionsToolbar.qml qml/FloatingActions.qml qml/Keyboard.qml qml/KeyboardContainer.qml qml/WordRibbon.qml
         DESTINATION ${MALIIT_KEYBOARD_QML_DIR})
 
-install(DIRECTORY qml/images
-        DESTINATION ${MALIIT_KEYBOARD_DATA_DIR})
-install(DIRECTORY data/sounds
-        DESTINATION ${MALIIT_KEYBOARD_DATA_DIR})
 install(DIRECTORY data/themes
         DESTINATION ${MALIIT_KEYBOARD_DATA_DIR})
 install(DIRECTORY data/devices
