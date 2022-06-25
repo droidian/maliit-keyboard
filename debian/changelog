@@ -1,5 +1,6 @@
-maliit-keyboard (2.2.0-2) UNRELEASED; urgency=medium
+maliit-keyboard (2.2.1.1-2) UNRELEASED; urgency=medium
 
+  * New upstream release.
   * debian/control:
     + Add to B-D: qml-model-qtquick2.
   * debian/rules:
