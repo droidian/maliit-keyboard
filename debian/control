@@ -31,7 +31,13 @@ Rules-Requires-Root: no
 
 Package: maliit-keyboard
 Architecture: any
-Depends: maliit-framework, ${misc:Depends}, ${shlibs:Depends}
+Depends: maliit-framework (>= 2.3.0),
+         qml-module-qtquick2,
+         qml-module-qtquick-controls2,
+         qml-module-qtquick-qtgraphicaleffects,
+         qml-module-qtquick-layouts,
+         ${misc:Depends},
+         ${shlibs:Depends},
 Description: virtual on-screen keyboard based on the Maliit Framework
  Maliit Keyboard is a virtual keyboard for Linux systems with Wayland and
  X11 display servers. It supports many different languages and emoji. It
