@@ -1,3 +1,9 @@
+maliit-keyboard (2.3.0-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Mon, 25 Jul 2022 14:27:21 +0200
+
 maliit-keyboard (2.2.1.1-1) unstable; urgency=medium
 
   * New upstream release.
