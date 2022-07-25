@@ -1,6 +1,18 @@
 maliit-keyboard (2.3.0-1) UNRELEASED; urgency=medium
 
   * New upstream release.
+  * debian/patches:
+    + Drop all pre-2.3.0 patches. Now included in this upstream release.
+  * debian/control:
+    + Add B-D: qtquickcontrols2-5-dev.
+    + Bump Standards-Version: to 4.6.1. No changes needed.
+    + Add D (maliit-keyboard): qml-module-qtquick2, qml-module-qtquick-
+      controls2, qml-module-qtquick-qtgraphicaleffects and qml-module-
+      qtquick-layouts.
+  * debian/copyright:
+    + Update auto-generated copyright.in file.
+    + Update copyright attributions.
+  * lintian: Update overrides for 2.115.
 
  -- Mike Gabriel <sunweaver@debian.org>  Mon, 25 Jul 2022 14:27:21 +0200
 
