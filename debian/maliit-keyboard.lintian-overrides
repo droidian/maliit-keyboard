@@ -1,2 +1,2 @@
 # reported upstream: https://github.com/maliit/keyboard/issues/107
-maliit-keyboard: no-manual-page usr/bin/maliit-keyboard
+maliit-keyboard: no-manual-page [usr/bin/maliit-keyboard]
