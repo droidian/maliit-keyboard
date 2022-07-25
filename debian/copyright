@@ -218,8 +218,6 @@ Files: plugins/ar/qml/Keyboard_ar.qml
  src/3rdparty/QGSettings/qgsettings.h
  src/3rdparty/QGSettings/util.cpp
  src/3rdparty/QGSettings/util.h
- src/plugin/greeterstatus.cpp
- src/plugin/greeterstatus.h
  tests/testlayout/qml/Keyboard_testlayout.qml
  tests/unittests/common/mockscreen.cpp
  tests/unittests/common/mockscreen.h
@@ -239,7 +237,8 @@ License: CC0-1.0
 Comment:
  Assuming copyright holdership from code files.
 
-Files: .gitignore
+Files: .github/workflows/main.yaml
+ .gitignore
  CMakeLists.txt
  README.md
  cmake/FindAnthy.cmake
@@ -255,17 +254,6 @@ Files: .gitignore
  data/devices/default.json
  data/devices/tablet.json
  data/schemas/org.maliit.keyboard.maliit.gschema.xml
- data/themes/Ambiance.json
- data/themes/BorderedBlack.json
- data/themes/BorderedGrey.json
- data/themes/BorderedWhite.json
- data/themes/Breeze.json
- data/themes/BreezeDark.json
- data/themes/JustBlack.json
- data/themes/JustGrey.json
- data/themes/JustWhite.json
- data/themes/SuruBlack.json
- data/themes/SuruDark.json
  doc/keyboard-styling-calc.ods
  plugins/README
  plugins/ar/src/arabicplugin.h
@@ -435,44 +423,23 @@ Files: .gitignore
  src/view/.gitignore
  tests/autopilot/lomiri-keyboard-tester.desktop
  tests/manual/disableOSKsettings.sh
- tests/qmltests/api-test/api-test.pro
  tests/qmltests/api-test/api_tests.qml
  tests/qmltests/qml-api-tests/imports/MaliitTestSupport/qmldir
  tests/qmltests/qml-api-tests/plugin.cpp
- tests/qmltests/qml-api-tests/qml-api-tests.pro
  tests/qmltests/qml-api-tests/tst_inputMethodHints.qml
  tests/qmltests/qml-test-app/keyboard-test.qml
  tests/qmltests/qml-test-app/layout-test.qml
- tests/qmltests/qml-test-app/qml-test-app.pro
- tests/qmltests/qmltests.pro
- tests/testlayout/qml/qml.pro
  tests/testlayout/src/database_testlayout.db
  tests/testlayout/src/empty.txt
- tests/testlayout/src/src.pro
  tests/testlayout/src/testlayoutplugin.h
  tests/testlayout/src/testlayoutplugin.json
- tests/testlayout/testlayout.pro
- tests/tests.pro
- tests/unittests/common-check.pri
- tests/unittests/common/common.pro
  tests/unittests/common/helper.js
- tests/unittests/unittests.pro
  tests/unittests/ut_editor/.gitignore
- tests/unittests/ut_editor/ut_editor.pro
- tests/unittests/ut_keyboardgeometry/ut_keyboardgeometry.pro
- tests/unittests/ut_keyboardsettings/ut_keyboardsettings.pro
- tests/unittests/ut_languagefeatures/ut_languagefeatures.pro
  tests/unittests/ut_preedit-string/.gitignore
- tests/unittests/ut_preedit-string/ut_preedit-string.pro
  tests/unittests/ut_repeat-backspace/.gitignore
- tests/unittests/ut_repeat-backspace/ut_repeat-backspace.pro
- tests/unittests/ut_text/ut_text.pro
  tests/unittests/ut_word-candidates/.gitignore
- tests/unittests/ut_word-candidates/ut_word-candidates.pro
  tests/unittests/ut_wordengine/.gitignore
  tests/unittests/ut_wordengine/ut_wordengine.cpp
- tests/unittests/ut_wordengine/ut_wordengine.pro
- unittests.sh
 Copyright: 2012, Openismus GmbH
   2013-2016, Canonical Ltd.
   2011, Nokia Corporation and/or its subsidiary(-ies).
@@ -524,7 +491,6 @@ Files: plugins/westernsupport/spellchecker.h
  src/view/setup.h
  tests/unittests/common/inputmethodhostprobe.cpp
  tests/unittests/common/inputmethodhostprobe.h
- tests/unittests/common/utils-gui.cpp
  tests/unittests/common/utils.cpp
  tests/unittests/common/utils.h
  tests/unittests/ut_preedit-string/ut_preedit-string.cpp
@@ -604,18 +570,8 @@ Files: src/plugin/device.cpp
  src/plugin/device.h
  src/plugin/feedback.cpp
  src/plugin/feedback.h
- src/plugin/theme.cpp
- src/plugin/theme.h
 Copyright: 2019, Jan Arne Petersen
   2020, Jan Arne Petersen
-License: BSD-3-clause
-
-Files: src/plugin/gettext.cpp
- src/plugin/gettext.h
- src/plugin/iconprovider.cpp
- src/plugin/iconprovider.h
-Copyright: 2021, Rodney Dawes
-  2022, Rodney Dawes
 License: BSD-3-clause
 
 Files: plugins/be/qml/Keyboard_be.qml
@@ -625,6 +581,12 @@ Files: plugins/be/qml/Keyboard_be.qml
 Copyright: 2013, Canonical Ltd.
   2021, Antikruk.
 License: LGPL-3
+
+Files: src/plugin/gettext.cpp
+ src/plugin/gettext.h
+Copyright: 2021, Rodney Dawes
+  2022, Rodney Dawes
+License: BSD-3-clause
 
 Files: plugins/mk/qml/Keyboard_mk.qml
  plugins/mk/qml/Keyboard_mk_email.qml
@@ -672,16 +634,13 @@ Files: src/plugin/inputmethod_p.h
 Copyright: 2013-2016, Canonical, Ltd.
 License: LGPL-3
 
-Files: qml/keys/KeyIcon.qml
-Copyright: 2021, Rodney Dawes
-License: LGPL-3
-
 Files: src/keyboard/keyboard.cpp
 Copyright: 2017, Jan Arne Petersen
 License: Expat
 
 Files: debian/*
 Copyright: 2012-2013, Canonical Ltd.
+  2022, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
 License: LGPL-3 or LGPL-2.1 or GPL-3 or BSD-3-clause or Expat
 
 License: GPL-3
