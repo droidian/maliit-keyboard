@@ -220,8 +220,6 @@ Files: plugins/ar/qml/Keyboard_ar.qml
  src/3rdparty/QGSettings/qgsettings.h
  src/3rdparty/QGSettings/util.cpp
  src/3rdparty/QGSettings/util.h
- src/plugin/greeterstatus.cpp
- src/plugin/greeterstatus.h
  tests/testlayout/qml/Keyboard_testlayout.qml
  tests/unittests/common/mockscreen.cpp
  tests/unittests/common/mockscreen.h
@@ -248,20 +246,7 @@ Files: CMakeLists.txt
  data/devices/default.json
  data/devices/tablet.json
  data/schemas/org.maliit.keyboard.maliit.gschema.xml
- data/themes/Ambiance.json
- data/themes/BorderedBlack.json
- data/themes/BorderedGrey.json
- data/themes/BorderedWhite.json
- data/themes/Breeze.json
- data/themes/BreezeDark.json
- data/themes/JustBlack.json
- data/themes/JustGrey.json
- data/themes/JustWhite.json
- data/themes/SuruBlack.json
- data/themes/SuruDark.json
- debian/changelog
  debian/control
- debian/files
  debian/maliit-keyboard.lintian-overrides
  debian/patches/README
  debian/rules
@@ -398,38 +383,17 @@ Files: CMakeLists.txt
  src/lib/logic/languageplugininterface.h
  tests/autopilot/lomiri-keyboard-tester.desktop
  tests/manual/disableOSKsettings.sh
- tests/qmltests/api-test/api-test.pro
  tests/qmltests/api-test/api_tests.qml
  tests/qmltests/qml-api-tests/imports/MaliitTestSupport/qmldir
  tests/qmltests/qml-api-tests/plugin.cpp
- tests/qmltests/qml-api-tests/qml-api-tests.pro
  tests/qmltests/qml-api-tests/tst_inputMethodHints.qml
  tests/qmltests/qml-test-app/keyboard-test.qml
  tests/qmltests/qml-test-app/layout-test.qml
- tests/qmltests/qml-test-app/qml-test-app.pro
- tests/qmltests/qmltests.pro
- tests/testlayout/qml/qml.pro
  tests/testlayout/src/database_testlayout.db
- tests/testlayout/src/src.pro
  tests/testlayout/src/testlayoutplugin.h
  tests/testlayout/src/testlayoutplugin.json
- tests/testlayout/testlayout.pro
- tests/tests.pro
- tests/unittests/common-check.pri
- tests/unittests/common/common.pro
  tests/unittests/common/helper.js
- tests/unittests/unittests.pro
- tests/unittests/ut_editor/ut_editor.pro
- tests/unittests/ut_keyboardgeometry/ut_keyboardgeometry.pro
- tests/unittests/ut_keyboardsettings/ut_keyboardsettings.pro
- tests/unittests/ut_languagefeatures/ut_languagefeatures.pro
- tests/unittests/ut_preedit-string/ut_preedit-string.pro
- tests/unittests/ut_repeat-backspace/ut_repeat-backspace.pro
- tests/unittests/ut_text/ut_text.pro
- tests/unittests/ut_word-candidates/ut_word-candidates.pro
  tests/unittests/ut_wordengine/ut_wordengine.cpp
- tests/unittests/ut_wordengine/ut_wordengine.pro
- unittests.sh
 Copyright: NONE
 License: UNKNOWN
  FIXME
@@ -518,7 +482,6 @@ Files: plugins/westernsupport/spellchecker.h
  src/view/setup.h
  tests/unittests/common/inputmethodhostprobe.cpp
  tests/unittests/common/inputmethodhostprobe.h
- tests/unittests/common/utils-gui.cpp
  tests/unittests/common/utils.cpp
  tests/unittests/common/utils.h
  tests/unittests/ut_preedit-string/ut_preedit-string.cpp
@@ -639,19 +602,8 @@ Files: src/plugin/device.cpp
  src/plugin/device.h
  src/plugin/feedback.cpp
  src/plugin/feedback.h
- src/plugin/theme.cpp
- src/plugin/theme.h
 Copyright: 2019, Jan Arne Petersen
   2020, Jan Arne Petersen
-License: BSD 3-clause "New" or "Revised" License
- FIXME
-
-Files: src/plugin/gettext.cpp
- src/plugin/gettext.h
- src/plugin/iconprovider.cpp
- src/plugin/iconprovider.h
-Copyright: 2021, Rodney Dawes
-  2022, Rodney Dawes
 License: BSD 3-clause "New" or "Revised" License
  FIXME
 
@@ -678,6 +630,12 @@ Files: plugins/az/src/database_az.db
  plugins/ko/src/database_ko.db
 Copyright: 
 License: UNKNOWN
+ FIXME
+
+Files: src/plugin/gettext.cpp
+ src/plugin/gettext.h
+Copyright: 2022, Rodney Dawes
+License: BSD 3-clause "New" or "Revised" License
  FIXME
 
 Files: src/lib/coreutils.cpp
@@ -738,11 +696,6 @@ Copyright: 2013-2016, Canonical, Ltd.
 License: GNU Lesser General Public License, Version 3
  FIXME
 
-Files: qml/keys/KeyIcon.qml
-Copyright: 2021, Rodney Dawes
-License: GNU Lesser General Public License, Version 3
- FIXME
-
 Files: README.md
 Copyright: NONE
 License: GNU Lesser General Public License, Version 3
@@ -799,6 +752,11 @@ License: UNKNOWN
 
 Files: plugins/eo/src/alicio_en_mirlando.txt
 Copyright: any Defect you cause.
+License: UNKNOWN
+ FIXME
+
+Files: debian/changelog
+Copyright: attributions.
 License: UNKNOWN
  FIXME
 
