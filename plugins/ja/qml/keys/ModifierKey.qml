@@ -24,13 +24,12 @@ FlickCharKey {
     label: (isPreedit && layoutState == "kana") ? " ゛ ゜" : "␣"
     leaves: isPreedit ? preeditLeaves : ["␣", "□"]
     annotation: isPreedit ? "大⇔小" : ""
-    fontSize: isPreedit ? Device.fontSize * 0.8 : Device.fontSize
 
     overridePressArea: true
 
     property string layoutState: "kana"
-    property string preedit: maliit_input_method.preedit
-    property int cursorPosition: maliit_input_method.cursorPosition
+    property string preedit: Keyboard.preedit
+    property int cursorPosition: Keyboard.cursorPosition
     property bool isPreedit: preedit != ""
     property string lastChar: ""
     property var preeditLeaves: Modifier.map[lastChar] ? Modifier.map[lastChar] : [lastChar]
@@ -43,13 +42,13 @@ FlickCharKey {
                 } else {
                     var pos = cursorPosition
                     var newChar = lastChar.charCodeAt(0) < 91 ? lastChar.toLowerCase() : lastChar.toUpperCase()
-                    maliit_input_method.preedit = preedit.substr(0, cursorPosition-1) + newChar + preedit.substr(cursorPosition)
-                    maliit_input_method.cursorPosition = pos
+                    Keyboard.preedit = preedit.substr(0, cursorPosition-1) + newChar + preedit.substr(cursorPosition)
+                    Keyboard.cursorPosition = pos
                 }
             } else if (preeditLeaves[index] && preeditLeaves[index] != "") {
                 var pos = cursorPosition
-                maliit_input_method.preedit = preedit.substr(0, cursorPosition-1) + preeditLeaves[index] + preedit.substr(cursorPosition)
-                maliit_input_method.cursorPosition = pos
+                Keyboard.preedit = preedit.substr(0, cursorPosition-1) + preeditLeaves[index] + preedit.substr(cursorPosition)
+                Keyboard.cursorPosition = pos
             }
         } else {
             if (index == 0) {

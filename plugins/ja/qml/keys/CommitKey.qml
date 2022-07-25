@@ -21,22 +21,20 @@ import MaliitKeyboard 2.0
 import keys 1.0
 
 ActionKey {
-    property var actionKeyOverride: maliit_input_method.actionKeyOverride
+    property var actionKeyOverride: Keyboard.actionKeyOverride
     property string overrideIconName: actionKeyOverride && actionKeyOverride.icon ? actionKeyOverride.icon : ""
     property string overrideLabel: actionKeyOverride && actionKeyOverride.label ? actionKeyOverride.label : ""
 
     enabled: actionKeyOverride ? actionKeyOverride.enabled : true
     // overrideIcon has high priority over label
     label: overrideIconName == "" ? overrideLabel : ""
-    // Scale the font so the label fits if a long word is set
-    fontSize: Device.symbolShiftKeyFontSize * (4 / (label.length >= 4 ? (label.length <= 6 ? label.length : 6) : 4));
     shifted: label
 
     iconNormal: (overrideIconName == "") && (overrideLabel == "") ? "keyboard-enter-symoblic" : overrideIconName
     iconShifted: iconNormal
     iconCapsLock: iconNormal
 
-    action: maliit_input_method.preedit != "" ? "commit" : "return"
+    action: Keyboard.preedit != "" ? "commit" : "return"
     switchBackFromSymbols: true
     // TODO: input_method.actionKeyOverride.highlighted
 }

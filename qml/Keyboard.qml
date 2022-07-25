@@ -48,10 +48,9 @@ Item {
     property int prevSwipePositionY
     property int cursorSwipeDuration: 5000
     property var timerSwipe: swipeTimer
-    property var theme: Theme.defaultTheme
 
-    property variant input_method: maliit_input_method
-    property variant event_handler: maliit_event_handler
+    property variant input_method: Keyboard
+    property variant event_handler: MaliitEventHandler
 
     onXChanged: fullScreenItem.reportKeyboardVisibleRect();
     onYChanged: fullScreenItem.reportKeyboardVisibleRect();
@@ -71,7 +70,7 @@ Item {
 
         visible: true
 
-        property bool wordribbon_visible: maliit_word_engine.enabled
+        property bool wordribbon_visible: WordEngine.enabled
         onWordribbon_visibleChanged: fullScreenItem.reportKeyboardVisibleRect();
 
         property bool languageMenuShown: false
@@ -88,7 +87,7 @@ Item {
         onWidthChanged: fullScreenItem.reportKeyboardVisibleRect();
         onHeightChanged: fullScreenItem.reportKeyboardVisibleRect();
 
-        opacity: maliit_input_method.opacity
+        opacity: Keyboard.opacity
 
         MouseArea {
             id: swipeArea
@@ -109,14 +108,14 @@ Item {
 
             onReleased: {
                 if (keyboardSurface.y > jumpBackThreshold) {
-                    maliit_geometry.shown = false;
+                    MaliitGeometry.shown = false;
                 } else {
                     bounceBackAnimation.from = keyboardSurface.y
                     bounceBackAnimation.start();
                 }
             }
 
-            Item {
+            Page {
                 id: keyboardSurface
                 objectName: "keyboardSurface"
 
@@ -129,13 +128,6 @@ Item {
                 onYChanged: fullScreenItem.reportKeyboardVisibleRect();
                 onWidthChanged: fullScreenItem.reportKeyboardVisibleRect();
                 onHeightChanged: fullScreenItem.reportKeyboardVisibleRect();
-
-                Rectangle {
-                    width: parent.width
-                    height: (1)
-                    color: Theme.dividerColor
-                    anchors.bottom: wordRibbon.visible ? wordRibbon.top : keyboardComp.top
-                }
 
                 WordRibbon {
                     id: wordRibbon
@@ -160,6 +152,12 @@ Item {
                     height: Device.wordRibbonHeight
                 }
                     
+                Rectangle {
+                    width: parent.width
+                    height: 1
+                    color: "#888888"
+                    anchors.bottom: wordRibbon.visible ? wordRibbon.top : keyboardComp.top
+                }
 
                 Item {
                     id: keyboardComp
@@ -172,14 +170,6 @@ Item {
 
                     onHeightChanged: fullScreenItem.reportKeyboardVisibleRect();
 
-                    Rectangle {
-                        id: background
-
-                        anchors.fill: parent
-
-                        color: Theme.backgroundColor
-                    }
-                
                     KeyboardContainer {
                         id: keypad
 
@@ -207,7 +197,7 @@ Item {
             // Animations don't have an "enabled" property, so just set the
             // target to null if animation is disabled, which effectively also
             // disables the animation.
-            target: maliit_input_method.animationEnabled ? keyboardSurface : null
+            target: Keyboard.animationEnabled ? keyboardSurface : null
             properties: "y"
             easing.type: Easing.OutBounce;
             easing.overshoot: 2.0
@@ -224,7 +214,7 @@ Item {
                     canvas.firstShow = false;
                     canvas.hidingComplete = false;
                 }
-                when: maliit_geometry.shown === true
+                when: MaliitGeometry.shown === true
             },
 
             State {
@@ -235,7 +225,7 @@ Item {
                     keypad.closeExtendedKeys();
                     keypad.activeKeypadState = "NORMAL";
                     keypad.state = "CHARACTERS";
-                    maliit_input_method.close();
+                    Keyboard.close();
                     canvas.hidingComplete = true;
                     reportKeyboardVisibleRect();
                     
@@ -245,17 +235,17 @@ Item {
                 // Wait for the first show operation to complete before
                 // allowing hiding, as the conditions when the keyboard
                 // has never been visible can trigger a hide operation
-                when: maliit_geometry.shown === false && canvas.firstShow === false
+                when: MaliitGeometry.shown === false && canvas.firstShow === false
             }
         ]
         transitions: Transition {
-            enabled: maliit_input_method.animationEnabled
+            enabled: Keyboard.animationEnabled
             NumberAnimation { target: keyboardSurface; properties: "y"; duration: 165}
         }
 
         Connections {
             target: input_method
-            onActivateAutocaps: {
+            function onActivateAutocaps() {
                 if (keypad.state == "CHARACTERS" && keypad.activeKeypadState != "CAPSLOCK" && !cursorSwipe) {
                     keypad.activeKeypadState = "SHIFTED";
                     keypad.autoCapsTriggered = true;
@@ -264,10 +254,10 @@ Item {
                 }
             }
 
-            onKeyboardReset: {
+            function onKeyboardReset() {
                 keypad.state = "CHARACTERS"
             }
-            onDeactivateAutocaps: {
+            function onDeactivateAutocaps() {
                 if(keypad.autoCapsTriggered) {
                     keypad.activeKeypadState = "NORMAL";
                     keypad.autoCapsTriggered = false;
@@ -298,16 +288,25 @@ Item {
             
             enabled: cursorSwipe
 
+            // An invisible text field to be able to get selection colors from
+            // thte qqc2 style in use, for selection mode
+            TextField {
+                id: textArea
+                width: 0
+                height: 0
+                visible: false
+            }
+
             Rectangle {
                 anchors.fill: parent
                 visible: parent.enabled
-                color: cursorSwipeArea.selectionMode ? Theme.selectionColor : Theme.charKeyPressedColor
+                color: cursorSwipeArea.selectionMode ? textArea.selectionColor : "#888888"
                 
                 Label {
                     visible: !cursorSwipeArea.pressed
                     horizontalAlignment: Text.AlignHCenter
                     // FIXME: selected font color should differ
-                    color: cursorSwipeArea.selectionMode ? "#fefefe" : Theme.fontColor
+                    color: cursorSwipeArea.selectionMode ? textArea.selectedTextColor : "#313131"
                     wrapMode: Text.WordWrap
                     
                     anchors {
@@ -442,7 +441,7 @@ Item {
             return;
         }
 
-        maliit_geometry.visibleRect = Qt.rect(obj.x, obj.y, obj.width, obj.height);
+        MaliitGeometry.visibleRect = Qt.rect(obj.x, obj.y, obj.width, obj.height);
     }
 
     // Autopilot needs to be able to move the cursor even when the layout

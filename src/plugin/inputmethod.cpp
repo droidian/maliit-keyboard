@@ -124,7 +124,6 @@ InputMethod::InputMethod(MAbstractInputMethodHost *host)
     d->registerStayHidden();
     d->registerPluginPaths();
     d->registerOpacity();
-    d->registerTheme();
 
     //fire signal so all listeners know what active language is
     Q_EMIT activeLanguageChanged(d->activeLanguage);
@@ -722,12 +721,6 @@ double InputMethod::opacity() const
     return d->m_settings.opacity();
 }
 
-const QString InputMethod::theme() const
-{
-    Q_D(const InputMethod);
-    return d->m_settings.theme();
-}
-
 void InputMethod::replacePreedit(const QString &preedit)
 {
     Q_D(InputMethod);
@@ -795,8 +788,8 @@ void InputMethod::showSystemSettings()
     auto previous = qgetenv("QT_WAYLAND_SHELL_INTEGRATION");
     qunsetenv("QT_WAYLAND_SHELL_INTEGRATION");
 
-    if (qgetenv("XDG_CURRENT_DESKTOP") == "KDE") {
-        QDesktopServices::openUrl(QUrl("systemsettings://kcm_mobile_virtualkeyboard"));
+    if (qEnvironmentVariable("PLASMA_PLATFORM").contains(QStringLiteral("phone"))) {
+        QDesktopServices::openUrl(QUrl("systemsettings://kcm_mobile_onscreenkeyboard"));
     } else {
         QDesktopServices::openUrl(QUrl("settings://system/language"));
     }

@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.9)
 
-project(maliit-keyboard VERSION 2.2.1.1)
+project(maliit-keyboard VERSION 2.3.0)
 
 option(enable-presage "Use presage to calculate word candidates (maliit-keyboard-plugin only)" ON)
 option(enable-hunspell "Use hunspell for error correction (maliit-keyboard-plugin only)" ON)
-option(enable-tests "Build tests" OFF)
+option(enable-tests "Build tests" ON)
 
 # Install paths
 include(GNUInstallDirs)
@@ -31,6 +31,7 @@ find_package(GIO REQUIRED)
 
 find_package(Qt5DBus)
 
+find_package(Qt5QuickControls2 REQUIRED)
 find_package(Qt5Multimedia)
 find_package(Qt5Feedback)
 find_package(Intl REQUIRED)
@@ -156,12 +157,8 @@ set(MALIIT_KEYBOARD_COMMON_SOURCES
         src/plugin/feedback.h
         src/plugin/gettext.cpp
         src/plugin/gettext.h
-        src/plugin/greeterstatus.cpp
-        src/plugin/greeterstatus.h
         src/plugin/updatenotifier.cpp
         src/plugin/updatenotifier.h
-        src/plugin/iconprovider.cpp
-        src/plugin/iconprovider.h
         src/plugin/inputmethod.cpp
         src/plugin/inputmethod.h
         src/plugin/inputmethod_p.h
@@ -169,10 +166,11 @@ set(MALIIT_KEYBOARD_COMMON_SOURCES
         src/plugin/keyboardgeometry.h
         src/plugin/keyboardsettings.cpp
         src/plugin/keyboardsettings.h
-        src/plugin/theme.cpp src/plugin/theme.h src/plugin/device.cpp src/plugin/device.h)
+        src/plugin/device.cpp
+        src/plugin/device.h)
 
 add_library(maliit-keyboard-common STATIC ${MALIIT_KEYBOARD_COMMON_SOURCES})
-target_link_libraries(maliit-keyboard-common Qt5::DBus Maliit::Plugins maliit-keyboard-lib maliit-keyboard-view gsettings-qt Qt5::Multimedia ${Intl_LIBRARIES})
+target_link_libraries(maliit-keyboard-common Qt5::DBus Qt5::QuickControls2 Maliit::Plugins maliit-keyboard-lib maliit-keyboard-view gsettings-qt Qt5::Multimedia ${Intl_LIBRARIES})
 if (Qt5Feedback_FOUND)
     target_link_libraries(maliit-keyboard-common Qt5::Feedback)
     target_compile_definitions(maliit-keyboard-common PUBLIC HAVE_QT5_FEEDBACK)
@@ -405,8 +403,6 @@ install(DIRECTORY qml/keys qml/languages
 install(FILES qml/ActionsToolbar.qml qml/FloatingActions.qml qml/Keyboard.qml qml/KeyboardContainer.qml qml/WordRibbon.qml
         DESTINATION ${MALIIT_KEYBOARD_QML_DIR})
 
-install(DIRECTORY data/themes
-        DESTINATION ${MALIIT_KEYBOARD_DATA_DIR})
 install(DIRECTORY data/devices
         DESTINATION ${MALIIT_KEYBOARD_DATA_DIR})
 install(FILES data/schemas/org.maliit.keyboard.maliit.gschema.xml
@@ -429,12 +425,11 @@ if(enable-tests)
     add_library(test-utils STATIC
             tests/unittests/common/inputmethodhostprobe.cpp
             tests/unittests/common/inputmethodhostprobe.h
-            tests/unittests/common/utils-gui.cpp
             tests/unittests/common/utils.cpp
             tests/unittests/common/utils.h)
 
-    target_link_libraries(test-utils PUBLIC Qt5::Core Qt5::Gui Qt5::Test)
-    target_include_directories(test-utils INTERFACE tests/common tests maliit-keyboard)
+    target_link_libraries(test-utils PUBLIC Maliit::Plugins Qt5::Core Qt5::Gui Qt5::Test westernsupport)
+    target_include_directories(test-utils PUBLIC tests/unittests tests/unittests/common src src/lib)
 
     function(create_test name)
         set(_extra_sources ${ARGV})
@@ -444,7 +439,7 @@ if(enable-tests)
                 tests/unittests/${name}/${name}.cpp
                 ${_extra_sources})
 
-        target_link_libraries(${name} test-utils ${_libs})
+        target_link_libraries(${name} test-utils maliit-keyboard-common ${_libs})
 
         add_test(${name} ${name})
 
@@ -452,11 +447,13 @@ if(enable-tests)
     endfunction()
 
     create_test(ut_languagefeatures)
-    create_test(ut_repeat-backspace)
+    create_test(ut_repeat-backspace
+            tests/unittests/common/wordengineprobe.cpp
+            tests/unittests/common/wordengineprobe.h)
     create_test(ut_editor
             tests/unittests/ut_editor/wordengineprobe.cpp
             tests/unittests/ut_editor/wordengineprobe.h)
-    create_test(ut_preedit-string)
+    #create_test(ut_preedit-string)
     create_test(ut_text)
     create_test(ut_word-candidates
             tests/unittests/ut_word-candidates/wordengineprobe.cpp
@@ -467,8 +464,3 @@ if(enable-tests)
             MALIIT_PLUGINS_DATADIR=${CMAKE_SOURCE_DIR}/data)
 
 endif()
-
-add_custom_target(install_${PROJECT_NAME}
-        ${CMAKE_BUILD_TOOL} install
-        DEPENDS ${PROJECT_NAME}
-        COMMENT "Installing ${PROJECT_NAME}")
