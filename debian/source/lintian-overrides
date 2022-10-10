@@ -1,5 +1,5 @@
 # emoji.js simply contains a long array in one line...
-source: very-long-line-length-in-source-file qml/languages/emoji.js line 1 is 7769 characters long (>512)
+source: very-long-line-length-in-source-file 7770 > 512 [qml/languages/emoji.js:1]
 source: source-contains-prebuilt-javascript-object [qml/languages/emoji.js]
 source: source-is-missing [qml/languages/emoji.js]
 
@@ -18,9 +18,8 @@ source: very-long-line-length-in-source-file 2049 > 512 [tests/testlayout/src/da
 source: very-long-line-length-in-source-file 2700 > 512 [plugins/ro/src/amintiri_din_copilarie.txt:118]
 source: very-long-line-length-in-source-file 3008 > 512 [plugins/tr/src/free_ebook.txt:1800]
 source: very-long-line-length-in-source-file 3634 > 512 [plugins/ko/src/database_ko.db:310]
-source: very-long-line-length-in-source-file 4096 > 512 [plugins/bg/src/database_bg.db:14774]
+source: very-long-line-length-in-source-file 4096 > 512 [plugins/bg/src/database_bg.db:*]
 source: very-long-line-length-in-source-file 5997 > 512 [plugins/az/src/database_az.db:14298]
-source: very-long-line-length-in-source-file 7770 > 512 [qml/languages/emoji.js:1]
 source: very-long-line-length-in-source-file 8948 > 512 [plugins/tr/src/database_tr.db:17664]
 
 # ignore our own auto-generated copyright.in file
