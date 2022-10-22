@@ -1,3 +1,10 @@
+maliit-keyboard (2.3.1-2) unstable; urgency=medium
+
+  * debian/control:
+    + Fix pkg:name in Depends: field. (Closes: #1022230).
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sat, 22 Oct 2022 13:11:48 +0200
+
 maliit-keyboard (2.3.1-1) unstable; urgency=medium
 
   * New upstream release.
