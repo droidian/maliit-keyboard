@@ -32,9 +32,9 @@ Rules-Requires-Root: no
 Package: maliit-keyboard
 Architecture: any
 Depends: maliit-framework (>= 2.3.0),
+         qml-module-qtgraphicaleffects,
          qml-module-qtquick2,
          qml-module-qtquick-controls2,
-         qml-module-qtquick-qtgraphicaleffects,
          qml-module-qtquick-layouts,
          ${misc:Depends},
          ${shlibs:Depends},
