@@ -1,2 +1,2 @@
 version=4
-https://github.com/maliit/keyboard/releases /maliit/keyboard/archive/refs/tags/(\d\S*).tar.gz
+https://github.com/maliit/keyboard/tags /maliit/keyboard/archive/refs/tags/(\d\S*).tar.gz
