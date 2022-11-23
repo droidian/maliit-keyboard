@@ -1,3 +1,18 @@
+maliit-keyboard (2.3.1-3.1) unstable; urgency=medium
+
+  * Non-maintainer upload
+
+  [ Jelmer Vernooĳ ]
+  * debian/rules:
+    + Remove unnecessary get-orig-source-target.
+
+  [ Gunnar Hjalmarsson ]
+  * debian/control:
+    + Build with libpinyin15-dev instead of libpinyin13-dev
+      (closes: #1024593).
+
+ -- Gunnar Hjalmarsson <gunnarhj@debian.org>  Wed, 23 Nov 2022 10:09:39 +0100
+
 maliit-keyboard (2.3.1-3) unstable; urgency=medium
 
   * debian/watch:
