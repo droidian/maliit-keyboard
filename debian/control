@@ -38,6 +38,10 @@ Depends: maliit-framework (>= 2.3.0),
          qml-module-qtquick-layouts,
          ${misc:Depends},
          ${shlibs:Depends},
+Recommends: hunspell-de-de,
+            hunspell-en-us,
+            hunspell-fr,
+            hunspell-nl,
 Description: virtual on-screen keyboard based on the Maliit Framework
  Maliit Keyboard is a virtual keyboard for Linux systems with Wayland and
  X11 display servers. It supports many different languages and emoji. It
