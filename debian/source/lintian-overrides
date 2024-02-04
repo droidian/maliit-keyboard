@@ -8,7 +8,6 @@ source: very-long-line-length-in-source-file 760 > 512 [COPYING.BSD:9]
 
 # some too-long lines to be ignored
 source: very-long-line-length-in-source-file 1006 > 512 [plugins/hr/src/knjiga.txt:927]
-source: very-long-line-length-in-source-file 1341 > 512 [doc/keyboard-styling-calc.ods:23]
 source: very-long-line-length-in-source-file 1365 > 512 [plugins/bg/src/free_ebook.txt:7975]
 source: very-long-line-length-in-source-file 1481 > 512 [plugins/pl/src/ziemia_obiecana_tom_pierwszy_4.txt:3157]
 source: very-long-line-length-in-source-file 2049 > 512 [plugins/be/src/database_be.db:1]
