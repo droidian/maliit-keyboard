@@ -1,3 +1,21 @@
+maliit-keyboard (2.3.1-4) unstable; urgency=medium
+
+  * Revert "Remove unnecessary get-orig-source-target."
+  * debian/control:
+    + Bump Standards-Version: to 4.6.2. No changes needed.
+    + Add to R: various hunspell-<lang> packages.
+  * debian/copyright:
+    + Update copyright attribution for debian/.
+  * debian/:
+    + Re-add key_tick2_quiet.wav audio file back. It got removed from upstream,
+      but is still referenced in the .gschema file. No adequate replacement in
+      sight. So shipping the .wav file in the DEB package.
+  * debian/source/lintian-overrides:
+    + Drop doc/keyboard-styling-calc.ods from the list of files with too-long-
+      line-length.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sun, 04 Feb 2024 21:28:19 +0100
+
 maliit-keyboard (2.3.1-3.1) unstable; urgency=medium
 
   * Non-maintainer upload
