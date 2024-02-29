@@ -1,3 +1,13 @@
+maliit-keyboard (2.3.1-5) unstable; urgency=medium
+
+  * debian/patches:
+    + Add 2001_use-noto-sans-font.patch. Enforce using Noto Sans for keyboard
+      keys.
+  * debian/control:
+    + Add to D: field: fonts-noto, fonts-noto-color-emoji.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Thu, 29 Feb 2024 17:11:18 +0100
+
 maliit-keyboard (2.3.1-4) unstable; urgency=medium
 
   * Revert "Remove unnecessary get-orig-source-target."
