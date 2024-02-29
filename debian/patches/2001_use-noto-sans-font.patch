@@ -1,0 +1,70 @@
+Description: Use Noto Sans font for keyboard keys.
+Author: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+Forwarded: not needed, Debian-specific
+
+--- a/qml/keys/CharKey.qml
++++ b/qml/keys/CharKey.qml
+@@ -155,6 +155,7 @@
+             Label {
+                 id: keyLabel
+                 text: label
++                font.family: "Noto Sans"
+                 font.pixelSize: key.fontSize
+                 font.weight: Font.Light
+                 anchors.right: parent.right
+@@ -180,6 +181,7 @@
+                 anchors.top: parent.top
+                 anchors.topMargin: Device.annotationTopMargin
+                 anchors.rightMargin: Device.annotationRightMargin
++                font.family: "Noto Sans"
+                 font.pixelSize: key.fontSize / 2
+                 font.weight: Font.Light
+                 visible: !panel.hideKeyLabels
+--- a/qml/keys/ExtendedKeysSelector.qml
++++ b/qml/keys/ExtendedKeysSelector.qml
+@@ -156,6 +156,7 @@
+                     id: textCell
+                     anchors.centerIn: parent;
+                     text: modelData
++                    font.family: "Noto Sans"
+                     font.pixelSize: fontSize
+                     font.weight: Font.Light
+                     color: key.highlight ? textArea.selectionColor : textArea.color
+--- a/qml/keys/Magnifier.qml
++++ b/qml/keys/Magnifier.qml
+@@ -98,6 +98,7 @@
+             anchors.centerIn: parent
+             height: parent.height
+             text: currentlyAssignedKey ? currentlyAssignedKey.valueToSubmit : ""
++            font.family: "Noto Sans"
+             font.weight: Font.Light
+             font.pixelSize: panel.keyHeight * 0.6
+             verticalAlignment: Text.AlignVCenter
+--- a/qml/keys/SpaceKey.qml
++++ b/qml/keys/SpaceKey.qml
+@@ -41,6 +41,7 @@
+ 
+     Label {
+         anchors.centerIn: parent
++        font.family: "Noto Sans"
+         font.weight: Font.Light
+         opacity: 0.6
+         font.pixelSize: parent.fontSize * 0.6
+--- a/plugins/ja/qml/keys/FlickCharKey.qml
++++ b/plugins/ja/qml/keys/FlickCharKey.qml
+@@ -96,6 +96,7 @@
+                     id: keyLabel
+                     text: label
+                     anchors.horizontalCenter: parent.horizontalCenter
++                    font.family: "Noto Sans"
+                     font.pixelSize: key.fontSize
+                     font.weight: Font.Light
+                     textFormat: Text.StyledText
+@@ -108,6 +109,7 @@
+                     anchors.horizontalCenter: parent.horizontalCenter
+                     anchors.bottomMargin: Device.gu(0.3)
+ 
++                    font.family: "Noto Sans"
+                     font.pixelSize: Device.annotationFontSize
+                     font.weight: Font.Light
+                     visible: annotation != ""
