@@ -1,3 +1,20 @@
+maliit-keyboard (2.3.1-6) unstable; urgency=medium
+
+  [ Guido Berhoerster ]
+  * debian/patches: Add
+    + 2002_Revert-qml-Use-invisible-components-to-get-colors-fo.patch. Fix
+      background color of key annotations.
+      This reverts commit 3f0d076a6e55551760a27b994de8aff16e6c0d. This is a
+      workaround until https://github.com/maliit/keyboard/issues/217 is
+      addressed by upstream.
+
+  [ Mike Gabriel ]
+  * debian/patches:
+    + Resort patch order.
+    + Rebase patches after re-sorted patch order.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Mon, 27 May 2024 08:24:00 +0200
+
 maliit-keyboard (2.3.1-5) unstable; urgency=medium
 
   * debian/patches:
