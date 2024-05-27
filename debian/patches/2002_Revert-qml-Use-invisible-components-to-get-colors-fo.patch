@@ -8,11 +8,9 @@ addressed by upstream.
  qml/keys/ExtendedKeysSelector.qml | 24 +++++-------------------
  1 file changed, 5 insertions(+), 19 deletions(-)
 
-diff --git a/qml/keys/ExtendedKeysSelector.qml b/qml/keys/ExtendedKeysSelector.qml
-index e26298b1..a0743b41 100644
 --- a/qml/keys/ExtendedKeysSelector.qml
 +++ b/qml/keys/ExtendedKeysSelector.qml
-@@ -92,17 +92,10 @@ KeyPopover {
+@@ -92,17 +92,10 @@
  
          height: rowOfKeys.height
  
@@ -32,7 +30,7 @@ index e26298b1..a0743b41 100644
          }
  
          onXChanged: {
-@@ -139,21 +132,14 @@ KeyPopover {
+@@ -144,21 +137,14 @@
                  property bool highlight: false
                  opacity: highlight ? 1.0 : 0.6
  
@@ -57,6 +55,3 @@ index e26298b1..a0743b41 100644
                  }
  
                  function commit(skipAutoCaps) {
--- 
-2.34.1
-

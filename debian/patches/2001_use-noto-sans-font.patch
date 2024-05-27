@@ -22,14 +22,15 @@ Forwarded: not needed, Debian-specific
                  visible: !panel.hideKeyLabels
 --- a/qml/keys/ExtendedKeysSelector.qml
 +++ b/qml/keys/ExtendedKeysSelector.qml
-@@ -156,6 +156,7 @@
+@@ -141,7 +141,7 @@
                      id: textCell
                      anchors.centerIn: parent;
                      text: modelData
+-                    font.family: Theme.fontFamily
 +                    font.family: "Noto Sans"
                      font.pixelSize: fontSize
                      font.weight: Font.Light
-                     color: key.highlight ? textArea.selectionColor : textArea.color
+                     color: key.highlight ? Theme.selectionColor : Theme.fontColor
 --- a/qml/keys/Magnifier.qml
 +++ b/qml/keys/Magnifier.qml
 @@ -98,6 +98,7 @@
