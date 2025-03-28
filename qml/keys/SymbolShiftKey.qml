@@ -19,18 +19,25 @@ import QtQuick 2.4
 import MaliitKeyboard 2.0
 
 ActionKey {
-    label: "?123";
-    shifted: "?123";
+    label: panel.state == "SYMBOLS" ? "ABC" : "?123"
+    shifted: panel.state == "SYMBOLS" ? "ABC" : "?123"
     action: "symbols";
 
     overridePressArea: true;
 
+    // Internal proerty for preserving previous active keypad state
+    property string __oldKeypadState: panel.activeKeypadState
+
     onPressed: {
         Feedback.keyPressed();
 
-        if (panel.state == "CHARACTERS")
+        if (panel.state == "CHARACTERS") {
+            __oldKeypadState = panel.activeKeypadState;
+            panel.activeKeypadState = "NORMAL";
             panel.state = "SYMBOLS";
-        else
+        } else {
+            panel.activeKeypadState = __oldKeypadState;
             panel.state = "CHARACTERS";
+        }
     }
 }

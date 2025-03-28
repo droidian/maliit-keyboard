@@ -30,8 +30,6 @@ Item {
     property bool delayedAutoCaps: false
 
     property string activeKeypadState: "NORMAL"
-    property alias popoverEnabled: extendedKeysSelector.enabled
-    property bool hideKeyLabels: false // Hide key labels when in cursor movement mode
 
     property Item lastKeyPressed // Used for determining double click validity in PressArea
 

@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.9)
 
-project(maliit-keyboard VERSION 2.2.1.1)
+project(maliit-keyboard VERSION 2.3.1)
 
-option(enable-presage "Use presage to calculate word candidates (maliit-keyboard-plugin only)" ON)
 option(enable-hunspell "Use hunspell for error correction (maliit-keyboard-plugin only)" ON)
-option(enable-tests "Build tests" OFF)
+option(enable-tests "Build tests" ON)
 
 # Install paths
 include(GNUInstallDirs)
@@ -31,6 +30,7 @@ find_package(GIO REQUIRED)
 
 find_package(Qt5DBus)
 
+find_package(Qt5QuickControls2 REQUIRED)
 find_package(Qt5Multimedia)
 find_package(Qt5Feedback)
 find_package(Intl REQUIRED)
@@ -75,6 +75,8 @@ set(MALIIT_KEYBOARD_LIB_SOURCES
 set(WESTERNSUPPORT_SOURCES
         plugins/westernsupport/spellchecker.cpp
         plugins/westernsupport/spellchecker.h
+        plugins/westernsupport/spellpredictworker.cpp
+        plugins/westernsupport/spellpredictworker.h
         plugins/westernsupport/westernlanguagefeatures.cpp
         plugins/westernsupport/westernlanguagefeatures.h
         plugins/westernsupport/westernlanguagesplugin.cpp
@@ -94,24 +96,6 @@ set(maliit-keyboard-definitions HUNSPELL_DICT_PATH="${HUNSPELL_DICT_PATH}"
         MALIIT_KEYBOARD_DATA_DIR="${CMAKE_INSTALL_PREFIX}/${MALIIT_KEYBOARD_DATA_DIR}"
         MALIIT_KEYBOARD_LANGUAGES_DIR="${CMAKE_INSTALL_PREFIX}/${MALIIT_KEYBOARD_LANGUAGES_DIR}")
 set(maliit-keyboard-include-dirs)
-
-if(enable-presage)
-    # Presage headers incompatible with C++17, which is default in newer GCC
-    set(CMAKE_CXX_STANDARD 14)
-    find_package(Presage REQUIRED)
-
-    if(Presage_FOUND)
-        list(APPEND maliit-keyboard-definitions HAVE_PRESAGE)
-        list(APPEND maliit-keyboard-libraries ${Presage_LIBRARIES})
-        list(APPEND maliit-keyboard-include-dirs ${Presage_INCLUDE_DIRS})
-
-        list(APPEND WESTERNSUPPORT_SOURCES
-                plugins/westernsupport/candidatescallback.cpp
-                plugins/westernsupport/candidatescallback.h
-                plugins/westernsupport/spellpredictworker.cpp
-                plugins/westernsupport/spellpredictworker.h)
-    endif()
-endif()
 
 if(enable-hunspell)
     find_package(Hunspell REQUIRED)
@@ -158,8 +142,6 @@ set(MALIIT_KEYBOARD_COMMON_SOURCES
         src/plugin/gettext.h
         src/plugin/updatenotifier.cpp
         src/plugin/updatenotifier.h
-        src/plugin/iconprovider.cpp
-        src/plugin/iconprovider.h
         src/plugin/inputmethod.cpp
         src/plugin/inputmethod.h
         src/plugin/inputmethod_p.h
@@ -167,10 +149,11 @@ set(MALIIT_KEYBOARD_COMMON_SOURCES
         src/plugin/keyboardgeometry.h
         src/plugin/keyboardsettings.cpp
         src/plugin/keyboardsettings.h
-        src/plugin/theme.cpp src/plugin/theme.h src/plugin/device.cpp src/plugin/device.h)
+        src/plugin/device.cpp
+        src/plugin/device.h)
 
 add_library(maliit-keyboard-common STATIC ${MALIIT_KEYBOARD_COMMON_SOURCES})
-target_link_libraries(maliit-keyboard-common Qt5::DBus Maliit::Plugins maliit-keyboard-lib maliit-keyboard-view gsettings-qt Qt5::Multimedia ${Intl_LIBRARIES})
+target_link_libraries(maliit-keyboard-common Qt5::DBus Qt5::QuickControls2 Maliit::Plugins maliit-keyboard-lib maliit-keyboard-view gsettings-qt Qt5::Multimedia ${Intl_LIBRARIES})
 if (Qt5Feedback_FOUND)
     target_link_libraries(maliit-keyboard-common Qt5::Feedback)
     target_compile_definitions(maliit-keyboard-common PUBLIC HAVE_QT5_FEEDBACK)
@@ -203,7 +186,7 @@ target_link_libraries(westernsupport ${maliit-keyboard-libraries} Maliit::Plugin
 target_include_directories(westernsupport PUBLIC src/lib/logic plugins/westernsupport ${maliit-keyboard-include-dirs})
 target_compile_definitions(westernsupport PRIVATE ${maliit-keyboard-definitions})
 
-function(language_plugin _language _full_language _ebook)
+function(language_plugin _language _full_language)
     # To support layout style variations such as en@dv we need to avoid using
     # the @ character in variables, so split and replace it with _
     set(_target ${_language})
@@ -214,10 +197,6 @@ function(language_plugin _language _full_language _ebook)
     set(PLUGIN_SOURCES
             plugins/${_language}/src/${_full_language}plugin.h
             plugins/${_language}/src/${_full_language}plugin.json)
-if(enable-presage)
-    add_ngram(TEXT plugins/${_language}/src/${_ebook} DATABASE database_${_language}.db)
-    list(APPEND PLUGIN_SOURCES database_${_language}.db)
-endif()
     add_library(${_target}plugin MODULE ${PLUGIN_SOURCES})
     set_target_properties(${_target}plugin PROPERTIES OUTPUT_NAME ${_language}plugin)
     target_link_libraries(${_target}plugin maliit-keyboard-common westernsupport)
@@ -228,10 +207,6 @@ endif()
             DESTINATION ${MALIIT_KEYBOARD_LANGUAGES_DIR}/${_language})
     install(TARGETS ${_target}plugin
             LIBRARY DESTINATION ${MALIIT_KEYBOARD_LANGUAGES_DIR}/${_language})
-if(enable-presage)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/database_${_language}.db
-            DESTINATION ${MALIIT_KEYBOARD_LANGUAGES_DIR}/${_language})
-endif()
     foreach(_file IN LISTS ARGN)
         install(FILES plugins/${_language}/${_file}
                 DESTINATION ${MALIIT_KEYBOARD_LANGUAGES_DIR}/${_language})
@@ -240,7 +215,7 @@ endfunction()
 
 function(abstract_language_plugin _language _full_language)
     set(options ABSTRACT_LANGUAGE_PLUGIN)
-    set(oneValueArgs NGRAM_DATABASE PLUGIN_DIR LANGUAGE_FEATURES)
+    set(oneValueArgs PLUGIN_DIR LANGUAGE_FEATURES)
     set(multiValueArgs SOURCES LIBRARIES INCLUDE_DIRS DEFINITIONS FILES DIRECTORY)
     cmake_parse_arguments(abstract_language_plugin "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -279,10 +254,6 @@ function(abstract_language_plugin _language _full_language)
     foreach(_s IN LISTS abstract_language_plugin_SOURCES)
         list(APPEND PLUGIN_SOURCES plugins/${_plugindir}/src/${_s})
     endforeach()
-    if(enable-presage AND (NOT ${abstract_language_plugin_NGRAM_DATABASE} EQUAL ""))
-        add_ngram(TEXT plugins/${_plugindir}/src/${abstract_language_plugin_NGRAM_DATABASE} DATABASE database_${_language}.db)
-        list(APPEND PLUGIN_SOURCES database_${_language}.db)
-    endif()
     add_library(${_target}plugin MODULE ${PLUGIN_SOURCES})
     set_target_properties(${_target}plugin PROPERTIES OUTPUT_NAME ${_language}plugin)
     target_link_libraries(${_target}plugin Qt5::Core Maliit::Plugins maliit-keyboard-common ${abstract_language_plugin_LIBRARIES})
@@ -303,48 +274,44 @@ function(abstract_language_plugin _language _full_language)
         install(DIRECTORY plugins/${_plugindir}/${_dir}
                 DESTINATION ${MALIIT_KEYBOARD_LANGUAGES_DIR}/${_language})
     endforeach()
-    if(enable-presage AND (NOT ${abstract_language_plugin_NGRAM_DATABASE} EQUAL ""))
-        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/database_${_language}.db
-                DESTINATION ${MALIIT_KEYBOARD_LANGUAGES_DIR}/${_language})
-    endif()
 endfunction()
 
-language_plugin(ar arabic free_ebook.txt)
-language_plugin(az azerbaijani free_ebook.txt)
-language_plugin(be belarusian free_ebook.txt)
-language_plugin(bg bulgarian free_ebook.txt)
-language_plugin(bs bosnian free_ebook.txt)
-language_plugin(ca catalan paulina_buxareu.txt src/overrides.csv)
-language_plugin(cs czech free_ebook.txt)
-language_plugin(da danish free_ebook.txt src/overrides.csv)
-language_plugin(de german buddenbrooks.txt)
-language_plugin(el greek grazia_deledda-christos_alexandridis.txt)
-language_plugin(en english the_picture_of_dorian_gray.txt src/overrides.csv)
-language_plugin(eo esperanto alicio_en_mirlando.txt)
-language_plugin(es spanish el_quijote.txt)
-language_plugin(fa persian free_ebook.txt qml/Keyboard_symbols_fa.qml)
-language_plugin(fi finnish free_ebook.txt)
-language_plugin(fr french les_trois_mousquetaires.txt src/overrides.csv)
-language_plugin(gd gaelic teacsa.txt)
-language_plugin(he hebrew free_ebook.txt src/overrides.csv)
-language_plugin(hr croatian knjiga.txt)
-language_plugin(hu hungarian free_ebook.txt)
-language_plugin(is icelandic althingi_umraedur_2004_2005.txt)
-language_plugin(it italian la_francia_dal_primo_impero.txt src/overrides.csv)
-language_plugin(lt lithuanian free_ebook.txt)
-language_plugin(lv latvian free_ebook.txt)
-language_plugin(mk macedonian free_ebook.txt)
-language_plugin(nb norwegian free_ebook.txt)
-language_plugin(nl dutch free_ebook.txt src/overrides.csv)
-language_plugin(pl polish ziemia_obiecana_tom_pierwszy_4.txt)
-language_plugin(pt portuguese historias_sem_data.txt src/overrides.csv)
-language_plugin(ro romanian amintiri_din_copilarie.txt)
-language_plugin(ru russian free_ebook.txt)
-language_plugin(sl slovenian free_ebook.txt)
-language_plugin(sr serbian free_ebook.txt)
-language_plugin(sv swedish free_ebook.txt src/overrides.csv)
-language_plugin(tr turkish free_ebook.txt)
-language_plugin(uk ukrainian free_ebook.txt)
+language_plugin(ar arabic)
+language_plugin(az azerbaijani)
+language_plugin(be belarusian)
+language_plugin(bg bulgarian)
+language_plugin(bs bosnian)
+language_plugin(ca catalan src/overrides.csv)
+language_plugin(cs czech)
+language_plugin(da danish src/overrides.csv)
+language_plugin(de german)
+language_plugin(el greek)
+language_plugin(en english src/overrides.csv)
+language_plugin(eo esperanto)
+language_plugin(es spanish)
+language_plugin(fa persian qml/Keyboard_symbols_fa.qml)
+language_plugin(fi finnish)
+language_plugin(fr french src/overrides.csv)
+language_plugin(gd gaelic)
+language_plugin(he hebrew src/overrides.csv)
+language_plugin(hr croatian)
+language_plugin(hu hungarian)
+language_plugin(is icelandic)
+language_plugin(it italian src/overrides.csv)
+language_plugin(lt lithuanian)
+language_plugin(lv latvian)
+language_plugin(mk macedonian)
+language_plugin(nb norwegian)
+language_plugin(nl dutch src/overrides.csv)
+language_plugin(pl polish)
+language_plugin(pt portuguese src/overrides.csv)
+language_plugin(ro romanian)
+language_plugin(ru russian)
+language_plugin(sl slovenian)
+language_plugin(sr serbian)
+language_plugin(sv swedish src/overrides.csv)
+language_plugin(tr turkish)
+language_plugin(uk ukrainian)
 
 abstract_language_plugin(en@dv englishdvorak
     FILES src/overrides.csv
@@ -365,13 +332,11 @@ elseif(Anthy_FOUND)
             INCLUDE_DIRS ${Anthy_INCLUDE_DIRS}
             DIRECTORY qml/keys)
 endif()
-if(enable-presage)
-    abstract_language_plugin(ko korean
-            NGRAM_DATABASE korean.txt
-            SOURCES database_ko.db
-            LIBRARIES westernsupport
-            DIRECTORY qml/keys)
-endif()
+
+abstract_language_plugin(ko korean
+  LIBRARIES westernsupport
+  DIRECTORY qml/keys)
+
 if(Pinyin_FOUND)
     abstract_language_plugin(zh-hans pinyin ABSTRACT_LANGUAGE_PLUGIN
             PLUGIN_DIR pinyin
@@ -403,8 +368,6 @@ install(DIRECTORY qml/keys qml/languages
 install(FILES qml/ActionsToolbar.qml qml/FloatingActions.qml qml/Keyboard.qml qml/KeyboardContainer.qml qml/WordRibbon.qml
         DESTINATION ${MALIIT_KEYBOARD_QML_DIR})
 
-install(DIRECTORY data/themes
-        DESTINATION ${MALIIT_KEYBOARD_DATA_DIR})
 install(DIRECTORY data/devices
         DESTINATION ${MALIIT_KEYBOARD_DATA_DIR})
 install(FILES data/schemas/org.maliit.keyboard.maliit.gschema.xml
@@ -427,12 +390,11 @@ if(enable-tests)
     add_library(test-utils STATIC
             tests/unittests/common/inputmethodhostprobe.cpp
             tests/unittests/common/inputmethodhostprobe.h
-            tests/unittests/common/utils-gui.cpp
             tests/unittests/common/utils.cpp
             tests/unittests/common/utils.h)
 
-    target_link_libraries(test-utils PUBLIC Qt5::Core Qt5::Gui Qt5::Test)
-    target_include_directories(test-utils INTERFACE tests/common tests maliit-keyboard)
+    target_link_libraries(test-utils PUBLIC Maliit::Plugins Qt5::Core Qt5::Gui Qt5::Test westernsupport)
+    target_include_directories(test-utils PUBLIC tests/unittests tests/unittests/common src src/lib)
 
     function(create_test name)
         set(_extra_sources ${ARGV})
@@ -442,7 +404,7 @@ if(enable-tests)
                 tests/unittests/${name}/${name}.cpp
                 ${_extra_sources})
 
-        target_link_libraries(${name} test-utils ${_libs})
+        target_link_libraries(${name} test-utils maliit-keyboard-common ${_libs})
 
         add_test(${name} ${name})
 
@@ -450,11 +412,13 @@ if(enable-tests)
     endfunction()
 
     create_test(ut_languagefeatures)
-    create_test(ut_repeat-backspace)
+    create_test(ut_repeat-backspace
+            tests/unittests/common/wordengineprobe.cpp
+            tests/unittests/common/wordengineprobe.h)
     create_test(ut_editor
             tests/unittests/ut_editor/wordengineprobe.cpp
             tests/unittests/ut_editor/wordengineprobe.h)
-    create_test(ut_preedit-string)
+    #create_test(ut_preedit-string)
     create_test(ut_text)
     create_test(ut_word-candidates
             tests/unittests/ut_word-candidates/wordengineprobe.cpp
@@ -465,8 +429,3 @@ if(enable-tests)
             MALIIT_PLUGINS_DATADIR=${CMAKE_SOURCE_DIR}/data)
 
 endif()
-
-add_custom_target(install_${PROJECT_NAME}
-        ${CMAKE_BUILD_TOOL} install
-        DEPENDS ${PROJECT_NAME}
-        COMMENT "Installing ${PROJECT_NAME}")

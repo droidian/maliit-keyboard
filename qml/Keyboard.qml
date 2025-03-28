@@ -30,7 +30,6 @@
 
 import QtQuick 2.4
 import QtQuick.Controls 2.4
-import QtGraphicalEffects 1.0
 
 import MaliitKeyboard 2.0
 
@@ -48,7 +47,6 @@ Item {
     property int prevSwipePositionY
     property int cursorSwipeDuration: 5000
     property var timerSwipe: swipeTimer
-    property var theme: Theme.defaultTheme
 
     property variant input_method: Keyboard
     property variant event_handler: MaliitEventHandler
@@ -116,7 +114,7 @@ Item {
                 }
             }
 
-            Item {
+            Page {
                 id: keyboardSurface
                 objectName: "keyboardSurface"
 
@@ -129,13 +127,6 @@ Item {
                 onYChanged: fullScreenItem.reportKeyboardVisibleRect();
                 onWidthChanged: fullScreenItem.reportKeyboardVisibleRect();
                 onHeightChanged: fullScreenItem.reportKeyboardVisibleRect();
-
-                Rectangle {
-                    width: parent.width
-                    height: (1)
-                    color: Theme.dividerColor
-                    anchors.bottom: wordRibbon.visible ? wordRibbon.top : keyboardComp.top
-                }
 
                 WordRibbon {
                     id: wordRibbon
@@ -160,6 +151,12 @@ Item {
                     height: Device.wordRibbonHeight
                 }
                     
+                Rectangle {
+                    width: parent.width
+                    height: 1
+                    color: "#888888"
+                    anchors.bottom: wordRibbon.visible ? wordRibbon.top : keyboardComp.top
+                }
 
                 Item {
                     id: keyboardComp
@@ -172,23 +169,12 @@ Item {
 
                     onHeightChanged: fullScreenItem.reportKeyboardVisibleRect();
 
-                    Rectangle {
-                        id: background
-
-                        anchors.fill: parent
-
-                        color: Theme.backgroundColor
-                    }
-                
                     KeyboardContainer {
                         id: keypad
 
                         anchors.fill: parent
                         anchors.topMargin: wordRibbon.visible ? 0 : Device.top_margin
                         anchors.bottomMargin: Device.bottom_margin
-                        hideKeyLabels: fullScreenItem.cursorSwipe
-
-                        onPopoverEnabledChanged: fullScreenItem.reportKeyboardVisibleRect();
                     }
 
                     LanguageMenu {
@@ -255,7 +241,7 @@ Item {
 
         Connections {
             target: input_method
-            onActivateAutocaps: {
+            function onActivateAutocaps() {
                 if (keypad.state == "CHARACTERS" && keypad.activeKeypadState != "CAPSLOCK" && !cursorSwipe) {
                     keypad.activeKeypadState = "SHIFTED";
                     keypad.autoCapsTriggered = true;
@@ -264,10 +250,10 @@ Item {
                 }
             }
 
-            onKeyboardReset: {
+            function onKeyboardReset() {
                 keypad.state = "CHARACTERS"
             }
-            onDeactivateAutocaps: {
+            function onDeactivateAutocaps() {
                 if(keypad.autoCapsTriggered) {
                     keypad.activeKeypadState = "NORMAL";
                     keypad.autoCapsTriggered = false;
@@ -298,16 +284,25 @@ Item {
             
             enabled: cursorSwipe
 
+            // An invisible text field to be able to get selection colors from
+            // thte qqc2 style in use, for selection mode
+            TextField {
+                id: textArea
+                width: 0
+                height: 0
+                visible: false
+            }
+
             Rectangle {
                 anchors.fill: parent
                 visible: parent.enabled
-                color: cursorSwipeArea.selectionMode ? Theme.selectionColor : Theme.charKeyPressedColor
+                color: cursorSwipeArea.selectionMode ? textArea.selectionColor : "#888888"
                 
                 Label {
                     visible: !cursorSwipeArea.pressed
                     horizontalAlignment: Text.AlignHCenter
                     // FIXME: selected font color should differ
-                    color: cursorSwipeArea.selectionMode ? "#fefefe" : Theme.fontColor
+                    color: cursorSwipeArea.selectionMode ? textArea.selectedTextColor : "#313131"
                     wrapMode: Text.WordWrap
                     
                     anchors {

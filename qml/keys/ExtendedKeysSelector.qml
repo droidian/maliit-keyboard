@@ -15,6 +15,8 @@
  */
 
 import QtQuick 2.4
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 
 import MaliitKeyboard 2.0
 
@@ -28,17 +30,31 @@ KeyPopover {
     property alias rowY: rowOfKeys.y
     property int fontSize: 0
 
-    property int __width: 0
+    // A readonly variable to check if our grid has multiple rows
+    readonly property bool multirow: rowOfKeys.columns < (extendedKeysModel ? extendedKeysModel.length : 0)
+
     property string __commitStr: ""
 
     onExtendedKeysModelChanged: {
         if (extendedKeysModel && extendedKeysModel.length > 1) {
+            // Reset columns to length, to avoid having weird positioning
+            // when switching extended keys
+            rowOfKeys.columns = extendedKeysModel.length;
+
             // Place the first key in the middle of the model so that it gets
             // selected by default
             var middleKey = Math.floor(extendedKeysModel.length / 2);
+            if (extendedKeysModel.length > 5) {
+                middleKey -= 1;
+            }
             var reorderedModel = extendedKeysModel.slice(0); // Ensure the array is cloned
+            var defaultKey = extendedKeysModel[0];
             reorderedModel.splice(extendedKeysModel.length % 2 == 0 ? middleKey : middleKey + 1, 0, extendedKeysModel[0]);
             reorderedModel.shift();
+            if (reorderedModel.length > 5) {
+                rowOfKeys.columns = Math.ceil(reorderedModel.length / 2);
+                reorderedModel.reverse();
+            }
             keyRepeater.model = reorderedModel;
         } else {
             keyRepeater.model = extendedKeysModel;
@@ -76,11 +92,17 @@ KeyPopover {
 
         height: rowOfKeys.height
 
-        color: Theme.charKeyColor
+        // Invisible tooltip to copy the qqc2 style colors from
+        ToolTip {
+            id: tip
+            visible: false
+        }
+
+        color: tip.background.color
         radius: Device.gu(0.8)
         border {
-            width: Device.gu(0.1)
-        	color: Theme.popupBorderColor
+            width: tip.background.border.width
+            color: tip.background.border.color
         }
 
         onXChanged: {
@@ -98,17 +120,10 @@ KeyPopover {
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: closePopover();
-    }
-
-    Row {
+    GridLayout {
         id: rowOfKeys
         anchors.centerIn: anchorItem
         anchors.verticalCenterOffset: -Device.popoverTopMargin
-
-        Component.onCompleted: __width = 0
 
         Repeater {
             id: keyRepeater
@@ -116,7 +131,7 @@ KeyPopover {
 
             Item {
                 id: key
-                width: textCell.width + Device.popoverCellPadding;
+                width: panel.keyWidth
 
                 height: panel.keyHeight;
 
@@ -124,15 +139,21 @@ KeyPopover {
                 property bool highlight: false
                 opacity: highlight ? 1.0 : 0.6
 
-                Text {
+                // Invisible text field to get selection colors from
+                TextField {
+                    id: textArea
+                    width: 0
+                    height: 0
+                    visible: false
+                }
+
+                Label {
                     id: textCell
                     anchors.centerIn: parent;
                     text: modelData
-                    font.family: Theme.fontFamily
                     font.pixelSize: fontSize
                     font.weight: Font.Light
-                    color: key.highlight ? Theme.selectionColor : Theme.fontColor
-                    Component.onCompleted: __width += (textCell.width + Device.popoverCellPadding);
+                    color: key.highlight ? textArea.selectionColor : textArea.color
                 }
 
                 function commit(skipAutoCaps) {
@@ -151,9 +172,31 @@ KeyPopover {
         }
     }
 
-    function enableMouseArea()
-    {
-        extendedKeysMouseArea.enabled = true
+    // Determine which extended key we're underneath when swiping,
+    // highlight it and set it as the currentExtendedKey (to be committed
+    // when press is released)
+    function evaluateSelectorSwipe(mouseX, mouseY) {
+        let currentExtendedKey = null;
+        if (enabled && currentlyAssignedKey != null) {
+            var keyMapping = mapToItem(currentlyAssignedKey, rowX, rowY);
+            var mx = mouseX - keyMapping.x;
+            var my = mouseY - keyMapping.y;
+            for (var i = 0; i < keys.length; i++) {
+                var posX = keys[i].x;
+                var posY = keys[i].y;
+                if (mx > posX && mx < (posX + keys[i].width)
+                    && my > posY && my < (posY + (keys[i].height * (posY == rowOfKeys.height - panel.keyHeight ? 2 : 1)))) {
+                    if (!keys[i].highlight) {
+                        Feedback.startPressEffect();
+                    }
+                    keys[i].highlight = true;
+                    currentExtendedKey = keys[i];
+                } else if('highlight' in keys[i]) {
+                    keys[i].highlight = false;
+                }
+            }
+        }
+        return currentExtendedKey;
     }
 
     function __restoreAssignedKey()

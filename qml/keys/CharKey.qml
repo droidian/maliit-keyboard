@@ -15,6 +15,7 @@
  */
 
 import QtQuick 2.4
+import QtQuick.Controls 2.12
 
 import MaliitKeyboard 2.0
 
@@ -27,6 +28,9 @@ Item {
     height: panel.keyHeight
 
     // to be set in keyboard layouts
+    property string iconNormal: ""
+    property string iconShifted: ""
+    property string iconCapsLock: ""
     property string label: ""
     property string shifted: ""
     property var extended; // list of extended keys
@@ -54,14 +58,8 @@ Item {
 
     // These properties are used by autopilot to determine the visible
     // portion of the key to press
-    readonly property double leftOffset: buttonRect.anchors.leftMargin
-    readonly property double rightOffset: buttonRect.anchors.rightMargin
-
-    // design
-    property string normalColor: Theme.charKeyColor
-    property string pressedColor: Theme.charKeyPressedColor
-    property bool borderEnabled: Theme.keyBorderEnabled
-    property color borderColor: borderEnabled ? Theme.charKeyBorderColor : "transparent"
+    readonly property double leftOffset: keyButton.anchors.leftMargin
+    readonly property double rightOffset: keyButton.anchors.rightMargin
 
     // Scale the font so the label fits if a long word is set
     property int fontSize: (fullScreenItem.landscape ? (height / 2) : (height / 2.8))
@@ -102,9 +100,6 @@ Item {
     property bool allowPreeditHandler: false
     property var preeditHandler: null
 
-    // Don't detect swipe changes until the swipeTimer has expired to prevent
-    // accidentally selecting something other than the default extended key
-    property bool swipeReady: false
 
     signal pressed()
     signal released()
@@ -117,9 +112,9 @@ Item {
             __annotationLabelNormal = annotation
             __annotationLabelShifted = annotation
         } else {
-            if (extended)
+            if (extended && extended[0])
                 __annotationLabelNormal = extended[0]
-            if (extendedShifted)
+            if (extendedShifted && extendedShifted[0])
                 __annotationLabelShifted = extendedShifted[0]
         }
     }
@@ -133,29 +128,34 @@ Item {
         height: panel.keyHeight
         width: parent.width
 
-        Rectangle {
-            id: buttonRect
-            color: key.currentlyPressed || key.highlight ? pressedColor : normalColor
+        ToolButton {
+            id: keyButton
             anchors.fill: parent
             anchors.leftMargin: key.leftSide ? (parent.width - panel.keyWidth) + key.keyMargin : key.keyMargin
             anchors.rightMargin: key.rightSide ? (parent.width - panel.keyWidth) + key.keyMargin : key.keyMargin
             anchors.bottomMargin: key.rowMargin
-            border {
-                width: borderEnabled ? 8 * (0.1) : 0
-                color: borderColor
-            }
-            radius: (4)
+
+            // Disable hover so that highlight doesn't stick on touch screens
+            hoverEnabled: false
+
+            // Tell the ToolButton to be drawn as pressed, when pressed
+            down: keyMouseArea.pressed
+
+            // Icon of the key
+            icon.name: key.iconNormal
+            icon.height: key.fontSize
+            icon.width: key.fontSize
+
+            display: label == "" ? AbstractButton.IconOnly : AbstractButton.TextOnly
 
             /// label of the key
             //  the label is also the value subitted to the app
 
-            Text {
+            Label {
                 id: keyLabel
-                text: (panel.activeKeypadState === "NORMAL") ? label : shifted;
-                font.family: Theme.fontFamily
-                font.pixelSize: fontSize
+                text: label
+                font.pixelSize: key.fontSize
                 font.weight: Font.Light
-                color: Theme.fontColor
                 anchors.right: parent.right
                 anchors.left: parent.left
                 anchors.leftMargin: Device.gu(0.2)
@@ -165,29 +165,71 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 // Avoid eliding characters that are slightly too wide (e.g. some emoji and chinese characters)
                 elide: text.length <= 4 ? Text.ElideNone : Text.ElideRight
-                visible: !panel.hideKeyLabels
             }
 
             /// shows an annotation
             // used e.g. for indicating the existence of extended keys
 
-            Text {
+            Label {
                 id: annotationLabel
-                text: (panel.activeKeypadState != "NORMAL") ? __annotationLabelShifted : __annotationLabelNormal
+                text: __annotationLabelNormal
 
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.topMargin: Device.annotationTopMargin
                 anchors.rightMargin: Device.annotationRightMargin
-                font.family: Theme.annotationFontFamily
-                font.pixelSize: fontSize / 3
+                font.pixelSize: key.fontSize / 2.25
                 font.weight: Font.Light
-                color: Theme.annotationFontColor
-                visible: !panel.hideKeyLabels
             }
 
         }
     }
+
+    // make sure the icon and/or labels change with the state
+    state: panel.activeKeypadState
+    states: [
+        State {
+            name: "NORMAL"
+            PropertyChanges {
+                target: keyButton
+                icon.name: iconNormal
+            }
+            PropertyChanges {
+                target: keyLabel
+                text: label
+            }
+            PropertyChanges {
+                target: annotationLabel
+                text: __annotationLabelNormal
+            }
+        },
+        State {
+            name: "SHIFTED"
+            PropertyChanges {
+                target: keyButton
+                icon.name: iconShifted ? iconShifted : iconNormal
+            }
+            PropertyChanges {
+                target: keyLabel
+                text: shifted
+            }
+            PropertyChanges {
+                target: annotationLabel
+                text: __annotationLabelShifted
+            }
+        },
+        State {
+            name: "CAPSLOCK"
+            PropertyChanges {
+                target: keyButton
+                icon.name: iconCapsLock ? iconCapsLock : iconShifted ? iconShifted : iconNormal
+            }
+            PropertyChanges {
+                target: keyLabel
+                text: shifted
+            }
+        }
+    ]
 
     PressArea {
         id: keyMouseArea
@@ -201,14 +243,15 @@ Item {
             if (activeExtendedModel != undefined) {
                 Feedback.startPressEffect();
 
-                swipeReady = false;
-                swipeTimer.restart();
                 magnifier.shown = false
                 extendedKeysSelector.enabled = true
                 extendedKeysSelector.extendedKeysModel = activeExtendedModel
                 extendedKeysSelector.currentlyAssignedKey = key
                 var extendedKeys = extendedKeysSelector.keys;
-                var middleKey = extendedKeys.length > 1 ? Math.floor(extendedKeys.length / 2) - 1 : 0;
+                var middleKey = extendedKeys.length > 1 ? Math.floor(extendedKeys.length / 2) - 1: 0;
+                if (extendedKeys.length > 5 && extendedKeysSelector.multirow) {
+                    middleKey = extendedKeys.length - middleKey - 1;
+                }
                 extendedKeys[middleKey].highlight = true;
                 currentExtendedKey = extendedKeys[middleKey];
             }
@@ -299,46 +342,14 @@ Item {
             }
         }
 
-        // Determine which extended key we're underneath when swiping,
-        // highlight it and set it as the currentExtendedKey (to be committed
-        // when press is released)
         function evaluateSelectorSwipe() {
-            if (extendedKeysSelector.enabled && swipeReady) {
-                var extendedKeys = extendedKeysSelector.keys;
-                currentExtendedKey = null;
-                var keyMapping = extendedKeysSelector.mapToItem(key, extendedKeysSelector.rowX, extendedKeysSelector.rowY);
-                var mx = mouseX - keyMapping.x;
-                var my = mouseY - keyMapping.y;
-                for(var i = 0; i < extendedKeys.length; i++) {
-                    var posX = extendedKeys[i].x;
-                    var posY = extendedKeys[i].y;
-                    if(mx > posX && mx < (posX + extendedKeys[i].width)
-                       && my > posY && my < (posY + extendedKeys[i].height * 2.5)) {
-                        if(!extendedKeys[i].highlight) {
-                            Feedback.startPressEffect();
-                        }
-                        extendedKeys[i].highlight = true;
-                        currentExtendedKey = extendedKeys[i];
-                    } else if('highlight' in extendedKeys[i]) {
-                        extendedKeys[i].highlight = false;
-                    }
-                }
-            }
-        }
-    }
-
-    Timer {
-        id: swipeTimer
-        interval: 750
-        onTriggered: {
-            swipeReady = true;
-            keyMouseArea.evaluateSelectorSwipe();
+            currentExtendedKey = extendedKeysSelector.evaluateSelectorSwipe(mouseX, mouseY);
         }
     }
 
     Connections {
         target: swipeArea.drag
-        onActiveChanged: {
+        function onActiveChanged() {
             if (swipeArea.drag.active)
                 keyMouseArea.cancelPress();
         }

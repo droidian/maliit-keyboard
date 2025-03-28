@@ -15,6 +15,7 @@
  */
 
 import QtQuick 2.4
+import QtQuick.Controls 2.12
 
 import MaliitKeyboard 2.0
 
@@ -26,12 +27,8 @@ import MaliitKeyboard 2.0
 KeyPopover {
     id: root
 
-    width: currentlyAssignedKey ? (panel.keyWidth > label.width ? 
-                                  panel.keyWidth + Device.magnifierHorizontalPadding
-                                  : label.width + Device.magnifierHorizontalPadding) : 0
-    // Use visible key height instead of real key height to allow for bottom
-    // row touch area to be extended
-    height: currentlyAssignedKey ? panel.keyHeight + Device.magnifierVerticalPadding : 0
+    width: panel.keyWidth
+    height: panel.keyHeight * 2
 
     /*! Sets the Magnifier visible or invisible*/
     property bool shown: false
@@ -65,11 +62,17 @@ KeyPopover {
         transformOrigin: Item.Bottom
         opacity: animationStep
 
-        color: Theme.charKeyColor
+        // Invisible tooltip to copy the qqc2 style colors from
+        ToolTip {
+            id: tip
+            visible: false
+        }
+
+        color: tip.background.color
         radius: 8 * (0.8)
         border {
-            width: 8 * (0.1)
-        	color: Theme.popupBorderColor
+            width: tip.background.border.width
+            color: tip.background.border.color
         }
 
         onXChanged: {
@@ -86,17 +89,18 @@ KeyPopover {
         }
 
 
-        Text {
+        Label {
             id: label
-            anchors.centerIn: parent
-            height: parent.height
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+            }
             text: currentlyAssignedKey ? currentlyAssignedKey.valueToSubmit : ""
-            font.family: Theme.fontFamily
             font.weight: Font.Light
             font.pixelSize: panel.keyHeight * 0.6
             verticalAlignment: Text.AlignVCenter
-
-            color: Theme.fontColor
+            horizontalAlignment: Text.AlignHCenter
         }
 
         NumberAnimation {
