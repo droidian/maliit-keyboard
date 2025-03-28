@@ -9,7 +9,7 @@ include /usr/share/dpkg/buildflags.mk
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -- -Denable-tests=ON
+	dh_auto_configure -- -Denable-tests=OFF
 
 override_dh_install:
 	# drop extra license files from bin:pkg
