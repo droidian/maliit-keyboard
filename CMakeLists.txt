@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 
 project(maliit-keyboard VERSION 2.3.1)
 
-option(BUILD_WITH_QT6 "Enable build with Qt6" OFF)
+option(BUILD_WITH_QT6 "Enable build with Qt6" ON)
 set(MALIIT_SUFFIX "")
 if(BUILD_WITH_QT6)
   find_package(Qt6 6.0 REQUIRED COMPONENTS Core Core5Compat QuickControls2)
