@@ -102,7 +102,7 @@ double Device::gu(double value) const
 void Device::loadDevice(const QString& device)
 {
     const auto &deviceFile = QFileInfo(device).isRelative() ?
-                            QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("/maliit/keyboard2/devices/%1.json").arg(device)) :
+                            QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("/maliit6/keyboard2/devices/%1.json").arg(device)) :
                             device;
 
     QFile file(deviceFile);

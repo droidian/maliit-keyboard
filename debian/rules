@@ -19,8 +19,8 @@ override_dh_install:
 	dh_install
 
 	# ship the key-press-feedback sound file
-	mkdir -p debian/maliit-keyboard/usr/share/maliit/keyboard2/sounds/
-	cp debian/sound/key_tick2_quiet.wav debian/maliit-keyboard/usr/share/maliit/keyboard2/sounds/
+	mkdir -p debian/maliit-keyboard/usr/share/maliit6/keyboard2/sounds/
+	cp debian/sound/key_tick2_quiet.wav debian/maliit-keyboard/usr/share/maliit6/keyboard2/sounds/
 
 override_dh_auto_test:
 	xvfb-run dh_auto_test
