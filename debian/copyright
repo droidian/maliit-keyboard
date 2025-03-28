@@ -1,0 +1,1088 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: maliit-keyboard
+Source: https://github.com/maliit/keyboard/
+
+Files: plugins/ar/qml/Keyboard_ar.qml
+ plugins/ar/qml/Keyboard_ar_email.qml
+ plugins/ar/qml/Keyboard_ar_url.qml
+ plugins/ar/qml/Keyboard_ar_url_search.qml
+ plugins/az/qml/Keyboard_az.qml
+ plugins/az/qml/Keyboard_az_email.qml
+ plugins/az/qml/Keyboard_az_url.qml
+ plugins/az/qml/Keyboard_az_url_search.qml
+ plugins/bg/qml/Keyboard_bg.qml
+ plugins/bg/qml/Keyboard_bg_email.qml
+ plugins/bg/qml/Keyboard_bg_url.qml
+ plugins/bg/qml/Keyboard_bg_url_search.qml
+ plugins/bs/qml/Keyboard_bs.qml
+ plugins/bs/qml/Keyboard_bs_email.qml
+ plugins/bs/qml/Keyboard_bs_url.qml
+ plugins/bs/qml/Keyboard_bs_url_search.qml
+ plugins/ca/qml/Keyboard_ca.qml
+ plugins/ca/qml/Keyboard_ca_email.qml
+ plugins/ca/qml/Keyboard_ca_url.qml
+ plugins/ca/qml/Keyboard_ca_url_search.qml
+ plugins/chewing/qml/Keyboard_zh-hant.qml
+ plugins/chewing/qml/Keyboard_zh-hant_email.qml
+ plugins/chewing/qml/Keyboard_zh-hant_url.qml
+ plugins/chewing/qml/Keyboard_zh-hant_url_search.qml
+ plugins/chewing/src/chewingadapter.cpp
+ plugins/chewing/src/chewingadapter.h
+ plugins/chewing/src/chewinglanguagefeatures.cpp
+ plugins/chewing/src/chewinglanguagefeatures.h
+ plugins/cs/qml/Keyboard_cs.qml
+ plugins/cs/qml/Keyboard_cs_email.qml
+ plugins/cs/qml/Keyboard_cs_url.qml
+ plugins/cs/qml/Keyboard_cs_url_search.qml
+ plugins/da/qml/Keyboard_da.qml
+ plugins/da/qml/Keyboard_da_email.qml
+ plugins/da/qml/Keyboard_da_url.qml
+ plugins/da/qml/Keyboard_da_url_search.qml
+ plugins/de/qml/Keyboard_de.qml
+ plugins/de/qml/Keyboard_de_email.qml
+ plugins/de/qml/Keyboard_de_url.qml
+ plugins/de/qml/Keyboard_de_url_search.qml
+ plugins/el/qml/Keyboard_el.qml
+ plugins/el/qml/Keyboard_el_email.qml
+ plugins/el/qml/Keyboard_el_url.qml
+ plugins/el/qml/Keyboard_el_url_search.qml
+ plugins/en/qml/Keyboard_en.qml
+ plugins/en/qml/Keyboard_en_email.qml
+ plugins/en/qml/Keyboard_en_url.qml
+ plugins/en/qml/Keyboard_en_url_search.qml
+ plugins/en@dv/qml/Keyboard_en@dv.qml
+ plugins/en@dv/qml/Keyboard_en@dv_email.qml
+ plugins/en@dv/qml/Keyboard_en@dv_url.qml
+ plugins/en@dv/qml/Keyboard_en@dv_url_search.qml
+ plugins/eo/qml/Keyboard_eo.qml
+ plugins/eo/qml/Keyboard_eo_email.qml
+ plugins/eo/qml/Keyboard_eo_url.qml
+ plugins/eo/qml/Keyboard_eo_url_search.qml
+ plugins/es/qml/Keyboard_es.qml
+ plugins/es/qml/Keyboard_es_email.qml
+ plugins/es/qml/Keyboard_es_url.qml
+ plugins/es/qml/Keyboard_es_url_search.qml
+ plugins/fa/qml/Keyboard_fa.qml
+ plugins/fa/qml/Keyboard_fa_email.qml
+ plugins/fa/qml/Keyboard_fa_url.qml
+ plugins/fa/qml/Keyboard_fa_url_search.qml
+ plugins/fa/qml/Keyboard_symbols_fa.qml
+ plugins/fi/qml/Keyboard_fi.qml
+ plugins/fi/qml/Keyboard_fi_email.qml
+ plugins/fi/qml/Keyboard_fi_url.qml
+ plugins/fi/qml/Keyboard_fi_url_search.qml
+ plugins/fr-ch/qml/Keyboard_fr-ch.qml
+ plugins/fr-ch/qml/Keyboard_fr-ch_email.qml
+ plugins/fr-ch/qml/Keyboard_fr-ch_url.qml
+ plugins/fr-ch/qml/Keyboard_fr-ch_url_search.qml
+ plugins/fr/qml/Keyboard_fr.qml
+ plugins/fr/qml/Keyboard_fr_email.qml
+ plugins/fr/qml/Keyboard_fr_url.qml
+ plugins/fr/qml/Keyboard_fr_url_search.qml
+ plugins/gd/qml/Keyboard_gd.qml
+ plugins/gd/qml/Keyboard_gd_email.qml
+ plugins/gd/qml/Keyboard_gd_url.qml
+ plugins/gd/qml/Keyboard_gd_url_search.qml
+ plugins/he/qml/Keyboard_he.qml
+ plugins/he/qml/Keyboard_he_email.qml
+ plugins/he/qml/Keyboard_he_url.qml
+ plugins/he/qml/Keyboard_he_url_search.qml
+ plugins/hr/qml/Keyboard_hr.qml
+ plugins/hr/qml/Keyboard_hr_email.qml
+ plugins/hr/qml/Keyboard_hr_url.qml
+ plugins/hr/qml/Keyboard_hr_url_search.qml
+ plugins/hu/qml/Keyboard_hu.qml
+ plugins/hu/qml/Keyboard_hu_email.qml
+ plugins/hu/qml/Keyboard_hu_url.qml
+ plugins/hu/qml/Keyboard_hu_url_search.qml
+ plugins/is/qml/Keyboard_is.qml
+ plugins/is/qml/Keyboard_is_email.qml
+ plugins/is/qml/Keyboard_is_url.qml
+ plugins/is/qml/Keyboard_is_url_search.qml
+ plugins/it/qml/Keyboard_it.qml
+ plugins/it/qml/Keyboard_it_email.qml
+ plugins/it/qml/Keyboard_it_url.qml
+ plugins/it/qml/Keyboard_it_url_search.qml
+ plugins/ja/qml/Keyboard_ja.qml
+ plugins/ja/qml/Keyboard_ja_email.qml
+ plugins/ja/qml/Keyboard_ja_url.qml
+ plugins/ja/qml/Keyboard_ja_url_search.qml
+ plugins/ja/qml/keys/CommitKey.qml
+ plugins/ja/qml/keys/CursorKey.qml
+ plugins/ja/qml/keys/DomainKey.qml
+ plugins/ja/qml/keys/FlickCharKey.qml
+ plugins/ja/qml/keys/KanaSwitchKey.qml
+ plugins/ja/qml/keys/ModifierKey.qml
+ plugins/ja/qml/keys/UndoKey.qml
+ plugins/ja/src/anthyadapter.cpp
+ plugins/ja/src/anthyadapter.h
+ plugins/ja/src/japaneselanguagefeatures.cpp
+ plugins/ja/src/japaneselanguagefeatures.h
+ plugins/ko/qml/Keyboard_ko.qml
+ plugins/ko/qml/Keyboard_ko_email.qml
+ plugins/ko/qml/Keyboard_ko_url.qml
+ plugins/ko/qml/Keyboard_ko_url_search.qml
+ plugins/ko/qml/keys/HBackspaceKey.qml
+ plugins/ko/qml/keys/HCharKey.qml
+ plugins/ko/src/koreanlanguagefeatures.cpp
+ plugins/ko/src/koreanlanguagefeatures.h
+ plugins/lt/qml/Keyboard_lt.qml
+ plugins/lt/qml/Keyboard_lt_email.qml
+ plugins/lt/qml/Keyboard_lt_url.qml
+ plugins/lt/qml/Keyboard_lt_url_search.qml
+ plugins/lv/qml/Keyboard_lv.qml
+ plugins/lv/qml/Keyboard_lv_email.qml
+ plugins/lv/qml/Keyboard_lv_url.qml
+ plugins/lv/qml/Keyboard_lv_url_search.qml
+ plugins/nb/qml/Keyboard_nb.qml
+ plugins/nb/qml/Keyboard_nb_email.qml
+ plugins/nb/qml/Keyboard_nb_url.qml
+ plugins/nb/qml/Keyboard_nb_url_search.qml
+ plugins/nl/qml/Keyboard_nl.qml
+ plugins/nl/qml/Keyboard_nl_email.qml
+ plugins/nl/qml/Keyboard_nl_url.qml
+ plugins/nl/qml/Keyboard_nl_url_search.qml
+ plugins/pinyin/qml/Keyboard_zh-hans.qml
+ plugins/pinyin/qml/Keyboard_zh-hans_email.qml
+ plugins/pinyin/qml/Keyboard_zh-hans_url.qml
+ plugins/pinyin/qml/Keyboard_zh-hans_url_search.qml
+ plugins/pinyin/src/chineselanguagefeatures.cpp
+ plugins/pinyin/src/chineselanguagefeatures.h
+ plugins/pinyin/src/pinyinadapter.h
+ plugins/pl/qml/Keyboard_pl.qml
+ plugins/pl/qml/Keyboard_pl_email.qml
+ plugins/pl/qml/Keyboard_pl_url.qml
+ plugins/pl/qml/Keyboard_pl_url_search.qml
+ plugins/pt/qml/Keyboard_pt.qml
+ plugins/pt/qml/Keyboard_pt_email.qml
+ plugins/pt/qml/Keyboard_pt_url.qml
+ plugins/pt/qml/Keyboard_pt_url_search.qml
+ plugins/ro/qml/Keyboard_ro.qml
+ plugins/ro/qml/Keyboard_ro_email.qml
+ plugins/ro/qml/Keyboard_ro_url.qml
+ plugins/ro/qml/Keyboard_ro_url_search.qml
+ plugins/ru/qml/Keyboard_ru.qml
+ plugins/ru/qml/Keyboard_ru_email.qml
+ plugins/ru/qml/Keyboard_ru_url.qml
+ plugins/ru/qml/Keyboard_ru_url_search.qml
+ plugins/sl/qml/Keyboard_sl.qml
+ plugins/sl/qml/Keyboard_sl_email.qml
+ plugins/sl/qml/Keyboard_sl_url.qml
+ plugins/sl/qml/Keyboard_sl_url_search.qml
+ plugins/sr/qml/Keyboard_sr.qml
+ plugins/sr/qml/Keyboard_sr_email.qml
+ plugins/sr/qml/Keyboard_sr_url.qml
+ plugins/sr/qml/Keyboard_sr_url_search.qml
+ plugins/sv/qml/Keyboard_sv.qml
+ plugins/sv/qml/Keyboard_sv_email.qml
+ plugins/sv/qml/Keyboard_sv_url.qml
+ plugins/sv/qml/Keyboard_sv_url_search.qml
+ plugins/th/qml/Keyboard_th.qml
+ plugins/th/qml/Keyboard_th_email.qml
+ plugins/th/qml/Keyboard_th_url.qml
+ plugins/th/qml/Keyboard_th_url_search.qml
+ plugins/th/src/thailanguagefeatures.cpp
+ plugins/th/src/thailanguagefeatures.h
+ plugins/tr/qml/Keyboard_tr.qml
+ plugins/tr/qml/Keyboard_tr_email.qml
+ plugins/tr/qml/Keyboard_tr_url.qml
+ plugins/tr/qml/Keyboard_tr_url_search.qml
+ plugins/uk/qml/Keyboard_uk.qml
+ plugins/uk/qml/Keyboard_uk_email.qml
+ plugins/uk/qml/Keyboard_uk_url.qml
+ plugins/uk/qml/Keyboard_uk_url_search.qml
+ qml/KeyboardContainer.qml
+ qml/WordRibbon.qml
+ qml/keys/ActionKey.qml
+ qml/keys/BackspaceKey.qml
+ qml/keys/CategoryKey.qml
+ qml/keys/CharKey.qml
+ qml/keys/ExtendedKeysSelector.qml
+ qml/keys/KeyPad.qml
+ qml/keys/KeyPopover.qml
+ qml/keys/LanguageKey.qml
+ qml/keys/OneTwoKey.qml
+ qml/keys/ReturnKey.qml
+ qml/keys/ShiftKey.qml
+ qml/keys/SmallSpaceKey.qml
+ qml/keys/SpaceKey.qml
+ qml/keys/Spacer.qml
+ qml/keys/SymbolShiftKey.qml
+ qml/keys/UrlKey.qml
+ qml/languages/Keyboard_emoji.qml
+ qml/languages/Keyboard_numbers.qml
+ qml/languages/Keyboard_symbols.qml
+ qml/languages/Keyboard_symbols_zh-hans.qml
+ qml/languages/Keyboard_telephone.qml
+ src/3rdparty/QGSettings/qgsettings.cpp
+ src/3rdparty/QGSettings/qgsettings.h
+ src/3rdparty/QGSettings/util.cpp
+ src/3rdparty/QGSettings/util.h
+ tests/testlayout/qml/Keyboard_testlayout.qml
+ tests/unittests/common/mockscreen.cpp
+ tests/unittests/common/mockscreen.h
+ tests/unittests/ut_keyboardsettings/qgsettings.h
+Copyright: 2013, Canonical Ltd.
+  2014, Canonical Ltd.
+  2015, Canonical Ltd.
+  2016, Canonical Ltd.
+License: LGPL-3
+
+Files: com.github.maliit.keyboard.metainfo.xml
+Copyright: 2012, Openismus GmbH
+  2013-2016, Canonical Ltd.
+  2011, Nokia Corporation and/or its subsidiary(-ies).
+  2019-2020, Jan Arne Petersen
+License: CC0-1.0
+Comment:
+ Assuming copyright holdership from code files.
+
+Files: .github/workflows/main.yaml
+ .gitignore
+ CMakeLists.txt
+ README.md
+ cmake/FindAnthy.cmake
+ cmake/FindAnthyUnicode.cmake
+ cmake/FindChewing.cmake
+ cmake/FindGIO.cmake
+ cmake/FindGLib2.cmake
+ cmake/FindHunspell.cmake
+ cmake/FindPinyin.cmake
+ cmake/FindPresage.cmake
+ com.github.maliit.keyboard.desktop
+ data/.gitignore
+ data/devices/default.json
+ data/devices/tablet.json
+ data/schemas/org.maliit.keyboard.maliit.gschema.xml
+ doc/keyboard-styling-calc.ods
+ plugins/README
+ plugins/ar/src/arabicplugin.h
+ plugins/ar/src/arabicplugin.json
+ plugins/ar/src/free_ebook.txt
+ plugins/az/src/azerbaijaniplugin.h
+ plugins/az/src/azerbaijaniplugin.json
+ plugins/az/src/database_az.db
+ plugins/az/src/free_ebook.txt
+ plugins/be/src/belarusianplugin.h
+ plugins/be/src/belarusianplugin.json
+ plugins/be/src/database_be.db
+ plugins/be/src/free_ebook.txt
+ plugins/bg/src/bulgarianplugin.h
+ plugins/bg/src/bulgarianplugin.json
+ plugins/bg/src/database_bg.db
+ plugins/bg/src/free_ebook.txt
+ plugins/bs/src/bosnianplugin.h
+ plugins/bs/src/bosnianplugin.json
+ plugins/bs/src/free_ebook.txt
+ plugins/ca/src/catalanplugin.h
+ plugins/ca/src/catalanplugin.json
+ plugins/ca/src/overrides.csv
+ plugins/ca/src/paulina_buxareu.txt
+ plugins/chewing/src/chewingplugin.cpp
+ plugins/chewing/src/chewingplugin.h
+ plugins/chewing/src/chewingplugin.json
+ plugins/cs/src/czechplugin.h
+ plugins/cs/src/czechplugin.json
+ plugins/cs/src/free_ebook.txt
+ plugins/da/src/danishplugin.h
+ plugins/da/src/danishplugin.json
+ plugins/da/src/free_ebook.txt
+ plugins/da/src/overrides.csv
+ plugins/de/src/buddenbrooks.txt
+ plugins/de/src/germanplugin.h
+ plugins/de/src/germanplugin.json
+ plugins/el/src/grazia_deledda-christos_alexandridis.txt
+ plugins/el/src/greekplugin.h
+ plugins/el/src/greekplugin.json
+ plugins/en/src/englishplugin.h
+ plugins/en/src/englishplugin.json
+ plugins/en/src/overrides.csv
+ plugins/en/src/the_picture_of_dorian_gray.txt
+ plugins/en@dv/src/englishdvorakplugin.h
+ plugins/en@dv/src/englishdvorakplugin.json
+ plugins/en@dv/src/overrides.csv
+ plugins/eo/src/alicio_en_mirlando.txt
+ plugins/eo/src/esperantoplugin.h
+ plugins/eo/src/esperantoplugin.json
+ plugins/es/src/el_quijote.txt
+ plugins/es/src/spanishplugin.h
+ plugins/es/src/spanishplugin.json
+ plugins/fa/src/free_ebook.txt
+ plugins/fa/src/persianplugin.h
+ plugins/fa/src/persianplugin.json
+ plugins/fi/src/finnishplugin.h
+ plugins/fi/src/finnishplugin.json
+ plugins/fi/src/free_ebook.txt
+ plugins/fr-ch/src/frenchplugin.h
+ plugins/fr-ch/src/frenchplugin.json
+ plugins/fr/src/frenchplugin.h
+ plugins/fr/src/frenchplugin.json
+ plugins/fr/src/les_trois_mousquetaires.txt
+ plugins/fr/src/overrides.csv
+ plugins/gd/src/gaelicplugin.h
+ plugins/gd/src/gaelicplugin.json
+ plugins/gd/src/teacsa.txt
+ plugins/he/src/free_ebook.txt
+ plugins/he/src/hebrewplugin.h
+ plugins/he/src/hebrewplugin.json
+ plugins/he/src/overrides.csv
+ plugins/hr/src/croatianplugin.h
+ plugins/hr/src/croatianplugin.json
+ plugins/hr/src/knjiga.txt
+ plugins/hu/src/free_ebook.txt
+ plugins/hu/src/hungarianplugin.h
+ plugins/hu/src/hungarianplugin.json
+ plugins/is/src/althingi_umraedur_2004_2005.txt
+ plugins/is/src/icelandicplugin.h
+ plugins/is/src/icelandicplugin.json
+ plugins/it/src/italianplugin.h
+ plugins/it/src/italianplugin.json
+ plugins/it/src/la_francia_dal_primo_impero.txt
+ plugins/it/src/overrides.csv
+ plugins/ja/src/japaneseplugin.cpp
+ plugins/ja/src/japaneseplugin.h
+ plugins/ja/src/japaneseplugin.json
+ plugins/ko/src/database_ko.db
+ plugins/ko/src/korean.txt
+ plugins/ko/src/koreanplugin.cpp
+ plugins/ko/src/koreanplugin.h
+ plugins/ko/src/koreanplugin.json
+ plugins/lt/src/database_lt.db
+ plugins/lt/src/free_ebook.txt
+ plugins/lt/src/lithuanianplugin.h
+ plugins/lt/src/lithuanianplugin.json
+ plugins/lv/src/free_ebook.txt
+ plugins/lv/src/latvianplugin.h
+ plugins/lv/src/latvianplugin.json
+ plugins/mk/src/database_mk.db
+ plugins/mk/src/free_ebook.txt
+ plugins/mk/src/macedonianplugin.h
+ plugins/mk/src/macedonianplugin.json
+ plugins/nb/src/free_ebook.txt
+ plugins/nb/src/norwegianplugin.h
+ plugins/nb/src/norwegianplugin.json
+ plugins/nl/src/dutchplugin.h
+ plugins/nl/src/dutchplugin.json
+ plugins/nl/src/free_ebook.txt
+ plugins/nl/src/overrides.csv
+ plugins/pinyin/src/pinyinplugin.cpp
+ plugins/pinyin/src/pinyinplugin.h
+ plugins/pinyin/src/pinyinplugin.json
+ plugins/pl/src/polishplugin.h
+ plugins/pl/src/polishplugin.json
+ plugins/pl/src/ziemia_obiecana_tom_pierwszy_4.txt
+ plugins/pt/src/historias_sem_data.txt
+ plugins/pt/src/overrides.csv
+ plugins/pt/src/portugueseplugin.h
+ plugins/pt/src/portugueseplugin.json
+ plugins/ro/src/amintiri_din_copilarie.txt
+ plugins/ro/src/romanianplugin.h
+ plugins/ro/src/romanianplugin.json
+ plugins/ru/src/free_ebook.txt
+ plugins/ru/src/russianplugin.h
+ plugins/ru/src/russianplugin.json
+ plugins/sl/src/free_ebook.txt
+ plugins/sl/src/slovenianplugin.h
+ plugins/sl/src/slovenianplugin.json
+ plugins/sr/src/free_ebook.txt
+ plugins/sr/src/serbianplugin.h
+ plugins/sr/src/serbianplugin.json
+ plugins/sv/src/overrides.csv
+ plugins/sv/src/free_ebook.txt
+ plugins/sv/src/swedishplugin.h
+ plugins/sv/src/swedishplugin.json
+ plugins/th/src/thaiplugin.cpp
+ plugins/th/src/thaiplugin.h
+ plugins/th/src/thaiplugin.json
+ plugins/tr/src/free_ebook.txt
+ plugins/tr/src/database_tr.db
+ plugins/tr/src/turkishplugin.h
+ plugins/tr/src/turkishplugin.json
+ plugins/uk/src/free_ebook.txt
+ plugins/uk/src/ukrainianplugin.h
+ plugins/uk/src/ukrainianplugin.json
+ plugins/westernsupport/candidatescallback.cpp
+ plugins/westernsupport/candidatescallback.h
+ plugins/westernsupport/westernlanguagesplugin.cpp
+ plugins/westernsupport/westernlanguagesplugin.h
+ plugins/westernsupport/westernsupport.cpp
+ plugins/westernsupport/westernsupport.h
+ plugins/westernsupport/westernsupport_global.h
+ po/CMakeLists.txt
+ qml/ActionsToolbar.qml
+ qml/FloatingActions.qml
+ qml/keys/ActionsToolbarButton.qml
+ qml/keys/DropShadow.qml
+ qml/keys/FloatingActionKey.qml
+ qml/keys/qmldir
+ qml/languages/emoji.js
+ qml/prototype.qmlproject
+ src/3rdparty/QGSettings/QGSettings
+ src/lib/logic/languageplugininterface.h
+ src/plugin/plugin.json
+ src/view/.gitignore
+ tests/autopilot/lomiri-keyboard-tester.desktop
+ tests/manual/disableOSKsettings.sh
+ tests/qmltests/api-test/api_tests.qml
+ tests/qmltests/qml-api-tests/imports/MaliitTestSupport/qmldir
+ tests/qmltests/qml-api-tests/plugin.cpp
+ tests/qmltests/qml-api-tests/tst_inputMethodHints.qml
+ tests/qmltests/qml-test-app/keyboard-test.qml
+ tests/qmltests/qml-test-app/layout-test.qml
+ tests/testlayout/src/database_testlayout.db
+ tests/testlayout/src/empty.txt
+ tests/testlayout/src/testlayoutplugin.h
+ tests/testlayout/src/testlayoutplugin.json
+ tests/unittests/common/helper.js
+ tests/unittests/ut_editor/.gitignore
+ tests/unittests/ut_preedit-string/.gitignore
+ tests/unittests/ut_repeat-backspace/.gitignore
+ tests/unittests/ut_word-candidates/.gitignore
+ tests/unittests/ut_wordengine/.gitignore
+ tests/unittests/ut_wordengine/ut_wordengine.cpp
+Copyright: 2012, Openismus GmbH
+  2013-2016, Canonical Ltd.
+  2011, Nokia Corporation and/or its subsidiary(-ies).
+  2019-2020, Jan Arne Petersen
+License: BSD-3-clause or LGPL-3
+Comment:
+ Assuming BSD-3-clause license from explanation in README.md about
+ all files outside the qml/ directory. Some files listed above
+ might also be licensed under LGPL-3.
+ .
+ Assuming copyright holdership from code files.
+
+Files: po/*.po
+ po/maliit-keyboard.pot
+Copyright: 2014, Rosetta Contributors and Canonical Ltd.
+  2015, Rosetta Contributors and Canonical Ltd.
+  2016, Rosetta Contributors and Canonical Ltd.
+  YEAR, Canonical Ltd.
+License: LGPL-3 or BSD-3-clause
+Comment:
+ Assuming same licenses as used for code files.
+
+Files: plugins/westernsupport/spellchecker.h
+ src/lib/logic/wordengine.cpp
+ src/lib/logic/wordengine.h
+ src/lib/models/area.cpp
+ src/lib/models/area.h
+ src/lib/models/key.cpp
+ src/lib/models/key.h
+ src/lib/models/keyarea.cpp
+ src/lib/models/keyarea.h
+ src/lib/models/keyboard.h
+ src/lib/models/keydescription.h
+ src/lib/models/text.cpp
+ src/lib/models/text.h
+ src/lib/models/wordcandidate.cpp
+ src/lib/models/wordcandidate.h
+ src/lib/models/wordribbon.cpp
+ src/lib/models/wordribbon.h
+ src/plugin/editor.cpp
+ src/plugin/editor.h
+ src/plugin/inputmethod.cpp
+ src/plugin/inputmethod.h
+ src/plugin/plugin.cpp
+ src/plugin/plugin.h
+ src/view/abstracttexteditor.cpp
+ src/view/abstracttexteditor.h
+ src/view/setup.cpp
+ src/view/setup.h
+ tests/unittests/common/inputmethodhostprobe.cpp
+ tests/unittests/common/inputmethodhostprobe.h
+ tests/unittests/common/utils.cpp
+ tests/unittests/common/utils.h
+ tests/unittests/ut_preedit-string/ut_preedit-string.cpp
+ tests/unittests/ut_repeat-backspace/ut_repeat-backspace.cpp
+Copyright: 2011, Nokia Corporation and/or its subsidiary(-ies).
+License: BSD-3-clause
+
+Files: plugins/westernsupport/spellpredictworker.cpp
+ plugins/westernsupport/spellpredictworker.h
+ src/lib/logic/abstractlanguageplugin.cpp
+ src/lib/logic/abstractlanguageplugin.h
+ src/plugin/keyboardgeometry.cpp
+ src/plugin/keyboardgeometry.h
+ src/plugin/keyboardsettings.cpp
+ src/plugin/keyboardsettings.h
+ tests/unittests/ut_keyboardgeometry/ut_keyboardgeometry.cpp
+ tests/unittests/ut_keyboardsettings/fake_qgsettings.cpp
+ tests/unittests/ut_keyboardsettings/ut_keyboardsettings.cpp
+ tests/unittests/ut_languagefeatures/ut_languagefeatures.cpp
+ tests/unittests/ut_text/ut_text.cpp
+Copyright: 2013, Canonical, Ltd.
+  2014, Canonical, Ltd.
+License: BSD-3-clause
+
+Files: plugins/westernsupport/westernlanguagefeatures.cpp
+ plugins/westernsupport/westernlanguagefeatures.h
+ qml/Keyboard.qml
+ src/lib/logic/abstractlanguagefeatures.h
+ src/lib/logic/abstractwordengine.cpp
+ src/lib/logic/abstractwordengine.h
+ tests/unittests/common/wordengineprobe.cpp
+ tests/unittests/common/wordengineprobe.h
+ tests/unittests/ut_editor/wordengineprobe.cpp
+ tests/unittests/ut_editor/wordengineprobe.h
+ tests/unittests/ut_word-candidates/wordengineprobe.cpp
+ tests/unittests/ut_word-candidates/wordengineprobe.h
+Copyright: 2012, Openismus GmbH
+License: BSD-3-clause
+
+Files: src/lib/logic/eventhandler.cpp
+ src/lib/logic/eventhandler.h
+ src/lib/models/layout.cpp
+ src/lib/models/layout.h
+ src/plugin/updatenotifier.cpp
+ src/plugin/updatenotifier.h
+ tests/unittests/ut_editor/ut_editor.cpp
+ tests/unittests/ut_word-candidates/ut_word-candidates.cpp
+Copyright: 2012, Openismus GmbH.
+License: BSD-3-clause
+
+Files: tests/autopilot/lomiri_keyboard/__init__.py
+ tests/autopilot/lomiri_keyboard/emulators/__init__.py
+ tests/autopilot/lomiri_keyboard/emulators/key.py
+ tests/autopilot/lomiri_keyboard/emulators/keyboard.py
+ tests/autopilot/lomiri_keyboard/emulators/keypad.py
+ tests/autopilot/lomiri_keyboard/tests/__init__.py
+ tests/autopilot/lomiri_keyboard/tests/test_keyboard.py
+ tests/autopilot/setup.py
+Copyright: 2013, 2015, Canonical
+  2013, Canonical
+License: GPL-3
+
+Files: plugins/ja/qml/keys/FlickArea.qml
+ plugins/ja/qml/keys/FlickPop.qml
+ plugins/ja/qml/keys/FlickPopKey.qml
+ plugins/ja/qml/keys/modifier.js
+ plugins/ko/qml/keys/languages.js
+ qml/keys/Magnifier.qml
+ qml/keys/PressArea.qml
+ qml/keys/languages.js
+Copyright: 2013, Canonical Ltd.
+  2015, Canonical Ltd.
+  2016, Canonical Ltd.
+License: GPL-3
+
+Files: src/plugin/device.cpp
+ src/plugin/device.h
+ src/plugin/feedback.cpp
+ src/plugin/feedback.h
+Copyright: 2019, Jan Arne Petersen
+  2020, Jan Arne Petersen
+License: BSD-3-clause
+
+Files: plugins/be/qml/Keyboard_be.qml
+ plugins/be/qml/Keyboard_be_email.qml
+ plugins/be/qml/Keyboard_be_url.qml
+ plugins/be/qml/Keyboard_be_url_search.qml
+Copyright: 2013, Canonical Ltd.
+  2021, Antikruk.
+License: LGPL-3
+
+Files: src/plugin/gettext.cpp
+ src/plugin/gettext.h
+Copyright: 2021, Rodney Dawes
+  2022, Rodney Dawes
+License: BSD-3-clause
+
+Files: plugins/mk/qml/Keyboard_mk.qml
+ plugins/mk/qml/Keyboard_mk_email.qml
+ plugins/mk/qml/Keyboard_mk_url.qml
+ plugins/mk/qml/Keyboard_mk_url_search.qml
+Copyright: 2013, Canonical Ltd.
+  2021, Boris Mihailov
+License: LGPL-3
+
+Files: src/lib/coreutils.cpp
+ src/lib/coreutils.h
+Copyright: 2013, Thomas Moenicke
+License: BSD-3-clause
+
+Files: src/3rdparty/QGSettings/qconftypes.cpp
+ src/3rdparty/QGSettings/qconftypes.h
+Copyright: 2011, Canonical Limited
+License: LGPL-3
+
+Files: plugins/westernsupport/spellchecker.cpp
+Copyright: 2011, Nokia Corporation and/or its subsidiary(-ies).
+  2012, Openismus GmbH
+License: BSD-3-clause
+
+Files: plugins/ko/qml/keys/parser.js
+Copyright: 2014, Henry Carlson
+License: LGPL-2.1
+
+Files: qml/keys/LanguageMenu.qml
+Copyright: 2013, Canonical Ltd.
+  2019, Jan Arne Petersen
+License: LGPL-3
+
+Files: plugins/pinyin/src/pinyinadapter.cpp
+Copyright: 2013, Canonical Ltd.
+  2021, Tusooa Zhu <tusooa@kazv.moe>
+License: LGPL-3
+
+Files: plugins/th/qml/keys/ThCharKey.qml
+Copyright: 2013, Canonical Ltd.
+  2020, UBports Foundation.
+License: LGPL-3
+
+Files: src/plugin/inputmethod_p.h
+Copyright: 2013-2016, Canonical, Ltd.
+License: LGPL-3
+
+Files: src/keyboard/keyboard.cpp
+Copyright: 2017, Jan Arne Petersen
+License: Expat
+
+Files: debian/*
+Copyright: 2012-2013, Canonical Ltd.
+  2022-2024, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+License: LGPL-3 or LGPL-2.1 or GPL-3 or BSD-3-clause or Expat
+
+Files: debian/sound/key_tick2_quiet.wav
+Copyright: Jouni
+License: CC-BY-3.0
+Comment:
+ See: https://github.com/maliit/keyboard/commit/cbaf2fef7a239be7d2a979203174734940c237d7
+ and: https://github.com/maliit/keyboard/commit/31bbd3d69e15244eacca1ad40b0df914097fff3f
+
+License: GPL-3
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, version 3 of the License.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the full text of the GNU General Public License
+ version 3 can be found in the file /usr/share/common-licenses/GPL-3.
+
+License: LGPL-2.1
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation, version 2.1
+ of the License.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ Boston, MA  02110-1301  USA
+ .
+ On Debian systems, the full text of the GNU Lesser General Public
+ License version 2.1 can be found in the file
+ `/usr/share/common-licenses/LGPL-2.1'.
+
+License: LGPL-3
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation, version 3
+ of the License.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ Boston, MA  02110-1301  USA
+ .
+ On Debian systems, the full text of the GNU Lesser General Public
+ License version 2.1 can be found in the file
+ `/usr/share/common-licenses/LGPL-3'.
+
+License: Expat
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial
+ portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+License: BSD-3-clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ .
+ 1.  Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+ .
+ 2.  Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+ .
+ 3.  The name of the copyright holders may be used to endorse or promote
+     products derived from this software without specific prior written
+     permission.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGE.
+
+License: CC0-1.0
+ To the extent possible under law, the author(s) have dedicated all copyright
+ and related and neighboring rights to this software to the public domain
+ worldwide. This software is distributed without any warranty.
+ .
+ You should have received a copy of the CC0 Public Domain Dedication along with
+ this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+ .
+ On Debian systems, the full text of the CC0 1.0 Universal license can be found
+ in the file `/usr/share/common-licenses/CC0-1.0'.
+
+License: CC-BY-3.0
+ Creative Commons Legal Code
+ .
+ Attribution 3.0 Unported
+ .
+     CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE
+     LEGAL SERVICES. DISTRIBUTION OF THIS LICENSE DOES NOT CREATE AN
+     ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS
+     INFORMATION ON AN "AS-IS" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES
+     REGARDING THE INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR
+     DAMAGES RESULTING FROM ITS USE.
+ .
+ License
+ .
+ THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE
+ COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED BY
+ COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
+ .
+ BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE
+ TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY
+ BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS
+ CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND
+ CONDITIONS.
+ .
+ 1. Definitions
+ .
+  a. "Adaptation" means a work based upon the Work, or upon the Work and
+     other pre-existing works, such as a translation, adaptation,
+     derivative work, arrangement of music or other alterations of a
+     literary or artistic work, or phonogram or performance and includes
+     cinematographic adaptations or any other form in which the Work may be
+     recast, transformed, or adapted including in any form recognizably
+     derived from the original, except that a work that constitutes a
+     Collection will not be considered an Adaptation for the purpose of
+     this License. For the avoidance of doubt, where the Work is a musical
+     work, performance or phonogram, the synchronization of the Work in
+     timed-relation with a moving image ("synching") will be considered an
+     Adaptation for the purpose of this License.
+  b. "Collection" means a collection of literary or artistic works, such as
+     encyclopedias and anthologies, or performances, phonograms or
+     broadcasts, or other works or subject matter other than works listed
+     in Section 1(f) below, which, by reason of the selection and
+     arrangement of their contents, constitute intellectual creations, in
+     which the Work is included in its entirety in unmodified form along
+     with one or more other contributions, each constituting separate and
+     independent works in themselves, which together are assembled into a
+     collective whole. A work that constitutes a Collection will not be
+     considered an Adaptation (as defined above) for the purposes of this
+     License.
+  c. "Distribute" means to make available to the public the original and
+     copies of the Work or Adaptation, as appropriate, through sale or
+     other transfer of ownership.
+  d. "Licensor" means the individual, individuals, entity or entities that
+     offer(s) the Work under the terms of this License.
+  e. "Original Author" means, in the case of a literary or artistic work,
+     the individual, individuals, entity or entities who created the Work
+     or if no individual or entity can be identified, the publisher; and in
+     addition (i) in the case of a performance the actors, singers,
+     musicians, dancers, and other persons who act, sing, deliver, declaim,
+     play in, interpret or otherwise perform literary or artistic works or
+     expressions of folklore; (ii) in the case of a phonogram the producer
+     being the person or legal entity who first fixes the sounds of a
+     performance or other sounds; and, (iii) in the case of broadcasts, the
+     organization that transmits the broadcast.
+  f. "Work" means the literary and/or artistic work offered under the terms
+     of this License including without limitation any production in the
+     literary, scientific and artistic domain, whatever may be the mode or
+     form of its expression including digital form, such as a book,
+     pamphlet and other writing; a lecture, address, sermon or other work
+     of the same nature; a dramatic or dramatico-musical work; a
+     choreographic work or entertainment in dumb show; a musical
+     composition with or without words; a cinematographic work to which are
+     assimilated works expressed by a process analogous to cinematography;
+     a work of drawing, painting, architecture, sculpture, engraving or
+     lithography; a photographic work to which are assimilated works
+     expressed by a process analogous to photography; a work of applied
+     art; an illustration, map, plan, sketch or three-dimensional work
+     relative to geography, topography, architecture or science; a
+     performance; a broadcast; a phonogram; a compilation of data to the
+     extent it is protected as a copyrightable work; or a work performed by
+     a variety or circus performer to the extent it is not otherwise
+     considered a literary or artistic work.
+  g. "You" means an individual or entity exercising rights under this
+     License who has not previously violated the terms of this License with
+     respect to the Work, or who has received express permission from the
+     Licensor to exercise rights under this License despite a previous
+     violation.
+  h. "Publicly Perform" means to perform public recitations of the Work and
+     to communicate to the public those public recitations, by any means or
+     process, including by wire or wireless means or public digital
+     performances; to make available to the public Works in such a way that
+     members of the public may access these Works from a place and at a
+     place individually chosen by them; to perform the Work to the public
+     by any means or process and the communication to the public of the
+     performances of the Work, including by public digital performance; to
+     broadcast and rebroadcast the Work by any means including signs,
+     sounds or images.
+  i. "Reproduce" means to make copies of the Work by any means including
+     without limitation by sound or visual recordings and the right of
+     fixation and reproducing fixations of the Work, including storage of a
+     protected performance or phonogram in digital form or other electronic
+     medium.
+ .
+ 2. Fair Dealing Rights. Nothing in this License is intended to reduce,
+ limit, or restrict any uses free from copyright or rights arising from
+ limitations or exceptions that are provided for in connection with the
+ copyright protection under copyright law or other applicable laws.
+ .
+ 3. License Grant. Subject to the terms and conditions of this License,
+ Licensor hereby grants You a worldwide, royalty-free, non-exclusive,
+ perpetual (for the duration of the applicable copyright) license to
+ exercise the rights in the Work as stated below:
+ .
+  a. to Reproduce the Work, to incorporate the Work into one or more
+     Collections, and to Reproduce the Work as incorporated in the
+     Collections;
+  b. to create and Reproduce Adaptations provided that any such Adaptation,
+     including any translation in any medium, takes reasonable steps to
+     clearly label, demarcate or otherwise identify that changes were made
+     to the original Work. For example, a translation could be marked "The
+     original work was translated from English to Spanish," or a
+     modification could indicate "The original work has been modified.";
+  c. to Distribute and Publicly Perform the Work including as incorporated
+     in Collections; and,
+  d. to Distribute and Publicly Perform Adaptations.
+  e. For the avoidance of doubt:
+ .
+      i. Non-waivable Compulsory License Schemes. In those jurisdictions in
+         which the right to collect royalties through any statutory or
+         compulsory licensing scheme cannot be waived, the Licensor
+         reserves the exclusive right to collect such royalties for any
+         exercise by You of the rights granted under this License;
+     ii. Waivable Compulsory License Schemes. In those jurisdictions in
+         which the right to collect royalties through any statutory or
+         compulsory licensing scheme can be waived, the Licensor waives the
+         exclusive right to collect such royalties for any exercise by You
+         of the rights granted under this License; and,
+    iii. Voluntary License Schemes. The Licensor waives the right to
+         collect royalties, whether individually or, in the event that the
+         Licensor is a member of a collecting society that administers
+         voluntary licensing schemes, via that society, from any exercise
+         by You of the rights granted under this License.
+ .
+ The above rights may be exercised in all media and formats whether now
+ known or hereafter devised. The above rights include the right to make
+ such modifications as are technically necessary to exercise the rights in
+ other media and formats. Subject to Section 8(f), all rights not expressly
+ granted by Licensor are hereby reserved.
+ .
+ 4. Restrictions. The license granted in Section 3 above is expressly made
+ subject to and limited by the following restrictions:
+ .
+  a. You may Distribute or Publicly Perform the Work only under the terms
+     of this License. You must include a copy of, or the Uniform Resource
+     Identifier (URI) for, this License with every copy of the Work You
+     Distribute or Publicly Perform. You may not offer or impose any terms
+     on the Work that restrict the terms of this License or the ability of
+     the recipient of the Work to exercise the rights granted to that
+     recipient under the terms of the License. You may not sublicense the
+     Work. You must keep intact all notices that refer to this License and
+     to the disclaimer of warranties with every copy of the Work You
+     Distribute or Publicly Perform. When You Distribute or Publicly
+     Perform the Work, You may not impose any effective technological
+     measures on the Work that restrict the ability of a recipient of the
+     Work from You to exercise the rights granted to that recipient under
+     the terms of the License. This Section 4(a) applies to the Work as
+     incorporated in a Collection, but this does not require the Collection
+     apart from the Work itself to be made subject to the terms of this
+     License. If You create a Collection, upon notice from any Licensor You
+     must, to the extent practicable, remove from the Collection any credit
+     as required by Section 4(b), as requested. If You create an
+     Adaptation, upon notice from any Licensor You must, to the extent
+     practicable, remove from the Adaptation any credit as required by
+     Section 4(b), as requested.
+  b. If You Distribute, or Publicly Perform the Work or any Adaptations or
+     Collections, You must, unless a request has been made pursuant to
+     Section 4(a), keep intact all copyright notices for the Work and
+     provide, reasonable to the medium or means You are utilizing: (i) the
+     name of the Original Author (or pseudonym, if applicable) if supplied,
+     and/or if the Original Author and/or Licensor designate another party
+     or parties (e.g., a sponsor institute, publishing entity, journal) for
+     attribution ("Attribution Parties") in Licensor's copyright notice,
+     terms of service or by other reasonable means, the name of such party
+     or parties; (ii) the title of the Work if supplied; (iii) to the
+     extent reasonably practicable, the URI, if any, that Licensor
+     specifies to be associated with the Work, unless such URI does not
+     refer to the copyright notice or licensing information for the Work;
+     and (iv) , consistent with Section 3(b), in the case of an Adaptation,
+     a credit identifying the use of the Work in the Adaptation (e.g.,
+     "French translation of the Work by Original Author," or "Screenplay
+     based on original Work by Original Author"). The credit required by
+     this Section 4 (b) may be implemented in any reasonable manner;
+     provided, however, that in the case of a Adaptation or Collection, at
+     a minimum such credit will appear, if a credit for all contributing
+     authors of the Adaptation or Collection appears, then as part of these
+     credits and in a manner at least as prominent as the credits for the
+     other contributing authors. For the avoidance of doubt, You may only
+     use the credit required by this Section for the purpose of attribution
+     in the manner set out above and, by exercising Your rights under this
+     License, You may not implicitly or explicitly assert or imply any
+     connection with, sponsorship or endorsement by the Original Author,
+     Licensor and/or Attribution Parties, as appropriate, of You or Your
+     use of the Work, without the separate, express prior written
+     permission of the Original Author, Licensor and/or Attribution
+     Parties.
+  c. Except as otherwise agreed in writing by the Licensor or as may be
+     otherwise permitted by applicable law, if You Reproduce, Distribute or
+     Publicly Perform the Work either by itself or as part of any
+     Adaptations or Collections, You must not distort, mutilate, modify or
+     take other derogatory action in relation to the Work which would be
+     prejudicial to the Original Author's honor or reputation. Licensor
+     agrees that in those jurisdictions (e.g. Japan), in which any exercise
+     of the right granted in Section 3(b) of this License (the right to
+     make Adaptations) would be deemed to be a distortion, mutilation,
+     modification or other derogatory action prejudicial to the Original
+     Author's honor and reputation, the Licensor will waive or not assert,
+     as appropriate, this Section, to the fullest extent permitted by the
+     applicable national law, to enable You to reasonably exercise Your
+     right under Section 3(b) of this License (right to make Adaptations)
+     but not otherwise.
+ .
+ 5. Representations, Warranties and Disclaimer
+ .
+ UNLESS OTHERWISE MUTUALLY AGREED TO BY THE PARTIES IN WRITING, LICENSOR
+ OFFERS THE WORK AS-IS AND MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY
+ KIND CONCERNING THE WORK, EXPRESS, IMPLIED, STATUTORY OR OTHERWISE,
+ INCLUDING, WITHOUT LIMITATION, WARRANTIES OF TITLE, MERCHANTIBILITY,
+ FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR THE ABSENCE OF
+ LATENT OR OTHER DEFECTS, ACCURACY, OR THE PRESENCE OF ABSENCE OF ERRORS,
+ WHETHER OR NOT DISCOVERABLE. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION
+ OF IMPLIED WARRANTIES, SO SUCH EXCLUSION MAY NOT APPLY TO YOU.
+ .
+ 6. Limitation on Liability. EXCEPT TO THE EXTENT REQUIRED BY APPLICABLE
+ LAW, IN NO EVENT WILL LICENSOR BE LIABLE TO YOU ON ANY LEGAL THEORY FOR
+ ANY SPECIAL, INCIDENTAL, CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES
+ ARISING OUT OF THIS LICENSE OR THE USE OF THE WORK, EVEN IF LICENSOR HAS
+ BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+ .
+ 7. Termination
+ .
+  a. This License and the rights granted hereunder will terminate
+     automatically upon any breach by You of the terms of this License.
+     Individuals or entities who have received Adaptations or Collections
+     from You under this License, however, will not have their licenses
+     terminated provided such individuals or entities remain in full
+     compliance with those licenses. Sections 1, 2, 5, 6, 7, and 8 will
+     survive any termination of this License.
+  b. Subject to the above terms and conditions, the license granted here is
+     perpetual (for the duration of the applicable copyright in the Work).
+     Notwithstanding the above, Licensor reserves the right to release the
+     Work under different license terms or to stop distributing the Work at
+     any time; provided, however that any such election will not serve to
+     withdraw this License (or any other license that has been, or is
+     required to be, granted under the terms of this License), and this
+     License will continue in full force and effect unless terminated as
+     stated above.
+ .
+ 8. Miscellaneous
+ .
+  a. Each time You Distribute or Publicly Perform the Work or a Collection,
+     the Licensor offers to the recipient a license to the Work on the same
+     terms and conditions as the license granted to You under this License.
+  b. Each time You Distribute or Publicly Perform an Adaptation, Licensor
+     offers to the recipient a license to the original Work on the same
+     terms and conditions as the license granted to You under this License.
+  c. If any provision of this License is invalid or unenforceable under
+     applicable law, it shall not affect the validity or enforceability of
+     the remainder of the terms of this License, and without further action
+     by the parties to this agreement, such provision shall be reformed to
+     the minimum extent necessary to make such provision valid and
+     enforceable.
+  d. No term or provision of this License shall be deemed waived and no
+     breach consented to unless such waiver or consent shall be in writing
+     and signed by the party to be charged with such waiver or consent.
+  e. This License constitutes the entire agreement between the parties with
+     respect to the Work licensed here. There are no understandings,
+     agreements or representations with respect to the Work not specified
+     here. Licensor shall not be bound by any additional provisions that
+     may appear in any communication from You. This License may not be
+     modified without the mutual written agreement of the Licensor and You.
+  f. The rights granted under, and the subject matter referenced, in this
+     License were drafted utilizing the terminology of the Berne Convention
+     for the Protection of Literary and Artistic Works (as amended on
+     September 28, 1979), the Rome Convention of 1961, the WIPO Copyright
+     Treaty of 1996, the WIPO Performances and Phonograms Treaty of 1996
+     and the Universal Copyright Convention (as revised on July 24, 1971).
+     These rights and subject matter take effect in the relevant
+     jurisdiction in which the License terms are sought to be enforced
+     according to the corresponding provisions of the implementation of
+     those treaty provisions in the applicable national law. If the
+     standard suite of rights granted under applicable copyright law
+     includes additional rights not granted under this License, such
+     additional rights are deemed to be included in the License; this
+     License is not intended to restrict the license of any rights under
+     applicable law.
+ .
+ .
+ Creative Commons Notice
+ .
+     Creative Commons is not a party to this License, and makes no warranty
+     whatsoever in connection with the Work. Creative Commons will not be
+     liable to You or any party on any legal theory for any damages
+     whatsoever, including without limitation any general, special,
+     incidental or consequential damages arising in connection to this
+     license. Notwithstanding the foregoing two (2) sentences, if Creative
+     Commons has expressly identified itself as the Licensor hereunder, it
+     shall have all rights and obligations of Licensor.
+ .
+     Except for the limited purpose of indicating to the public that the
+     Work is licensed under the CCPL, Creative Commons does not authorize
+     the use by either party of the trademark "Creative Commons" or any
+     related trademark or logo of Creative Commons without the prior
+     written consent of Creative Commons. Any permitted use will be in
+     compliance with Creative Commons' then-current trademark usage
+     guidelines, as may be published on its website or otherwise made
+     available upon request from time to time. For the avoidance of doubt,
+     this trademark restriction does not form part of this License.
+ .
+     Creative Commons may be contacted at https://creativecommons.org/.

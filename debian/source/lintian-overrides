@@ -1,0 +1,25 @@
+# emoji.js simply contains a long array in one line...
+source: very-long-line-length-in-source-file 7770 > 512 [qml/languages/emoji.js:1]
+source: source-contains-prebuilt-javascript-object [qml/languages/emoji.js]
+source: source-is-missing [qml/languages/emoji.js]
+
+# ignore awkward text layout in COPYING.BSD
+source: very-long-line-length-in-source-file 760 > 512 [COPYING.BSD:9]
+
+# some too-long lines to be ignored
+source: very-long-line-length-in-source-file 1006 > 512 [plugins/hr/src/knjiga.txt:927]
+source: very-long-line-length-in-source-file 1365 > 512 [plugins/bg/src/free_ebook.txt:7975]
+source: very-long-line-length-in-source-file 1481 > 512 [plugins/pl/src/ziemia_obiecana_tom_pierwszy_4.txt:3157]
+source: very-long-line-length-in-source-file 2049 > 512 [plugins/be/src/database_be.db:1]
+source: very-long-line-length-in-source-file 2049 > 512 [plugins/lt/src/database_lt.db:1]
+source: very-long-line-length-in-source-file 2049 > 512 [plugins/mk/src/database_mk.db:1]
+source: very-long-line-length-in-source-file 2049 > 512 [tests/testlayout/src/database_testlayout.db:1]
+source: very-long-line-length-in-source-file 2700 > 512 [plugins/ro/src/amintiri_din_copilarie.txt:118]
+source: very-long-line-length-in-source-file 3008 > 512 [plugins/tr/src/free_ebook.txt:1800]
+source: very-long-line-length-in-source-file 3634 > 512 [plugins/ko/src/database_ko.db:310]
+source: very-long-line-length-in-source-file 4096 > 512 [plugins/bg/src/database_bg.db:*]
+source: very-long-line-length-in-source-file 5997 > 512 [plugins/az/src/database_az.db:14298]
+source: very-long-line-length-in-source-file 8948 > 512 [plugins/tr/src/database_tr.db:17664]
+
+# ignore our own auto-generated copyright.in file
+source: very-long-line-length-in-source-file 1279 > 512 [debian/copyright.in:844]

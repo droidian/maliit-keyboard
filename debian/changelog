@@ -1,0 +1,155 @@
+maliit-keyboard (2.3.1-6) unstable; urgency=medium
+
+  [ Guido Berhoerster ]
+  * debian/patches: Add
+    + 2002_Revert-qml-Use-invisible-components-to-get-colors-fo.patch. Fix
+      background color of key annotations.
+      This reverts commit 3f0d076a6e55551760a27b994de8aff16e6c0d. This is a
+      workaround until https://github.com/maliit/keyboard/issues/217 is
+      addressed by upstream.
+
+  [ Mike Gabriel ]
+  * debian/patches:
+    + Resort patch order.
+    + Rebase patches after re-sorted patch order.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Mon, 27 May 2024 08:24:00 +0200
+
+maliit-keyboard (2.3.1-5) unstable; urgency=medium
+
+  * debian/patches:
+    + Add 2001_use-noto-sans-font.patch. Enforce using Noto Sans for keyboard
+      keys.
+  * debian/control:
+    + Add to D: field: fonts-noto, fonts-noto-color-emoji.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Thu, 29 Feb 2024 17:11:18 +0100
+
+maliit-keyboard (2.3.1-4) unstable; urgency=medium
+
+  * Revert "Remove unnecessary get-orig-source-target."
+  * debian/control:
+    + Bump Standards-Version: to 4.6.2. No changes needed.
+    + Add to R: various hunspell-<lang> packages.
+  * debian/copyright:
+    + Update copyright attribution for debian/.
+  * debian/:
+    + Re-add key_tick2_quiet.wav audio file back. It got removed from upstream,
+      but is still referenced in the .gschema file. No adequate replacement in
+      sight. So shipping the .wav file in the DEB package.
+  * debian/source/lintian-overrides:
+    + Drop doc/keyboard-styling-calc.ods from the list of files with too-long-
+      line-length.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sun, 04 Feb 2024 21:28:19 +0100
+
+maliit-keyboard (2.3.1-3.1) unstable; urgency=medium
+
+  * Non-maintainer upload
+
+  [ Jelmer Vernooĳ ]
+  * debian/rules:
+    + Remove unnecessary get-orig-source-target.
+
+  [ Gunnar Hjalmarsson ]
+  * debian/control:
+    + Build with libpinyin15-dev instead of libpinyin13-dev
+      (closes: #1024593).
+
+ -- Gunnar Hjalmarsson <gunnarhj@debian.org>  Wed, 23 Nov 2022 10:09:39 +0100
+
+maliit-keyboard (2.3.1-3) unstable; urgency=medium
+
+  * debian/watch:
+    + Adjust watch file to Github release/tag URLs.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Wed, 26 Oct 2022 21:08:06 +0200
+
+maliit-keyboard (2.3.1-2) unstable; urgency=medium
+
+  * debian/control:
+    + Fix pkg:name in Depends: field. (Closes: #1022230).
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sat, 22 Oct 2022 13:11:48 +0200
+
+maliit-keyboard (2.3.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches:
+    + Drop all pre-2.3.0 patches. Now included in this upstream release.
+  * debian/control:
+    + Add B-D: qtquickcontrols2-5-dev.
+    + Bump Standards-Version: to 4.6.1. No changes needed.
+    + Add D (maliit-keyboard): qml-module-qtquick2, qml-module-qtquick-
+      controls2, qml-module-qtquick-qtgraphicaleffects and qml-module-
+      qtquick-layouts.
+  * debian/copyright:
+    + Update auto-generated copyright.in file.
+    + Update copyright attributions.
+  * lintian: Update overrides for 2.115.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Mon, 10 Oct 2022 21:44:35 +0200
+
+maliit-keyboard (2.2.1.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches:
+    + Add patches by Rodney Dawes to fix unit tests. (See:
+      https://github.com/maliit/keyboard/pull/133).
+  * debian/control:
+    + Add to B-D: qml-model-qtquick2.
+  * debian/rules:
+    + Re-enable building and running unit tests.
+  * debian/patches:
+    + Drop 1001_typo-fix-in-API.patch again, applied upstream.
+  * debian/copyright:
+    + Update copyright attributions.
+    + Update auto-generated copyright.in template file.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sat, 25 Jun 2022 15:11:57 +0200
+
+maliit-keyboard (2.2.0-1) unstable; urgency=medium
+
+  [ Norbert Preining ]
+  * Prepare initial packaging of v2.0.0.
+
+  [ Mike Gabriel ]
+  * Initial upload to Debian. (Closes: #991529).
+  * debian/:
+    + Move packaging over to the UBports Team's umbrella.
+  * debian/patches:
+    + Add README file explaining our patch naming scheme.
+    + Add 1001_typo-fix-in-API.patch. Fix spelling error in API/ABI relevant
+      parts of the code.
+  * debian/control:
+    + Improve SYNOPSIS and LONG_DESCRIPTION.
+    + Bump Standards-Version: to 4.6.0. No changes needed.
+    + Adjust Vcs-*: fields. Plan is to (co-)maintain the src:pkg with the
+      Qt/KDE team in group Debian on salsa.debian.org.
+    + Switch from Priority: extra to Priority: optional.
+    + Set Section: field to 'x11' (we should actually have a 'graphical'
+      section or somesuch).
+  * debian/rules:
+    + Add get-orig-source target (for the maintainer's convenience).
+    + Drop DEB_LDFLAGS_MAIN_APPEND variable.
+    + Enable all hardening build flags.
+    + Remove extra license files from bin:pkg.
+  * debian/{control,rules}:
+    + Make preparations for enabling unit tests (once the issue has been
+      resolved upstream).
+  * debian/upstream/metadata:
+    + Add file. Comply with DEP-12.
+  * debian/source/lintian-overrides:
+    + Override complains about emoji.js. The file is ok.
+  * debian/copyright:
+    + Add auto-generated copyright.in file.
+    + Drop some very long lines from this file, manually.
+    + Rewrite entire file.
+  * debian/source/lintian-overrides:
+    + Ignore long lines in COPYING.BSD.
+    + Silence various reports about language-specific files with very long
+      lines.
+  * debian/maliit-keyboard.lintian-overrides:
+    + Ignore missing man page for now, reported upstream.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Mon, 07 Mar 2022 11:43:11 +0100
