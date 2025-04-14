@@ -392,7 +392,7 @@ install(FILES data/schemas/org.maliit.keyboard.maliit.gschema.xml
         DESTINATION share/glib-2.0/schemas/)
 
 install(FILES com.github.maliit.keyboard.desktop
-        DESTINATION share/applications)
+        DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/xdg/autostart/)
 install(FILES com.github.maliit.keyboard.metainfo.xml
         DESTINATION share/metainfo)
 
